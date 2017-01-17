@@ -7,12 +7,13 @@ Fazer um aplicativo que permita pequenas impressas terem acesso a soluções de 
 
 Nossos Bots de Teste:
 
- -Telegran = https://telegram.me/BOMRO_bot
- -Mensager = *
- -Google Plus = *
- -Signal = ?
- -Viber = ?
+- Telegran = https://telegram.me/BOMRO_bot
+   Mensager = *
+   Google Plus = *
+   Signal = ?
+   Viber = ?
 
+Test
 
 
 #Organização
