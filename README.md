@@ -23,4 +23,4 @@ Estamos usando python 3.5 para programar o bot, segue algumas referencias:
 #Organização
 
 Reuniões semanais a onde é analisado o avanço do projeto e definido os objeetivos para proxima semana.
-Todos as tarefas devem ser geradas dentro do projeto "BOMROBOTO
+Todos as tarefas devem ser geradas dentro do projeto "BOMROBOTO MVP" e transformados em "Issues" e quando terminado devem ser anexado ao projeto por "Pull requests".
