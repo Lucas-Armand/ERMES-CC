@@ -8,7 +8,9 @@ Fazer um aplicativo que permita pequenas empresas terem acesso a soluções de c
 Nossos Bots de Teste:
 
 - Telegran = https://telegram.me/BOMRO_bot  // Token:"292444370:AAGiqsll_zwYbIRMQ9Hg_8pfihj8y1Ig8Ac" 
-- Mensager = *
+- Mensager = * ID: 132804990557844   
+
+  Token:EAAB4yRJJXpQBAIoktLxF50nSeDO3Rt8MGZChufZAWyx4cGNH2Ejwo0NF8wdGsoRS5oZBTxSyz2dK0riA9fjHniys0Wih7ZCoSNf2JPSEGgdX16YuaVbLiQsA3Mr6un94jYPQv53uqtT4W4E70oGk8BRGKQ6wdANAWFzkxmU3ogZDZD
 - Google Plus = *
 - Signal = ?
 - Viber = ?
