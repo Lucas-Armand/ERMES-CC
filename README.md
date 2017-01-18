@@ -21,6 +21,7 @@ Estamos usando python 3.5 para programar o bot, segue algumas referencias:
  - https://www.codementor.io/garethdwyer/tutorials/building-a-telegram-bot-using-python-part-1-goi5fncay
  - https://core.telegram.org/bots/samples
  - https://apps.worldwritable.com/tutorials/chatbot/ 
+ - https://blog.hartleybrody.com/fb-messenger-bot/
 
 #Organização
 
