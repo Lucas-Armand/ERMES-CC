@@ -2,14 +2,22 @@ import json
 import time
 import re
 import requests
-from dictdate import date 
 import random
+import datetime
 
+# dictionaries:
+import dictRequest
+import dictTime
+import dictDate
+
+tok_buffer =''
+dictTag = {}
+concatenationList = ['bom','boa','Bom','Boa']
 TOKEN = "292444370:AAGiqsll_zwYbIRMQ9Hg_8pfihj8y1Ig8Ac"
 URL = "https://api.telegram.org/bot{}/".format(TOKEN)
 
 
-GREETING_KEYWORDS = ("Olá","Ola","ola","olá","Oi", "bom dia", "bom tarde","boa noite","Tudo bem?","Tudo bem","tudo bem","tudo bem")
+c_KEYWORDS = ("Olá","Ola","ola","olá","Oi", "bom dia", "bom tarde","boa noite","Tudo bem?","Tudo bem","tudo bem","tudo bem")
 SCHEDULLING_KEYWORDS = ("marcar","combinar","definir","sondar","planejar","decidir","acertar","casar","horário")
  
 
@@ -43,6 +51,7 @@ def get_last_chat_id_name_and_text(updates):
     name = (updates["result"][last_update]["message"]["chat"]["first_name"])
 
     return (text, chat_id,name)
+
 
 
 def send_message(text, chat_id):
@@ -129,22 +138,115 @@ def cleaner(sentence,markers):
     return clean
       
 def tokenTest(token):
-    
-    if token.isdigit() : return True                #test if token is a number
-    if re.search(r'\d{2}:\d{2}',token): return True #test if token is in time format
-    if len(token)>4: return True                    #test if token is big enought
-    if token[0].isupper(): return True              #test if token cappital letter start
-    if token =='dia': return True                   #test if token is 'dia'
+
+    if token.isdigit() : return True                                            #test if token is a number
+    if re.search(r'\d{2}:\d{2}',token): return True                             #test if token is in time format
+    if re.search(r'\d{1}º',token) or re.search(r'\d{1}ª',token): return True    #test if token is a ordinal number
+    if len(token)>4: return True                                                #test if token is big enought
+    if len(token)==0: return False
+    if token[0].isupper(): return True                                          #test if token cappital letter start
+    if token =='dia': return True                                               #test if token is 'dia'
+    if token in  concatenationList : return True
+
     return False
-    
-        
+
+def tokenConcatenation(tokens):
+
+    tok_buffer = ''
+    new_tokens = []
+    for tok in tokens:
+        if tok_buffer != '':
+            new_tok = tok_buffer+' '+tok
+            new_tokens.append(new_tok)
+            tok_buffer = ''
+        else:
+            if  tok in concatenationList:
+                tok_buffer = tok
+            else:
+                new_tokens.append(tok)
+    return new_tokens
+
 def tokenization(text):
     
     cleanSentence = cleaner(text,'?!;)([],.')    
     pre_tokens = cleanSentence.split(' ')
     tokens = [token for token in pre_tokens if tokenTest(token)]
+    tokens = tokenConcatenation(tokens)
+
+    print(tokens)
     return tokens
+
+def tagRequestTest(tok):
     
+    if tok in dictRequest.dictKeys: return True
+
+def tagDateTest(tok):
+    
+    if tok in dictDate.dictKeys : return True
+        
+def tagTimeTest(tok):
+    
+    if tok in dictTime.dictKeys: return True
+
+def requestConstruct(tok):
+
+    if tok in dictRequest.schedule.keys(): return dictRequest.schedule[tok]
+    if tok in dictRequest.reschedule.keys(): return dictRequest.reschedule[tok]
+    if tok in dictRequest.cancelation.keys(): return dictRequest.cancelation[tok]
+    if tok in dictRequest.information.keys(): return dictRequest.information[tok]
+
+def dateConstruct(tok):
+
+    tdy = date.today()
+
+    if tok in dictDate.month.keys():
+
+        month_day = dicDate.month[tok]
+        dt = date(tdy.year,td.month,month_day)
+        return dt.isoformat()
+
+    if tok in dictDate.week.keys():
+
+        week_day = dicDate.week[tok]
+        delta = tdy.weekday()-week_day
+        dt = tdy + datetime.timedelta(days=delta)
+        return dt.isoformat()
+        
+    if tok in dictDate.relative.keys():
+        relative_day = dicDate.relative[tok]
+        dt = tdy +datetime.timedelta(days=relative_day)   
+        return dt.isoformat() 
+
+def timeConstruct(tok):
+
+    if tok in dictTime.time.keys():
+
+        if tok == '*':
+            now = datetime.datetime.now()
+            t = now.time()
+            return t.isoformat()
+        else:
+            time_str = dictTime.time[tok]
+            time_lst = time_str.split(':')
+            t = datetime.time(int(time_lst[0]),int(time_lst[1]))
+            return t.isoformat()
+    else:
+        time_str = tok
+        time_lst = time_str.split(':')
+        t = datetime.time(time_lst[0],time_lst[1])
+        return t.isoformat()
+            
+    
+def findTags(toks):
+    
+    tags = {'user':None,'request':None,'date':None,'time':None,'confirm':None,'job':None,'last_call':None}
+
+    for tok in toks:
+        if tagRequestTest(tok): tags['request'] = requestConstruct(tok)
+        if tagDateTest(tok): tags['date'] = dateConstruct(tok)
+        if tagTimeTest(tok): tags['time'] = timeConstruct(tok)
+        if re.search(r'\d{2}:\d{2}',tok): tags['time'] = timeConstruct(tok)
+    return tags
 #    
 #    features = [str(tok) for tok in tokens if len(str(tok))>2]
 #    
@@ -156,14 +258,15 @@ def main():
         if (text, chat) != last_textchat:
             toks = tokenization(text)
             new_tags = findTags(toks)
-            feat = findFeautures(toks)
-            old_tags = knowTags(chat)
-            tags = mergerTags(new_tags,old_tags)
-            resp = answer(tags,feat)
-            send_message(resp, chat)          
-            if tags['schedule']=='confirmed':
-                shedule(name,tags['request'],tags['date'],tags['time'],'schedule.csv')
-            save_tags(chat,tags,'user.csv')
+#            old_tags = knowTags(chat)
+#            tags = mergerTags(new_tags,old_tags)
+#            resp = answer(tags,feat)
+#            send_message(resp, chat)
+            send_message(str(new_tags),chat)
+
+#            if tags['schedule']=='confirmed':
+#                shedule(name,tags['request'],tags['date'],tags['time'],'schedule.csv')
+#            save_tags(chat,tags,'user.csv')
             last_textchat = (text, chat)
             
             
