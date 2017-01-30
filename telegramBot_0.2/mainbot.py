@@ -1,7 +1,6 @@
 import json
 import time
 import re
-import csv
 import requests
 import datetime
 from datetime import date
@@ -22,10 +21,6 @@ URL = "https://api.telegram.org/bot{}/".format(TOKEN)
 #           "boa noite","Tudo bem?","Tudo bem","tudo bem","tudo bem")
 # SCHEDULLING_KEYWORDS = ("marcar","combinar","definir","sondar",
 #           "planejar","decidir","acertar","casar","horário")
-
-
-GREETING_RESPONSES = ["Olá, tudo bem com você?", "Oi,tudo bem com você? "]
-
 
 def get_url(url):
     response = requests.get(url)
@@ -121,10 +116,11 @@ def tagTimeTest(tok):
 
 def requestConstruct(tok):
 
-    if tok in dictRequest.schedule.keys(): return dictRequest.schedule[tok]
+    if tok in dictRequest.schedule.keys(): result = dictRequest.schedule[tok]
     if tok in dictRequest.reschedule.keys(): return dictRequest.reschedule[tok]
     if tok in dictRequest.cancelation.keys(): return dictRequest.cancelation[tok]
     if tok in dictRequest.information.keys(): return dictRequest.information[tok]
+    return(result)
 
 def dateConstruct(tok):
 
@@ -192,7 +188,7 @@ def tagnization(v):
     tag['request'] = v[1]
     tag['date'] = v[2]
     tag['time'] = v[3]
-    tag['schedule'] = v[4]
+    tag['confirm'] = v[4]
     tag['job'] = v[5]
     tag['lastcall'] = v[6]
     return(tag)
@@ -217,29 +213,45 @@ def mergerTags(nTag,oTag):
     return mTag
 
 
+def csvConstruct(matrix):
+    text = ''
+    for vect in matrix:
+        line = ''
+        for elem in vect:
+            line+= elem+';'
+        line = line[0:-1]+'\n'
+        text += line
+    return(text)
+
+
 def saveTags(chat,tags,name):
     CSV = open(name,'r')
     data = CSV.read()
+    CSV.close()
     data = data.split('\n')
     data = [row.split(';') for row in data ]
     tst  = None
     for i in range(len(data)):
         if data[i][0] == str(chat):
-            data [i][1] = tag['request']
-            data [i][2] = tag['date']
-            data [i][3] = tag['time']
-            data [i][4] = tag['schedule']
-            data [i][5] = tag['job']
-            data [i][6] = tag['lastcall']
+            data [i][1] = tags['request']
+            data [i][2] = tags['date']
+            data [i][3] = tags['time']
+            data [i][4] = tags['confirm']
+            data [i][5] = tags['job']
+            data [i][6] = tags['lastcall']
             tst = 1
             break
     if not tst:
-        v = [tag['user'], tag['request'], tag['date'],
-             tag['time'], tag['schedule'], tag['job'], tag['lastcall']]
+        v = [tags['user'], tags['request'], tags['date'],
+             tags['time'], tags['confirm'], tags['job'], tags['lastcall']]
         data.append(v)
 
-    return ('')
+    csvDados = csvConstruct(data)
+    CSV = open(name,'w')
+    CSV.write(csvDados)
+    CSV.close()
 
+    return ()
 
 
 def main():
@@ -256,9 +268,9 @@ def main():
 #            send_message(resp, chat)
             send_message(str(new_tags),chat)
 
-#            if tags['schedule']=='confirmed':
-#                shedule(name,tags['request'],tags['date'],tags['time'],'schedule.csv')
-            save_tags(chat,tags,'user.csv')
+#            if tags['confirm']=='confirmed':
+#                shedule(name,tags['request'],tags['date'],tags['time'],'confirm.csv')
+            saveTags(chat,tags,'users.csv')
             last_textchat = (text, chat)
 
 
