@@ -160,7 +160,7 @@ def timeConstruct(tok):
     else:
         time_str = tok
         time_lst = time_str.split(':')
-        t = datetime.time(time_lst[0],time_lst[1])
+        t = datetime.time(int(time_lst[0]),int(time_lst[1]))
         return t.isoformat()
 
 
@@ -254,6 +254,69 @@ def saveTags(chat,tags,name):
     return ()
 
 
+def seeSechedule(service,date,time):
+
+    date =
+def answer(tags):
+
+#
+# first take a request
+# second take a date
+# third take time
+#
+# last confirm
+
+##first a need to understand the requeriment :
+# Sopouse : 'Consultório A' and ' Dr. Alberto'
+
+    if not tags['request']:
+
+        answer = 'O que posso fazer por você hoje ?'
+        options = ['Marcar um horário','Remarcar meu horário','Dismarcar meu horário','Informações a respeito do atendimento']
+        return (answer,options)
+
+    elif tags['request'] == 'information':
+
+        ansewer = 'Information'
+
+
+
+    if not tags['date']:
+
+        answer = 'Qual data seria melhor para marcar?'
+        options = ['seg','ter','qua','qui','sex']
+        return (answer,options)
+
+
+    else:
+
+        date =  validDate(tag['date'])
+        if date!=tag['date']:
+            answer = 'Infelizmente, não temos disponibilidade no dia solicitados, as datas para agendamento mais proximas são:'
+            options =  date + ['Escolher outra data', 'Informações sobre horários de funcionamento do consultório']
+
+
+
+    if not tags['time']:
+
+        #timeAvaible = timeSearch(tags['date'])
+        answer = 'Qual horário você tem interesse :'
+        options = [tags['date']]
+        return (answer,options)
+#    else:
+#
+#        answer = 'Horário a ser confirmado:'
+#        options = [tags['date'],tags['time']]
+#
+#        return (answer,options)
+#    return answer,options
+
+
+
+#now i need se if it's a valid request
+
+
+
 def main():
     last_textchat = (None, None)
     while True:
@@ -262,11 +325,13 @@ def main():
             toks = tokenization(text)
             new_tags = findTags(toks,chat)
             old_tags = knowTags('users.csv',chat)
-            print( old_tags)
+#            print( old_tags)
             tags = mergerTags(new_tags,old_tags)
-#            resp = answer(tags,feat)
+#            tags = new_tags
+            resp,opts = answer(tags)
 #            send_message(resp, chat)
-            send_message(str(new_tags),chat)
+            opts_ = [opt+'\n' for opt in opts]
+            send_message(resp+str(opts),chat)
 
 #            if tags['confirm']=='confirmed':
 #                shedule(name,tags['request'],tags['date'],tags['time'],'confirm.csv')
