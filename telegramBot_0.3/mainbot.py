@@ -16,6 +16,11 @@ concatenationList = ['bom', 'boa', 'Bom', 'Boa']
 TOKEN = "292444370:AAGiqsll_zwYbIRMQ9Hg_8pfihj8y1Ig8Ac"
 URL = "https://api.telegram.org/bot{}/".format(TOKEN)
 
+business_ID = 0
+employer_ID = 0
+
+
+
 #
 # c_KEYWORDS = ("Olá","Ola","ola","olá","Oi", "bom dia", "bom tarde",
 #           "boa noite","Tudo bem?","Tudo bem","tudo bem","tudo bem")
@@ -254,10 +259,27 @@ def saveTags(chat,tags,name):
     return ()
 
 
-def seeSechedule(service,date,time):
+def validDate(data,n):
 
-    date =
-def answer(tags):
+    timeAvaible = data[business_ID]['employers'][employer_ID]['time']
+    print (timeAvaible)
+    today = datetime.date.today()
+    w_tdy = today.weekday()
+    print (today.isoformat())
+    nDays = [ today+datetime.timedelta(days=i) for i in range(n) ]
+    validDays = [day.isoformat() for day in nDays if timeAvaible[str(day.weekday())][0]]
+    print (validDays)
+    return validDays
+#
+#    if tok in dictDate.week.keys():
+#
+#        week_day = dictDate.week[tok]
+#        delta = tdy.weekday()-week_day
+#        dt = tdy + datetime.timedelta(days=delta)
+#        return dt.isoformat()
+
+
+def answer(tags,dataTable,schdTable):
 
 #
 # first take a request
@@ -277,7 +299,9 @@ def answer(tags):
 
     elif tags['request'] == 'information':
 
-        ansewer = 'Information'
+        ansewer = 'Information:'
+        options = ['information' ]
+        return (answer,options)
 
 
 
@@ -290,12 +314,12 @@ def answer(tags):
 
     else:
 
-        date =  validDate(tag['date'])
-        if date!=tag['date']:
+        dates =  validDate(dataTable,7)
+        if dates[0]!=tags['date']:
             answer = 'Infelizmente, não temos disponibilidade no dia solicitados, as datas para agendamento mais proximas são:'
-            options =  date + ['Escolher outra data', 'Informações sobre horários de funcionamento do consultório']
+            options =  list(dates) + ['Escolher outra data', 'Informações sobre horários de atendimento do consultório']
 
-
+            return(answer,options)
 
     if not tags['time']:
 
@@ -315,9 +339,16 @@ def answer(tags):
 
 #now i need se if it's a valid request
 
+def get_jsonTable(jsonName):
 
+    with open(jsonName) as data_file:
+            data = json.load(data_file)
+    return data
 
 def main():
+    dataTable = get_jsonTable('data.json')
+    schdTable = get_jsonTable('schedule.json')
+
     last_textchat = (None, None)
     while True:
         text, chat,name = get_last_chat_id_name_and_text(get_updates())
@@ -328,10 +359,10 @@ def main():
 #            print( old_tags)
             tags = mergerTags(new_tags,old_tags)
 #            tags = new_tags
-            resp,opts = answer(tags)
+            resp,opts = answer(tags,dataTable,schdTable)
 #            send_message(resp, chat)
-            opts_ = [opt+'\n' for opt in opts]
-            send_message(resp+str(opts),chat)
+            opts_ = [opt for opt in opts]
+            send_message(resp+str(opts_),chat)
 
 #            if tags['confirm']=='confirmed':
 #                shedule(name,tags['request'],tags['date'],tags['time'],'confirm.csv')
