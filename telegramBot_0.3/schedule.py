@@ -4,7 +4,7 @@ scheduTable = [
         "employers": [
                 {
                     "nome": "Dr. Alberto",
-                    "shedules":{
+                    "schedules":{
 
                         '2017-02-07':[
                                 {

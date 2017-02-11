@@ -120,7 +120,6 @@ def tagTimeTest(tok):
     if tok in dictTime.dictKeys: return True
 
 def requestConstruct(tok):
-
     if tok in dictRequest.schedule.keys(): result = dictRequest.schedule[tok]
     if tok in dictRequest.reschedule.keys(): return dictRequest.reschedule[tok]
     if tok in dictRequest.cancelation.keys(): return dictRequest.cancelation[tok]
@@ -173,6 +172,7 @@ def findTags(toks,chat):
 
     tags = {'user':'','request':'','date':'','time':'','confirm':'','job':'','lastcall':''}
 
+    tags['job'] = 'consulta'
     tags['last_call'] = datetime.datetime.now().isoformat()
     tags['user'] = str(chat)
 
@@ -259,16 +259,13 @@ def saveTags(chat,tags,name):
     return ()
 
 
-def validDate(data,n):
-
+def validDate(date,data,n):
+    # this feature find the valid days in the nexts 'n' days to schedule
     timeAvaible = data[business_ID]['employers'][employer_ID]['time']
-    print (timeAvaible)
-    today = datetime.date.today()
-    w_tdy = today.weekday()
-    print (today.isoformat())
-    nDays = [ today+datetime.timedelta(days=i) for i in range(n) ]
-    validDays = [day.isoformat() for day in nDays if timeAvaible[str(day.weekday())][0]]
-    print (validDays)
+    d = date.split('-')
+    dayChose = datetime.datetime(int(d[0]),int(d[1]),int(d[2]))
+    nDays = [ dayChose+datetime.timedelta(days=i) for i in range(n) ]
+    validDays = [day.date().isoformat() for day in nDays if timeAvaible[str(day.weekday())][0]]
     return validDays
 #
 #    if tok in dictDate.week.keys():
@@ -279,65 +276,167 @@ def validDate(data,n):
 #        return dt.isoformat()
 
 
-def answer(tags,dataTable,schdTable):
+def expandTB(tB, timeExpand):
 
-#
-# first take a request
-# second take a date
-# third take time
-#
-# last confirm
+    # a timeBlock is period that you can't schedule a new service
+    # this feature increase a tB changin yours beginning and/or finish:
 
-##first a need to understand the requeriment :
-# Sopouse : 'Consultório A' and ' Dr. Alberto'
+    n_tB = []
+    for t, dt in zip(tB, timeExpand):
+        FMT = '#H:#M'
+        time = datetime.datetime.strptime(t, FMT)
+        delta_time = datetime.timedelta(hours=dt)
+        n_time = time + delta_time
+        n_tB.append(str(n_time.hour)+':'+str(n_time.minute))
+
+    return n_tB[0]
+
+
+def mergerBlocks(tBlocks):
+
+    n = len(tBlocks)
+    if n == 1:
+        return tBlocks
+
+    FMT = '#H:#M'
+    timeBlocks = [[datetime.datetime.strptime(t[0], FMT),
+                   datetime.datetime.strptime(t[1], FMT)] for t in tBlocks]
+
+    new_tBlocks = [[tBlocks[0][0]]]
+    for i in range(n-1):
+        if timeBlocks[i+1][0] > timeBlocks[i][1]:
+            t = timeBlocks[i][1].strftime('%H:%M')
+            t_ = timeBlocks[i+1][1].strftime('%H:%M')
+            new_tBlocks[-1].append(t)
+            new_tBlocks.append([t_])
+    new_tBlocks[-1].append(tBlocks[-1][1])
+
+    return (new_tBlocks)
+
+
+def TimeGrid(business_ID, employer_ID, data, d, delta):
+    # this feature generate a grid of schedule possibilities with a delta time
+    # distance:
+
+    timesAvaibles = data[business_ID]['employers'][employer_ID]['time']
+    d_l = [int(e) for e in d.split('-')]    # d format is like '2017-03-12'
+    date = datetime.datetime(d_l[0], d_l[1], d_l[2])
+    w = date.weekday()
+    timeList = timesAvaibles[str(w)]
+
+    grid = []
+    for t in timeList:
+        time = t.split(' ~ ')
+        FMT = '%H:%M'
+        startTime = datetime.datetime.strptime(time[0], FMT)
+        finishTime = datetime.datetime.strptime(time[-1], FMT)
+        avaibleTime = startTime
+        while avaibleTime.time() < finishTime.time():
+            grid.append(avaibleTime.strftime('%H:%M'))
+            avaibleTime = avaibleTime + datetime.timedelta(hours=delta)
+
+    return(grid)
+
+
+def gridArrange(tGrid, tBlocks):
+    # this festure merge the timeGrid with timeBlocks in a avaible timeGrid
+
+    FMT = '#H:#M'
+    timeGrid = [datetime.datetime.strpt(t, FMT) for t in tGrid]
+    timeBlocks = [[datetime.datetime.strptime(t[0], FMT),
+                   datetime.datetime.strptime(t[1], FMT)] for t in tBlocks]
+    i = 0
+    j = 0
+
+    n = len(timeGrid)
+
+    newGrid = []
+    while not i == n:
+        time = timeGrid[i]
+        if time < timeBlocks[j][0]:
+            newGrid.append(time.strftime('%H:%M'))
+            i += 1
+        elif time < timeBlocks[j][1]:
+            i += 1
+        else:
+            newGrid.append(timeBlocks[j][0].strftime('%H:%M'))
+            newGrid.append(timeBlocks[j][1].strftime('%H:%M'))
+            j += 1
+    return(newGrid)
+
+
+def avaibleTime(data, sched, tag, date, business_ID, employer_ID, delta):
+
+    # this module return the avaible time(s) to schedule
+    # for a employer or 'None':
+
+    jobList = data[business_ID]['services']
+    for job in jobList:
+        if job['name'] == tag['job']:
+            # test to find the right service:
+
+            timeService = job['duration']
+            print (sched[business_ID]['employers'][employer_ID]['schedules'].keys())
+            if date in sched[business_ID]['employers'][employer_ID]['schedules'].keys():
+                # if there is same shedule already done at this date
+                # i need to show a list of possibles shedule times:
+                print ('ola ola ola ')
+                services = sched[business_ID][employer_ID]['schedules'][date]
+                timeBlocks = [expandTB(tB, [timeService, 0]) for tB in services]
+                timeBlocks = mergerBlocks(timeBlocks)
+                timeGrid = TimeGrid(business_ID, employer_ID, data, date, delta)
+                timeGrid = gridArrange(timeGrid, timeBlocks)
+                return timeGrid
+            else:
+                timeGrid = TimeGrid(business_ID, employer_ID, data, date, delta)
+                return timeGrid
+        else:
+            print (tag['request'])
+
+
+def answer(tags, dataTable, schdTable):
 
     if not tags['request']:
 
         answer = 'O que posso fazer por você hoje ?'
-        options = ['Marcar um horário','Remarcar meu horário','Dismarcar meu horário','Informações a respeito do atendimento']
-        return (answer,options)
+        options = ['Marcar um horário',
+                   'Remarcar meu horário',
+                   'Dismarcar meu horário',
+                   'Informações a respeito do atendimento']
+        return (answer, options)
 
     elif tags['request'] == 'information':
 
-        ansewer = 'Information:'
-        options = ['information' ]
-        return (answer,options)
-
-
+        answer = 'Information:'
+        options = ['information']
+        return (answer, options)
 
     if not tags['date']:
 
         answer = 'Qual data seria melhor para marcar?'
-        options = ['seg','ter','qua','qui','sex']
-        return (answer,options)
-
+        options = ['seg', 'ter', 'qua', 'qui', 'sex']
+        return (answer, options)
 
     else:
-
-        dates =  validDate(dataTable,7)
-        if dates[0]!=tags['date']:
+        dates = validDate(tags['date'], dataTable, 7)
+        if dates[0] != tags['date']:
             answer = 'Infelizmente, não temos disponibilidade no dia solicitados, as datas para agendamento mais proximas são:'
-            options =  list(dates) + ['Escolher outra data', 'Informações sobre horários de atendimento do consultório']
+            options =  list(dates) + ['Escolher outra data',
+                                      'Informações sobre horários de atendimento do consultório']
 
-            return(answer,options)
+            return(answer, options)
 
     if not tags['time']:
 
-        #timeAvaible = timeSearch(tags['date'])
         answer = 'Qual horário você tem interesse :'
-        options = [tags['date']]
-        return (answer,options)
-#    else:
-#
-#        answer = 'Horário a ser confirmado:'
-#        options = [tags['date'],tags['time']]
-#
-#        return (answer,options)
-#    return answer,options
+        options = avaibleTime(dataTable, schdTable, tags, tags['date'],
+                              business_ID, employer_ID, 0.5)
+        return (answer, options)
+    else:
 
-
-
-#now i need se if it's a valid request
+        answer = 'Horário confirmado:'
+        options = [tags['date'], tags['time']]
+        return (answer, options)
 
 def get_jsonTable(jsonName):
 
@@ -345,36 +444,38 @@ def get_jsonTable(jsonName):
             data = json.load(data_file)
     return data
 
+
 def main():
     dataTable = get_jsonTable('data.json')
     schdTable = get_jsonTable('schedule.json')
 
     last_textchat = (None, None)
     while True:
-        text, chat,name = get_last_chat_id_name_and_text(get_updates())
+        text, chat, name = get_last_chat_id_name_and_text(get_updates())
         if (text, chat) != last_textchat:
             toks = tokenization(text)
-            new_tags = findTags(toks,chat)
-            old_tags = knowTags('users.csv',chat)
+            new_tags = findTags(toks, chat)
+            old_tags = knowTags('users.csv', chat)
 #            print( old_tags)
-            tags = mergerTags(new_tags,old_tags)
+            tags = mergerTags(new_tags, old_tags)
 #            tags = new_tags
-            resp,opts = answer(tags,dataTable,schdTable)
+            resp, opts = answer(tags, dataTable, schdTable)
 #            send_message(resp, chat)
             opts_ = [opt for opt in opts]
-            send_message(resp+str(opts_),chat)
+            send_message(resp, chat)
+            for opt in opts_:
+                send_message(opt, chat)
 
 #            if tags['confirm']=='confirmed':
 #                shedule(name,tags['request'],tags['date'],tags['time'],'confirm.csv')
-            saveTags(chat,tags,'users.csv')
+            saveTags(chat, tags, 'users.csv')
             last_textchat = (text, chat)
-
-
 
 #            print (name+' '+str(chat) +'  '+text)
 #            send_message(text, chat)
 #            last_textchat = (text, chat)
         time.sleep(0.5)
+
 
 
 if __name__ == '__main__':
