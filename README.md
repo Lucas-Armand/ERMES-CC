@@ -26,9 +26,15 @@ Estamos usando python 3.5 para programar o bot, segue algumas referências:
 #Organização
 
 1) Reuniões semanais a onde é analisado o avanço do projeto e definido os objeetivos para proxima semana.
+
 2) Utilize o GitKraken (https://www.gitkraken.com/) para organizar seu repositório
+
 3) Todos as tarefas (e idéias) devem ser geradas dentro do projeto "BOMROBOTO MVP" dentro da coluna "BACKLOG"
+
 4) Tarefas devem ser clasificadas como BUG ou FEATURE
+
 5) Ao longo da semana as tarefas caminham pelas colunas, no final de uma semana todas as suas tarefas devem estar em "Done"
+
 6) Caso precise transforme a tarefa em um  "Issues" (tente fazer isso nos 2 primeiros dias do ciclo de trabalho!)
+
 7) Problemas são imprevisíveis! Mantenha sempre o repositório oficial atualizado, fez alguma alteração significativa? Pull request!
