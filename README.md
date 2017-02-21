@@ -38,3 +38,12 @@ Estamos usando python 3.5 para programar o bot, segue algumas referências:
 6) Caso precise transforme a tarefa em um  "Issues" (tente fazer isso nos 2 primeiros dias do ciclo de trabalho!)
 
 7) Problemas são imprevisíveis! Mantenha sempre o repositório oficial atualizado, fez alguma alteração significativa? Pull request!
+
+#Servidores e VM
+
+Pessoal criei uma virtual Machine pelo Microsoft Azure!
+como entrar :
+
+ssh bomroboto.brazilsouth.cloudapp.azure.com
+password: aa123456789BB
+
