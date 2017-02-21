@@ -44,6 +44,7 @@ Estamos usando python 3.5 para programar o bot, segue algumas referências:
 Pessoal criei uma virtual Machine pelo Microsoft Azure!
 como entrar :
 
-ssh bomroboto.brazilsouth.cloudapp.azure.com
+ssh bomroboto.brazilsouth.cloudapp.azure.com -l bomroboto
+
 password: aa123456789BB
 
