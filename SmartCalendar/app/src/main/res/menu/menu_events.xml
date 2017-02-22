@@ -2,12 +2,6 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_today"
-        android:icon="@drawable/calendar_today_white"
-        android:title="@string/action_today"
-        app:showAsAction="ifRoom"/>
-
-    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"

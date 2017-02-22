@@ -8,9 +8,16 @@ import com.bomroboto.smartcalendar.fragments.CalendarFragment;
 import com.bomroboto.smartcalendar.fragments.ContactsFragment;
 import com.bomroboto.smartcalendar.fragments.EventsFragment;
 
-public class SectionsPagerAdapter extends FragmentPagerAdapter
+public class PagerAdapter extends FragmentPagerAdapter
 {
-    public SectionsPagerAdapter(FragmentManager fm)
+    private final Fragment[] fragments =
+            {
+                    CalendarFragment.newInstance(),
+                    EventsFragment.newInstance(),
+                    ContactsFragment.newInstance()
+            };
+
+    public PagerAdapter(FragmentManager fm)
     {
         super(fm);
     }
@@ -18,26 +25,13 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter
     @Override
     public Fragment getItem(int position)
     {
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
-        switch (position)
-        {
-            case 0:
-                return CalendarFragment.newInstance();
-            case 1:
-                return EventsFragment.newInstance();
-            case 2:
-                return ContactsFragment.newInstance();
-            default:
-                return null;
-        }
+        return fragments[position];
     }
 
     @Override
     public int getCount()
     {
-        // Show 3 total pages.
-        return 3;
+        return fragments.length;
     }
 
     @Override
@@ -52,6 +46,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter
             case 2:
                 return ContactsFragment.TITLE;
         }
+
         return null;
     }
 }

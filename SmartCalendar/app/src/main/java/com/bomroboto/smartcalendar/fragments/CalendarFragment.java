@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -29,14 +32,14 @@ public class CalendarFragment extends Fragment
 
     public static CalendarFragment newInstance()
     {
-        CalendarFragment fragment = new CalendarFragment();
-        return fragment;
+        return new CalendarFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -65,6 +68,28 @@ public class CalendarFragment extends Fragment
 
         return root;
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
+        inflater.inflate(R.menu.menu_calendar, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id = item.getItemId();
+
+        if (id == R.id.action_today)
+        {
+            Calendar today = Calendar.getInstance();
+            materialCalendarView.setSelectedDate(today.getTime());
+            materialCalendarView.setCurrentDate(today.getTime());
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }
 
 /**
@@ -79,7 +104,7 @@ class MarkTodayDecorator implements DayViewDecorator
     public MarkTodayDecorator(Activity context)
     {
         // get the primary color of the style sheet
-        color = context.getResources().getColor(R.color.colorPrimary);
+        color = context.getResources().getColor(R.color.primary);
     }
 
     @Override
@@ -101,6 +126,22 @@ class MarkTodayDecorator implements DayViewDecorator
  * DoubleDotSpan is an alternative to the DotSpan class,
  * used to mark the days with dots. DoubleDotSpan can add two dots,
  * and can be customized to add more.
+ * <p/>
+ * Create a span to draw two dots using default radius and colors
+ *
+ * @param colorLeft  color of the left dot
+ * @param colorRight color of the right dot
+ * @param radius     radius for the dot
+ * @param colorLeft  color of the left dot
+ * @param colorRight color of the right dot
+ * @see #DoubleDotSpan()
+ * @see #DEFAULT_RADIUS
+ * <p/>
+ * Create a span to draw two dots using default radius and specified colors
+ * @see #DoubleDotSpan(int, int)
+ * @see #DEFAULT_RADIUS
+ * <p/>
+ * Create a span to draw two dots using a specified radius and colors
  */
 
 /*
@@ -115,11 +156,11 @@ class DoubleDotSpan implements LineBackgroundSpan
 
     */
 /**
-     * Create a span to draw two dots using default radius and colors
-     *
-     * @see #DoubleDotSpan()
-     * @see #DEFAULT_RADIUS
-     *//*
+ * Create a span to draw two dots using default radius and colors
+ *
+ * @see #DoubleDotSpan()
+ * @see #DEFAULT_RADIUS
+ *//*
 
     public DoubleDotSpan()
     {
@@ -128,13 +169,13 @@ class DoubleDotSpan implements LineBackgroundSpan
 
     */
 /**
-     * Create a span to draw two dots using default radius and specified colors
-     *
-     * @param colorLeft  color of the left dot
-     * @param colorRight color of the right dot
-     * @see #DoubleDotSpan(int, int)
-     * @see #DEFAULT_RADIUS
-     *//*
+ * Create a span to draw two dots using default radius and specified colors
+ *
+ * @param colorLeft  color of the left dot
+ * @param colorRight color of the right dot
+ * @see #DoubleDotSpan(int, int)
+ * @see #DEFAULT_RADIUS
+ *//*
 
     public DoubleDotSpan(int colorLeft, int colorRight)
     {
@@ -143,12 +184,12 @@ class DoubleDotSpan implements LineBackgroundSpan
 
     */
 /**
-     * Create a span to draw two dots using a specified radius and colors
-     *
-     * @param radius     radius for the dot
-     * @param colorLeft  color of the left dot
-     * @param colorRight color of the right dot
-     *//*
+ * Create a span to draw two dots using a specified radius and colors
+ *
+ * @param radius     radius for the dot
+ * @param colorLeft  color of the left dot
+ * @param colorRight color of the right dot
+ *//*
 
     public DoubleDotSpan(float radius, int colorLeft, int colorRight)
     {

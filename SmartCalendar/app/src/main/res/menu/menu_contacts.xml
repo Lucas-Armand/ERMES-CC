@@ -2,9 +2,9 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_today"
-        android:icon="@drawable/calendar_today_white"
-        android:title="@string/action_today"
+        android:id="@+id/account_plus"
+        android:icon="@drawable/account_plus_white"
+        android:title="@string/action_account_plus"
         app:showAsAction="ifRoom"/>
 
     <item
