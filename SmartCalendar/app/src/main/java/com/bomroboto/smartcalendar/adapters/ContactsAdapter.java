@@ -104,7 +104,6 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
         contactEmail.setText(contact.getEmail());
     }
 
-    // Returns the total count of items in the list
     @Override
     public int getItemCount()
     {
