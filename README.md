@@ -31,7 +31,7 @@ Estamos usando python 3.5 para programar o bot, segue algumas referências:
 
 3) Todos as tarefas (e idéias) devem ser geradas dentro do projeto "BOMROBOTO MVP" dentro da coluna "BACKLOG"
 
-4) Tarefas devem ser clasificadas como BUG ou FEATURE
+4) Tarefas devem ser clasificadas como BUG, FEATURE ou UPGRADE
 
 5) Ao longo da semana as tarefas caminham pelas colunas, no final de uma semana todas as suas tarefas devem estar em "Done"
 
