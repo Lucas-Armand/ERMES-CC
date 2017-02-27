@@ -16,6 +16,8 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by Andrei Benincasa on 22/02/2017.
  * andrei.benincasa@gmail.com
@@ -26,10 +28,8 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
     {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
-        public ImageView contactPicture;
+        public CircleImageView contactPicture;
         public TextView contactName;
-        public TextView contactPhone;
-        public TextView contactEmail;
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -39,10 +39,8 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
             // to access the context from any ViewHolder instance.
             super(itemView);
 
-            contactPicture = (ImageView) itemView.findViewById(R.id.contact_picture);
+            contactPicture = (CircleImageView) itemView.findViewById(R.id.contact_picture);
             contactName = (TextView) itemView.findViewById(R.id.contact_name);
-            contactPhone = (TextView) itemView.findViewById(R.id.contact_phone);
-            contactEmail = (TextView) itemView.findViewById(R.id.contact_email);
         }
     }
 
@@ -89,19 +87,13 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
         Contact contact = contacts.get(position);
 
         // Set item views based on your views and data model
-        ImageView contactPicture = viewHolder.contactPicture;
+        CircleImageView contactPicture = viewHolder.contactPicture;
 
         ImageLoader imageLoader = ImageLoader.getInstance();
         imageLoader.displayImage(contact.getPicture().getMedium(), contactPicture);
 
         TextView contactName = viewHolder.contactName;
         contactName.setText(contact.getName().getFirst());
-
-        TextView contactPhone = viewHolder.contactPhone;
-        contactPhone.setText(contact.getPhone());
-
-        TextView contactEmail = viewHolder.contactEmail;
-        contactEmail.setText(contact.getEmail());
     }
 
     @Override

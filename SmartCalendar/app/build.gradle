@@ -30,4 +30,7 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'com.squareup.retrofit2:converter-gson:2.2.0'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.github.Raizlabs.DBFlow:dbflow:4.0.0-beta5'
 }
+

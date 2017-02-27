@@ -4,6 +4,4 @@
     <string name="action_today">Ir para hoje</string>
     <string name="action_account_plus">Adicionar contato</string>
     <string name="action_settings">Configurações</string>
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
