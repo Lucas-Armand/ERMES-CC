@@ -1,7 +1,6 @@
 package com.bomroboto.smartcalendar.models;
 
 import com.bomroboto.smartcalendar.data.SmartCalendarDatabase;
-import com.google.gson.annotations.SerializedName;
 import com.raizlabs.android.dbflow.annotation.Column;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;

@@ -19,6 +19,7 @@ import com.bomroboto.smartcalendar.adapters.ContactsAdapter;
 import com.bomroboto.smartcalendar.interfaces.RandomContactsService;
 import com.bomroboto.smartcalendar.models.Contact;
 import com.bomroboto.smartcalendar.models.ContactHolder;
+import com.raizlabs.android.dbflow.sql.language.Select;
 
 import java.util.ArrayList;
 
@@ -78,7 +79,14 @@ public class ContactsFragment extends Fragment {
             }
         });*/
 
-        contacts = new ArrayList<>();
+        contacts = new Select()
+                .from(Contact.class)
+                .where(Contact_Table.age.greaterThen(25)
+                        .limit(25)
+                        .offset(0)
+                        .orderBy(User_Table.age, true) // true for ASC, false for DESC
+                        .queryList();
+
 
         // Create adapter passing in the sample user data
         adapter = new ContactsAdapter(getContext(), contacts);
@@ -116,7 +124,12 @@ public class ContactsFragment extends Fragment {
 
         if (id == R.id.action_account_plus)
         {
-
+            Contact contact = new Contact();
+            contact.setFirstName("Samurai");
+            contact.setLastName("Jack");
+            contact.setPhone("(21) 1111-1111");
+            contact.setEmail("cartoon@email.com");
+            contact.save();
         }
 
         return super.onOptionsItemSelected(item);
