@@ -11,8 +11,7 @@ import dictTime
 import dictDate
 
 tok_buffer = ''
-dictTag = {}
-concatenationList = ['bom', 'boa', 'Bom', 'Boa']
+dictTa = {}
 TOKEN = "292444370:AAGiqsll_zwYbIRMQ9Hg_8pfihj8y1Ig8Ac"
 URL = "https://api.telegram.org/bot{}/".format(TOKEN)
 
@@ -28,14 +27,19 @@ employer_ID = 0
 #           "planejar","decidir","acertar","casar","horário")
 
 def get_url(url):
-    response = requests.get(url)
-    content = response.content.decode("utf8")
-    return content
-
+    try:
+        response = requests.get(url)
+        content = response.content.decode("utf8")
+        return content
+    except:
+        return (None,None)
 
 def get_json_from_url(url):
     content = get_url(url)
-    js = json.loads(content)
+    if content != (None,None):
+        js = json.loads(content)
+    else:
+        js = content
     return js
 
 
@@ -46,14 +50,16 @@ def get_updates():
 
 
 def get_last_chat_id_name_and_text(updates):
-    num_updates = len(updates["result"])
-    last_update = num_updates - 1
-    text = updates["result"][last_update]["message"]["text"]
-    chat_id = updates["result"][last_update]["message"]["chat"]["id"]
-    name = (updates["result"][last_update]["message"]["chat"]["first_name"])
+    if updates!=(None,None):
+        num_updates = len(updates["result"])
+        if num_updates >0:
+            last_update = num_updates - 1
+            text = updates["result"][last_update]["message"]["text"]
+            chat_id = updates["result"][last_update]["message"]["chat"]["id"]
+            name = (updates["result"][last_update]["message"]["chat"]["first_name"])
 
-    return (text, chat_id, name)
-
+            return (text, chat_id, name)
+    return (None,None,None)
 
 def send_message(text, chat_id):
     url = URL + "sendMessage?text={}&chat_id={}".format(text, chat_id)
@@ -69,6 +75,9 @@ def cleaner(sentence, markers):
 
 def tokenTest(token):
 
+    #
+    concatenationList = ['bom', 'boa']
+    #
     if token.isdigit() : return True                                            #test if token is a number
     if re.search(r'\d{2}:\d{2}', token): return True                             #test if token is in time format
     if re.search(r'\d{1}º', token) or re.search(r'\d{1}ª',token): return True    #test if token is a ordinal number
@@ -83,6 +92,9 @@ def tokenTest(token):
 
 def tokenConcatenation(tokens):
 
+    #
+    concatenationList = ['bom', 'boa','dia']
+    #
     tok_buffer = ''
     new_tokens = []
     for tok in tokens:
@@ -91,40 +103,54 @@ def tokenConcatenation(tokens):
             new_tokens.append(new_tok)
             tok_buffer = ''
         else:
-            if  tok in concatenationList:
+            if tok in concatenationList:
                 tok_buffer = tok
             else:
                 new_tokens.append(tok)
     return new_tokens
 
+
 def tokenization(text):
 
-    cleanSentence = cleaner(text,'?!;)([],.')
+    cleanSentence = cleaner(text, '?!;)([],.')
     pre_tokens = cleanSentence.split(' ')
+    pre_tokens = [w[0].lower()+w[1:] for w in pre_tokens]   # lower 1ª letter
     tokens = [token for token in pre_tokens if tokenTest(token)]
     tokens = tokenConcatenation(tokens)
 
     print(tokens)
     return tokens
 
+
 def tagRequestTest(tok):
 
-    if tok in dictRequest.dictKeys: return True
+    if tok in dictRequest.dictKeys:
+        return True
+
 
 def tagDateTest(tok):
 
-    if tok in dictDate.dictKeys : return True
+    if tok in dictDate.dictKeys:
+        return True
+
 
 def tagTimeTest(tok):
 
-    if tok in dictTime.dictKeys: return True
+    if tok in dictTime.dictKeys:
+        return True
+
 
 def requestConstruct(tok):
-    if tok in dictRequest.schedule.keys(): result = dictRequest.schedule[tok]
-    if tok in dictRequest.reschedule.keys(): return dictRequest.reschedule[tok]
-    if tok in dictRequest.cancelation.keys(): return dictRequest.cancelation[tok]
-    if tok in dictRequest.information.keys(): return dictRequest.information[tok]
+    if tok in dictRequest.schedule.keys():
+        result = dictRequest.schedule[tok]
+    if tok in dictRequest.reschedule.keys():
+        return dictRequest.reschedule[tok]
+    if tok in dictRequest.cancelation.keys():
+        return dictRequest.cancelation[tok]
+    if tok in dictRequest.information.keys():
+        return dictRequest.information[tok]
     return(result)
+
 
 def dateConstruct(tok):
 
@@ -133,20 +159,25 @@ def dateConstruct(tok):
     if tok in dictDate.month.keys():
 
         month_day = dictDate.month[tok]
-        dt = date(tdy.year,tdy.month,month_day)
+        dt = date(tdy.year, tdy.month, month_day)
         return dt.isoformat()
 
     if tok in dictDate.week.keys():
 
+        print(tok)
+
         week_day = dictDate.week[tok]
-        delta = tdy.weekday()-week_day
+        if week_day < tdy.weekday():
+            week_day+=7
+        delta = week_day-tdy.weekday()
         dt = tdy + datetime.timedelta(days=delta)
         return dt.isoformat()
 
     if tok in dictDate.relative.keys():
         relative_day = dictDate.relative[tok]
-        dt = tdy +datetime.timedelta(days=relative_day)
+        dt = tdy +datetime.timedelta(days = relative_day)
         return dt.isoformat()
+
 
 def timeConstruct(tok):
 
@@ -155,18 +186,13 @@ def timeConstruct(tok):
         if tok == '*':
             now = datetime.datetime.now()
             t = now.time()
-            return t.isoformat()
+            return t.strftime('%H:%M')
         else:
             time_str = dictTime.time[tok]
-            time_lst = time_str.split(':')
-            t = datetime.time(int(time_lst[0]),int(time_lst[1]))
-            return t.isoformat()
+            return time_str
     else:
         time_str = tok
-        time_lst = time_str.split(':')
-        t = datetime.time(int(time_lst[0]),int(time_lst[1]))
-        return t.isoformat()
-
+        return time_str
 
 def findTags(toks,chat):
 
@@ -198,65 +224,33 @@ def tagnization(v):
     tag['lastcall'] = v[6]
     return(tag)
 
-def knowTags(name,chat):
-    CSV = open(name,'r')
-    data = CSV.read()
-    data = data.split('\n')
-    data = [row.split(';') for row in data ]
-    for i in range(len(data)):
-        if data[i][0] == str(chat):
-            return (tagnization(data[i]))
 
-    return (None)
+def knowTags(users,chatID):
+    if str(chatID) in users.keys():
+        tags = users[str(chatID)]
+        tags['user'] = str(chatID)
+        return tags
+    else:
+        return None
 
 
-def mergerTags(nTag,oTag):
-
+def mergerTags(nTag, oTag):
     mTag ={}
     for k in nTag.keys():
         mTag[k] =  nTag[k] if nTag[k]!='' else oTag[k]
     return mTag
 
 
-def csvConstruct(matrix):
-    text = ''
-    for vect in matrix:
-        line = ''
-        for elem in vect:
-            line+= elem+';'
-        line = line[0:-1]+'\n'
-        text += line
-    return(text)
+def saveTags(chatID, tags, users, name):
 
-
-def saveTags(chat,tags,name):
-    CSV = open(name,'r')
-    data = CSV.read()
-    CSV.close()
-    data = data.split('\n')
-    data = [row.split(';') for row in data ]
-    tst  = None
-    for i in range(len(data)):
-        if data[i][0] == str(chat):
-            data [i][1] = tags['request']
-            data [i][2] = tags['date']
-            data [i][3] = tags['time']
-            data [i][4] = tags['confirm']
-            data [i][5] = tags['job']
-            data [i][6] = tags['lastcall']
-            tst = 1
-            break
-    if not tst:
-        v = [tags['user'], tags['request'], tags['date'],
-             tags['time'], tags['confirm'], tags['job'], tags['lastcall']]
-        data.append(v)
-
-    csvDados = csvConstruct(data)
-    CSV = open(name,'w')
-    CSV.write(csvDados)
-    CSV.close()
-
-    return ()
+    if str(chatID) in users.keys():
+        del users[str(chatID)]
+    del tags['user']
+    users[str(chatID)] = tags
+    post_jsonTable(name, users)
+    print (users)
+    print (tags)
+    return(users)
 
 
 def validDate(date,data,n):
@@ -293,6 +287,7 @@ def expandTB(tB, timeExpand):
 
 
 def mergerBlocks(tBlocks):
+    # this feature merge the overlapping blocks of time
 
     n = len(tBlocks)
     if n == 1:
@@ -414,7 +409,7 @@ def answer(tags, dataTable, schdTable):
     if not tags['date']:
 
         answer = 'Qual data seria melhor para marcar?'
-        options = ['seg', 'ter', 'qua', 'qui', 'sex']
+        options = ['segunda', 'terça', 'quarta', 'quinta', 'sexta']
         return (answer, options)
 
     else:
@@ -434,9 +429,73 @@ def answer(tags, dataTable, schdTable):
         return (answer, options)
     else:
 
+
         answer = 'Horário confirmado:'
         options = [tags['date'], tags['time']]
-        return (answer, options)
+        return (answer, options, True)
+
+
+def scheduleCreator(t0,tags,chatID,dataTable):
+
+    #
+    print ('scheduleCreator')
+    #
+
+    jobs = dataTable[business_ID]['services']
+    for job in jobs:
+        if job['name'] == tags['job']:
+            duration = job['duration']
+            hoursDuration = float(duration)
+            delta = datetime.timedelta(hours=hoursDuration)
+            break
+    tf = t0+delta
+
+    t0 = t0.strftime('%H:%M')
+    tf = tf.strftime('%H:%M')
+
+    schd = {}
+    schd['time'] = [t0,tf]
+    schd['job'] = tags['job']
+    schd['contactID'] = chatID
+    return schd
+
+
+def schedule(tags,chatID,dataTable,schdTable):
+
+    #this feature make anew schedule on the scheduleTable
+
+    time = datetime.datetime.strptime(tags['time'], '%H:%M')
+    new_schd = scheduleCreator(time,tags,chatID,dataTable)
+
+    schdEmployer = schdTable[business_ID]['employers'][employer_ID]['schedules']
+    if tags['date'] in schdEmployer.keys(): #test is i have same one schdule at 'this' day
+
+        #if ys i need to organize my schedules cronologic in a list (schdDayList)
+
+        schdDayList = schdEmployer[tags['date']]
+        for schd in schdDayList:
+
+            schdTime = datetime.datetime.strptime(schd['time'][0], '#H:#M')
+            if time > schdTime:
+                i =  schdDayList.index(schd)+1
+                break
+            else:
+                i = len(schdDayList)
+
+        schdDayList.insert(i,new_schd)
+    else:
+        # if not, i need to generate a new list for 'this day' ans save the new
+        # schdule on this list:
+
+        schdEmployer[tags['date']] = [new_schd]
+
+    return schdTable
+
+def clear_tags():
+
+    tags = {'user':'','request':'','date':'','time':'','confirm':'','job':'','lastcall':''}
+    return tags
+
 
 def get_jsonTable(jsonName):
 
@@ -445,32 +504,44 @@ def get_jsonTable(jsonName):
     return data
 
 
+def post_jsonTable(jsonName,data):
+
+    with open(jsonName, 'w') as outfile:
+            json.dump(data, outfile)
+
 def main():
     dataTable = get_jsonTable('data.json')
     schdTable = get_jsonTable('schedule.json')
-
+    userTable = get_jsonTable('users.json')
     last_textchat = (None, None)
     while True:
         text, chat, name = get_last_chat_id_name_and_text(get_updates())
         if (text, chat) != last_textchat:
             toks = tokenization(text)
             new_tags = findTags(toks, chat)
-            old_tags = knowTags('users.csv', chat)
+            old_tags = knowTags(userTable,chat)
 #            print( old_tags)
-            tags = mergerTags(new_tags, old_tags)
+            if old_tags != None:
+                tags = mergerTags(new_tags, old_tags)
+            else:
+                tags = new_tags
 #            tags = new_tags
-            resp, opts = answer(tags, dataTable, schdTable)
+            resp, opts, *tags['confirm'] = answer(tags, dataTable, schdTable)
 #            send_message(resp, chat)
-            opts_ = [opt for opt in opts]
             send_message(resp, chat)
-            for opt in opts_:
+            for opt in opts:
                 send_message(opt, chat)
+            userTable = saveTags(chat, tags, userTable, 'user.json')
 
-#            if tags['confirm']=='confirmed':
-#                shedule(name,tags['request'],tags['date'],tags['time'],'confirm.csv')
-            saveTags(chat, tags, 'users.csv')
             last_textchat = (text, chat)
 
+            print(tags['confirm'])
+
+            if tags['confirm']==[True]:
+                schdTable = schedule(tags,chat,dataTable,schdTable)
+                post_jsonTable('schedule.json',schdTable)
+                tags = clear_tags()
+                userTable = saveTags(chat, tags, userTable, 'user.json')
 #            print (name+' '+str(chat) +'  '+text)
 #            send_message(text, chat)
 #            last_textchat = (text, chat)

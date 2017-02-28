@@ -7,34 +7,22 @@ relative = {
 
 week = {
 	"segunda":0,
-	"Segunda":0,
 	"segunda-feira":0,
-	"Segunda-feira":0,
 	"2ª":0,
 	"terça":1,
-	"Terça":1,
 	"terça-feira":1,
-	"Terça-feira":1,
 	"3ª":1,
 	"quarta":2,
-	"Quarta":2,
 	"quarta-feira":2,
-	"Quarta-feira":2,
 	"4ª":2,
 	"quinta":3,
-	"Quinta":3,
 	"quinta-feira":3,
-	"Quinta-feira":3,
 	"5ª":3,
 	"sexta":4,
-	"Sexta":4,
 	"sexta-feira":4,
-	"Sexta-feira":4,
 	"6ª":4,
 	"sábado":5,
-	"Sábado":5,
 	"domingo":6,
-	"Domingo":6
 	}
 
 month = {
