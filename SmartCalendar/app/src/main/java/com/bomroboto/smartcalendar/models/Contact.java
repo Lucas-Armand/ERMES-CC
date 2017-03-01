@@ -6,16 +6,18 @@ import com.raizlabs.android.dbflow.annotation.PrimaryKey;
 import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
+import java.io.Serializable;
+
 /**
  * Created by Andrei Benincasa on 22/02/2017.
  * andrei.benincasa@gmail.com
  */
 
 @Table(database = SmartCalendarDatabase.class)
-public class Contact extends BaseModel
+public class Contact extends BaseModel implements Serializable
 {
     @Column
-    @PrimaryKey
+    @PrimaryKey(autoincrement = true)
     int id;
 
     @Column

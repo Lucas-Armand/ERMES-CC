@@ -1,7 +1,9 @@
 package com.bomroboto.smartcalendar.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,13 +17,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bomroboto.smartcalendar.R;
+import com.bomroboto.smartcalendar.activities.ContactInfoActivity;
 import com.bomroboto.smartcalendar.adapters.ContactsAdapter;
 import com.bomroboto.smartcalendar.interfaces.RandomContactsService;
 import com.bomroboto.smartcalendar.models.Contact;
 import com.bomroboto.smartcalendar.models.ContactHolder;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.sql.language.Select;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -79,14 +85,8 @@ public class ContactsFragment extends Fragment {
             }
         });*/
 
-        contacts = new Select()
-                .from(Contact.class)
-                .where(Contact_Table.age.greaterThen(25)
-                        .limit(25)
-                        .offset(0)
-                        .orderBy(User_Table.age, true) // true for ASC, false for DESC
-                        .queryList();
 
+        contacts = new ArrayList<>();
 
         // Create adapter passing in the sample user data
         adapter = new ContactsAdapter(getContext(), contacts);
@@ -104,6 +104,18 @@ public class ContactsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         // Set layout manager to position the items
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        adapter.setOnItemClickListener(new ContactsAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+                Contact contact = contacts.get(position);
+
+                Snackbar.make(itemView, "Id selecionado: " + contact.getId(), Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+
+                startActivity(new Intent(getContext(), ContactInfoActivity.class).putExtra("Contact", contact));
+            }
+        });
         //RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         //recyclerView.addItemDecoration(itemDecoration);
 
@@ -122,14 +134,23 @@ public class ContactsFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_account_plus)
-        {
+        if (id == R.id.action_account_plus) {
             Contact contact = new Contact();
             contact.setFirstName("Samurai");
             contact.setLastName("Jack");
             contact.setPhone("(21) 1111-1111");
             contact.setEmail("cartoon@email.com");
             contact.save();
+        }
+
+        if (id == R.id.action_refresh) {
+            contacts.clear();
+
+            contacts.addAll(SQLite.select()
+                    .from(Contact.class)
+                    .queryList());
+
+            adapter.notifyDataSetChanged();
         }
 
         return super.onOptionsItemSelected(item);

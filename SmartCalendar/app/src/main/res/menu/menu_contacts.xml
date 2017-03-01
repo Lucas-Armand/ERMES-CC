@@ -5,7 +5,13 @@
         android:id="@+id/action_account_plus"
         android:icon="@drawable/account_plus_white"
         android:title="@string/action_account_plus"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_refresh"
+        android:icon="@drawable/refresh_white"
+        android:title="@string/action_refresh"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_settings"
