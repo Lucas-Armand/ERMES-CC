@@ -22,7 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.ContactInfoActivity"></activity>
+        <activity android:name=".activities.ContactInfoActivity" />
+        <activity android:name=".activities.ContactEditorActivity"></activity>
     </application>
 
 </manifest>

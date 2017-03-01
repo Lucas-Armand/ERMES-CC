@@ -2,11 +2,11 @@ package com.bomroboto.smartcalendar.adapters;
 
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bomroboto.smartcalendar.R;
@@ -107,13 +107,14 @@ public class ContactsAdapter extends RecyclerView.Adapter<ContactsAdapter.ViewHo
 
         // Set item views based on your views and data model
         CircleImageView contactPicture = viewHolder.contactPicture;
+        contactPicture.setColorFilter(Color.parseColor(contact.getPicture()));
 
         // Setup the contact picture
         //ImageLoader imageLoader = ImageLoader.getInstance();
         //imageLoader.displayImage(contact.getPicture().getMedium(), contactPicture);
 
         TextView contactName = viewHolder.contactName;
-        contactName.setText(contact.getFirstName());
+        contactName.setText(contact.getName());
     }
 
     @Override

@@ -14,17 +14,13 @@ import java.io.Serializable;
  */
 
 @Table(database = SmartCalendarDatabase.class)
-public class Contact extends BaseModel implements Serializable
-{
+public class Contact extends BaseModel implements Serializable {
     @Column
     @PrimaryKey(autoincrement = true)
     int id;
 
     @Column
-    String firstName;
-
-    @Column
-    String lastName;
+    String name;
 
     @Column
     String address;
@@ -35,18 +31,28 @@ public class Contact extends BaseModel implements Serializable
     @Column
     String email;
 
-    public Contact() {
-        super();
-    }
+    @Column
+    String picture;
 
-    public Contact(int id, String firstName, String lastName, String address, String phone, String email) {
-        super();
+    public Contact(int id, String name, String address, String phone, String email, String picture) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
         this.address = address;
         this.phone = phone;
         this.email = email;
+        this.picture = picture;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public void setPicture(String picture) {
+        this.picture = picture;
+    }
+
+    public Contact() {
+        super();
     }
 
     public int getId() {
@@ -57,20 +63,12 @@ public class Contact extends BaseModel implements Serializable
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getAddress() {
