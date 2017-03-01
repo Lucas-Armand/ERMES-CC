@@ -1,6 +1,7 @@
 import json
 import time
 import re
+import random
 import requests
 import datetime
 from datetime import date
@@ -9,6 +10,7 @@ from datetime import date
 import dictRequest
 import dictTime
 import dictDate
+import dictGreeting
 
 tok_buffer = ''
 dictTa = {}
@@ -76,7 +78,7 @@ def cleaner(sentence, markers):
 def tokenTest(token):
 
     #
-    concatenationList = ['bom', 'boa']
+    littleWordsList = ['dia','oi','ola','olá','bem','bom','tudo','como','vai','boa']
     #
     if token.isdigit() : return True                                            #test if token is a number
     if re.search(r'\d{2}:\d{2}', token): return True                             #test if token is in time format
@@ -84,8 +86,7 @@ def tokenTest(token):
     if len(token)>4: return True                                                #test if token is big enought
     if len(token)==0: return False
     if token[0].isupper(): return True                                          #test if token cappital letter start
-    if token =='dia': return True                                               #test if token is 'dia'
-    if token in  concatenationList : return True
+    if token in littleWordsList: return True
 
     return False
 
@@ -93,7 +94,7 @@ def tokenTest(token):
 def tokenConcatenation(tokens):
 
     #
-    concatenationList = ['bom', 'boa','dia']
+    concatenationList = ['bom', 'boa','dia','tudo','como']
     #
     tok_buffer = ''
     new_tokens = []
@@ -114,7 +115,7 @@ def tokenization(text):
 
     cleanSentence = cleaner(text, '?!;)([],.')
     pre_tokens = cleanSentence.split(' ')
-    pre_tokens = [w[0].lower()+w[1:] for w in pre_tokens]   # lower 1ª letter
+    pre_tokens = [w[0].lower()+w[1:] for w in pre_tokens]   # lower first letter
     tokens = [token for token in pre_tokens if tokenTest(token)]
     tokens = tokenConcatenation(tokens)
 
@@ -140,7 +141,12 @@ def tagTimeTest(tok):
         return True
 
 
-def requestConstruct(tok):
+def tagGreetTest(tok):
+
+    if tok in dictGreeting.dictKeys:
+        return True
+
+def requestTagConstruct(tok):
     if tok in dictRequest.schedule.keys():
         result = dictRequest.schedule[tok]
     if tok in dictRequest.reschedule.keys():
@@ -152,7 +158,7 @@ def requestConstruct(tok):
     return(result)
 
 
-def dateConstruct(tok):
+def datTageConstruct(tok):
 
     tdy = date.today()
 
@@ -179,7 +185,7 @@ def dateConstruct(tok):
         return dt.isoformat()
 
 
-def timeConstruct(tok):
+def timeTagConstruct(tok):
 
     if tok in dictTime.time.keys():
 
@@ -194,35 +200,33 @@ def timeConstruct(tok):
         time_str = tok
         return time_str
 
-def findTags(toks,chat):
 
-    tags = {'user':'','request':'','date':'','time':'','confirm':'','job':'','lastcall':''}
+def greetTagConstruct(tok):
+
+    tag = dictGreeting.greeting[tok]
+    return tag
+
+
+def findTags(toks, chat):
+
+    tags = {'user': '', 'request': '', 'date': '', 'time': '',
+            'confirm': '', 'job': '', 'lastcall': '', 'greeting': []}
 
     tags['job'] = 'consulta'
-    tags['last_call'] = datetime.datetime.now().isoformat()
+    tags['lastcall'] = datetime.datetime.now().day
     tags['user'] = str(chat)
 
     for tok in toks:
-        if tagRequestTest(tok): tags['request'] = requestConstruct(tok)
-        if tagDateTest(tok): tags['date'] = dateConstruct(tok)
-        if tagTimeTest(tok): tags['time'] = timeConstruct(tok)
+        if tagRequestTest(tok): tags['request'] = requestTagConstruct(tok)
+        if tagDateTest(tok): tags['date'] = dateTagConstruct(tok)
+        if tagTimeTest(tok): tags['time'] = timeTagConstruct(tok)
         if re.search(r'\d{2}:\d{2}',tok): tags['time'] = timeConstruct(tok)
+        if tagGreetTest(tok): tags['greeting'].append(greetTagConstruct(tok))
     return tags
 #
 #    features = [str(tok) for tok in tokens if len(str(tok))>2]
 #
 #    features = [str(tok) for tok in tokens if len(str(tok))>2]
-def tagnization(v):
-
-    tag = {}
-    tag['user'] = v[0]
-    tag['request'] = v[1]
-    tag['date'] = v[2]
-    tag['time'] = v[3]
-    tag['confirm'] = v[4]
-    tag['job'] = v[5]
-    tag['lastcall'] = v[6]
-    return(tag)
 
 
 def knowTags(users,chatID):
@@ -253,8 +257,95 @@ def saveTags(chatID, tags, users, name):
     return(users)
 
 
-def validDate(date,data,n):
+def boaAswr(gTags):
+
+    # this feature generate a greeting that vary (time of day of or the sentence
+    # of the interlocutor
+
+    # first we will analyze tags:
+
+    if 'bom dia' in gTags:
+        return ('bom dia')
+    if 'boa tarde' in gTags:
+        return ('boa tarde')
+    if 'boa noite' in gTags:
+        return ('boa noite')
+
+    #
+    # now i will answer based on the time of day
+
+    now = datetime.datetime.now()
+    now_time = now.time()
+    time = datetime.time
+    if now_time >= time(5, 00) and now_time <= time(12, 00):  # morning
+        return ('bom dia')
+
+    elif now_time <= time(18, 00):  # afternoon
+        return ('boa tarde')
+
+    else:  # afternom
+        return ('boa noite')
+
+
+def greetAnswerConstruct(tags,name):
+
+    # this feature construct the initial part of conversation if user (greet)
+
+    gTags = tags['greeting']
+
+    aswr = ''
+    oiAswr = ['oi', 'olá']
+    tdAswr = ['tudo bem', 'tudo bom']
+    boaFlag = False
+    tdFlag = False
+    if 'oi' in gTags:   # if the client say 'oi' the bot answer 'oi'
+        aswr += random.choice(oiAswr)
+        gTags[:] = [tag for tag in gTags if tag != 'oi']
+    else:
+        rdm = random.random()
+        if rdm <= 0.2:  # 20% = Oi / 80% = Boa noite
+            aswr += random.choice(oiAswr)
+            gTags[:] = [tag for tag in gTags if tag != 'oi']
+        else:
+            aswr = boaAswr()
+            gTags[:] = [tag for tag in gTags if tag != 'bom dia' and
+                        tag != 'boa tarde' and tag != 'boa noite']
+            boaFlag = True
+
+    # add the possibility of say the client name
+    rdm = random.random()
+    if rdm <= 0.5:
+        aswr += ', '
+        aswr += name
+
+    # if client greet 'tudo bem?' the bot answer
+    if 'tudo bem?' in gTags:
+        aswr += ', '
+        aswr += random.choice(tdAswr)
+        gTags[:] = [tag for tag in gTags if tag != 'tudo bem?']
+        tdFlag = True
+
+    # if i don't answer wet the 'Bom dia' of client
+    if 'bom dia' in gTags or 'boa tarde' in gTags or 'boa noite' in gTags:
+        aswr += ', '
+        aswr += boaAswr()
+
+    if not boaFlag and not tdFlag:
+        rdm = random.random()
+        if rdm <= 0.5:
+            aswr += ', '
+            aswr += boaAswr()
+
+    # final adjustments
+    aswr = aswr[0].capitalize() + aswr[1:]
+    aswr += '. '
+    return(aswr)
+
+
+def validDate(date, data, n):
+
     # this feature find the valid days in the nexts 'n' days to schedule
+
     timeAvaible = data[business_ID]['employers'][employer_ID]['time']
     d = date.split('-')
     dayChose = datetime.datetime(int(d[0]),int(d[1]),int(d[2]))
@@ -389,53 +480,68 @@ def avaibleTime(data, sched, tag, date, business_ID, employer_ID, delta):
             print (tag['request'])
 
 
-def answer(tags, dataTable, schdTable):
+def answer(tags, dataTable, schdTable, name):
+
+    # this feature analyze the tags and the schedule and make a answer for the
+    # client.
+
+
+    if tags['greeting']:
+        answer = greetAnswerConstruct(tags,name)
+    else:
+        now = datetime.datetime.now()
+        tdy = now.day
+        lastcall_day = int(tags['lastcall'])
+        delta = lastcall_day - tdy
+        if delta:
+            answer = greetAnswerConstruct(tags,name)
+        else:
+            answer = ''
 
     if not tags['request']:
 
-        answer = 'O que posso fazer por você hoje ?'
+        answer += 'O que posso fazer por você hoje ?'
         options = ['Marcar um horário',
                    'Remarcar meu horário',
                    'Dismarcar meu horário',
                    'Informações a respeito do atendimento']
-        return (answer, options)
+        return (answer, options, None)
 
     elif tags['request'] == 'information':
 
-        answer = 'Information:'
+        answer += 'Information:'
         options = ['information']
-        return (answer, options)
+        return (answer, options, None)
 
     if not tags['date']:
 
-        answer = 'Qual data seria melhor para marcar?'
+        answer += 'Qual data seria melhor para marcarmos?'
         options = ['segunda', 'terça', 'quarta', 'quinta', 'sexta']
-        return (answer, options)
+        return (answer, options, None)
 
     else:
         dates = validDate(tags['date'], dataTable, 7)
         if dates[0] != tags['date']:
-            answer = 'Infelizmente, não temos disponibilidade no dia solicitados, as datas para agendamento mais proximas são:'
-            options =  list(dates) + ['Escolher outra data',
-                                      'Informações sobre horários de atendimento do consultório']
+            answer += 'Infelizmente, não temos disponibilidade no dia solicitados, as datas para agendamento mais proximas são:'
+            options = list(dates) + ['Escolher outra data',
+                                     'Informações sobre horários de atendimento do consultório']
 
-            return(answer, options)
+            return(answer, options, None)
 
     if not tags['time']:
 
-        answer = 'Qual horário você tem interesse :'
+        answer += 'Qual horário você tem interesse :'
         options = avaibleTime(dataTable, schdTable, tags, tags['date'],
                               business_ID, employer_ID, 0.5)
-        return (answer, options)
+        return (answer, options, None)
     else:
 
-
-        answer = 'Horário confirmado:'
+        answer += 'Horário confirmado:'
         options = [tags['date'], tags['time']]
         return (answer, options, True)
 
 
-def scheduleCreator(t0,tags,chatID,dataTable):
+def scheduleCreator(t0, tags, chatID, dataTable):
 
     #
     print ('scheduleCreator')
@@ -454,35 +560,37 @@ def scheduleCreator(t0,tags,chatID,dataTable):
     tf = tf.strftime('%H:%M')
 
     schd = {}
-    schd['time'] = [t0,tf]
+    schd['time'] = [t0, tf]
     schd['job'] = tags['job']
     schd['contactID'] = chatID
     return schd
 
 
-def schedule(tags,chatID,dataTable,schdTable):
+def schedule(tags, chatID, dataTable, schdTable):
 
-    #this feature make anew schedule on the scheduleTable
+    # this feature make anew schedule on the scheduleTable
 
     time = datetime.datetime.strptime(tags['time'], '%H:%M')
-    new_schd = scheduleCreator(time,tags,chatID,dataTable)
+    new_schd = scheduleCreator(time, tags, chatID, dataTable)
 
     schdEmployer = schdTable[business_ID]['employers'][employer_ID]['schedules']
-    if tags['date'] in schdEmployer.keys(): #test is i have same one schdule at 'this' day
+    if tags['date'] in schdEmployer.keys():  # test is i have same one schdule
+                                             # at 'this' day
 
-        #if ys i need to organize my schedules cronologic in a list (schdDayList)
+        # if ys i need to organize my schedules cronologic in a list
+        # (schdDayList)
 
         schdDayList = schdEmployer[tags['date']]
         for schd in schdDayList:
 
             schdTime = datetime.datetime.strptime(schd['time'][0], '#H:#M')
             if time > schdTime:
-                i =  schdDayList.index(schd)+1
+                i = schdDayList.index(schd) + 1
                 break
             else:
                 i = len(schdDayList)
 
-        schdDayList.insert(i,new_schd)
+        schdDayList.insert(i, new_schd)
     else:
         # if not, i need to generate a new list for 'this day' ans save the new
         # schdule on this list:
@@ -490,11 +598,6 @@ def schedule(tags,chatID,dataTable,schdTable):
         schdEmployer[tags['date']] = [new_schd]
 
     return schdTable
-
-def clear_tags():
-
-    tags = {'user':'','request':'','date':'','time':'','confirm':'','job':'','lastcall':''}
-    return tags
 
 
 def get_jsonTable(jsonName):
@@ -504,10 +607,11 @@ def get_jsonTable(jsonName):
     return data
 
 
-def post_jsonTable(jsonName,data):
+def post_jsonTable(jsonName, data):
 
     with open(jsonName, 'w') as outfile:
             json.dump(data, outfile)
+
 
 def main():
     dataTable = get_jsonTable('data.json')
@@ -519,15 +623,12 @@ def main():
         if (text, chat) != last_textchat:
             toks = tokenization(text)
             new_tags = findTags(toks, chat)
-            old_tags = knowTags(userTable,chat)
-#            print( old_tags)
-            if old_tags != None:
+            old_tags = knowTags(userTable, chat)
+            if old_tags is not None:
                 tags = mergerTags(new_tags, old_tags)
             else:
                 tags = new_tags
-#            tags = new_tags
-            resp, opts, *tags['confirm'] = answer(tags, dataTable, schdTable)
-#            send_message(resp, chat)
+            resp, opts, tags['confirm'] = answer(tags, dataTable, schdTable, name)
             send_message(resp, chat)
             for opt in opts:
                 send_message(opt, chat)
@@ -537,10 +638,10 @@ def main():
 
             print(tags['confirm'])
 
-            if tags['confirm']==[True]:
-                schdTable = schedule(tags,chat,dataTable,schdTable)
-                post_jsonTable('schedule.json',schdTable)
-                tags = clear_tags()
+            if tags['confirm'] == True:
+                schdTable = schedule(tags, chat, dataTable, schdTable)
+                post_jsonTable('schedule.json', schdTable)
+                tags = findTags([],chat)
                 userTable = saveTags(chat, tags, userTable, 'user.json')
 #            print (name+' '+str(chat) +'  '+text)
 #            send_message(text, chat)
