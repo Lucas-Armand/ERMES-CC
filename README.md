@@ -14,15 +14,14 @@ INFORMAÇÕES NOVAS:
 ID : 132804990557844           #id do aplicativo no facebook, quem quiser ter acesso é só pedir ao Lucas  
 URL de retorno : https://bcd920bf.ngrok.io/    # feita usando o ngrok e rodando na nossa maquina virtual!
 Tokens :
+
    Fundamentos da Matemática :
 EAAB4yRJJXpQBAPZC57WEk31t8Ot3dOq40gEZAcXBlN5JPDnJXIu56szS3adjKtXNBTOOyU1CKy5NTwU0hKamFwlLioXEY24hVPZBZCnsdqBFNu0YXPA4twge1XZCtPNvldc6JwzAFZA2DifRoSABSZCPg4nSkltU0iJeZB2AAsxYvgZDZD
-   Curso de Fisica Básico :
+
+Curso de Fisica Básico :
 EAAB4yRJJXpQBAIoktLxF50nSeDO3Rt8MGZChufZAWyx4cGNH2Ejwo0NF8wdGsoRS5oZBTxSyz2dK0riA9fjHniys0Wih7ZCoSNf2JPSEGgdX16YuaVbLiQsA3Mr6un94jYPQv53uqtT4W4E70oGk8BRGKQ6wdANAWFzkxmU3ogZDZD
 
-- Google Plus = *
-- Signal = ?
-- Viber = ?
-- ?????
+- Google Plus = ?
 
 Estamos usando python 3.5 para programar o bot, segue algumas referências:
 
@@ -53,6 +52,7 @@ Pessoal criei uma virtual Machine pelo Microsoft Azure!
 Para entrar você tem que abrir o seu terminal e digitar:
 
 $ ssh bomroboto.brazilsouth.cloudapp.azure.com -l bomroboto
+
 $ password: aa123456789BB
 
 Uma vez que vocẽ entrou você verá um novo usuário e maquina
@@ -77,19 +77,23 @@ de terminais existentes, algo como:
 (4) + vim: 1 windows                                                                                                                                 
 Ai você escolher uma das janelas já criadas ou voltar para janela
 que você começou agora, para referencia:
+
 + ngrok: Janela aonde está sendo executado o nosso servido! 
-+ NÃO PODE SER ALTERADA/FECHADA EM HIPÓTESE NEM UMA! 
-+ Caso isso seja feito tem que criar um novo link pro servidor
-+ e alterar no aplicativo do facebook (o que é chato) 
-+ 
+ NÃO PODE SER ALTERADA/FECHADA EM HIPÓTESE NEM UMA! 
+ Caso isso seja feito tem que criar um novo link pro servidor
+ e alterar no aplicativo do facebook (o que é chato) 
+ 
 + fb_bot: Janela executando o código python que gera o server
-+ local que conversa com a API do facebook, se for fechado basta
-+ executar:
-+ $ python3 fb_bot.py
-+ 
+ local que conversa com a API do facebook, se for fechado basta
+ executar:
+ $ python3 fb_bot.py
+ 
 + vim: é código do fb_bot.py aberto no vim
 
 # BIBLIOGRAFIA
 
+http://masnun.com/2016/05/22/building-a-facebook-messenger-bot-with-python.html
+http://flask.pocoo.org/
+http://askubuntu.com/questions/8653/how-to-keep-processes-running-after-ending-ssh-session
 http://man.openbsd.org/OpenBSD-current/man1/tmux.1
 
