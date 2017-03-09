@@ -612,8 +612,7 @@ def post_jsonTable(jsonName, data):
     with open(jsonName, 'w') as outfile:
             json.dump(data, outfile)
 
-
-def main():
+def main(chat,text)
     dataTable = get_jsonTable('data.json')
     schdTable = get_jsonTable('schedule.json')
     userTable = get_jsonTable('users.json')
