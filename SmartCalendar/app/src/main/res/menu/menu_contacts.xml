@@ -7,11 +7,11 @@
         android:title="@string/action_account_plus"
         app:showAsAction="always" />
 
-    <item
+    <!--<item
         android:id="@+id/action_refresh"
         android:icon="@drawable/refresh_white"
         android:title="@string/action_refresh"
-        app:showAsAction="always" />
+        app:showAsAction="always" />-->
 
     <item
         android:id="@+id/action_settings"

@@ -24,8 +24,10 @@ import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.util.ArrayList;
 
-public class ContactsFragment extends Fragment {
+public class ContactsFragment extends Fragment
+{
     public static String TITLE = "Contatos";
+    public static final int ADD_CONTACT_REQUEST_CODE = 1;
 
     RecyclerView rvContacts;
     TextView tvNoContacts;
@@ -33,16 +35,19 @@ public class ContactsFragment extends Fragment {
     ArrayList<Contact> contacts;
     private ContactsAdapter adapter;
 
-    public ContactsFragment() {
+    public ContactsFragment()
+    {
         // Required empty public constructor
     }
 
-    public static ContactsFragment newInstance() {
+    public static ContactsFragment newInstance()
+    {
         return new ContactsFragment();
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
 
@@ -81,15 +86,14 @@ public class ContactsFragment extends Fragment {
                 .from(Contact.class)
                 .queryList());
 
-
-
         // Create adapter passing in the sample user data
         adapter = new ContactsAdapter(getContext(), contacts);
         // Attach the adapter to the recyclerview to populate items
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_contacts, container, false);
 
@@ -102,12 +106,16 @@ public class ContactsFragment extends Fragment {
         // Set layout manager to position the items
         rvContacts.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter.setOnItemClickListener(new ContactsAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new ContactsAdapter.OnItemClickListener()
+        {
             @Override
-            public void onItemClick(View itemView, int position) {
+            public void onItemClick(View itemView, int position)
+            {
                 Contact contact = contacts.get(position);
 
-                startActivity(new Intent(getContext(), ContactInfoActivity.class).putExtra("Contact", contact));
+                Intent intent = new Intent(getContext(), ContactInfoActivity.class);
+                intent.putExtra("contact", contact);
+                startActivity(intent);
             }
         });
         //RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
@@ -124,30 +132,48 @@ public class ContactsFragment extends Fragment {
         return root;
     }
 
+    void updateList()
+    {
+        contacts.clear();
+
+        contacts.addAll(SQLite.select()
+                .from(Contact.class)
+                .queryList());
+
+        adapter.notifyDataSetChanged();
+
+        if (!contacts.isEmpty())
+        {
+            rvContacts.setVisibility(View.VISIBLE);
+            tvNoContacts.setVisibility(View.INVISIBLE);
+        }
+    }
+
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
+    {
         inflater.inflate(R.menu.menu_contacts, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public void onResume()
+    {
+        updateList();
+        super.onResume();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
         int id = item.getItemId();
 
-        if (id == R.id.action_account_plus) {
-
-            startActivityForResult(new Intent(getContext(), ContactEditorActivity.class), 1);
-        }
-
-        if (id == R.id.action_refresh)
+        if (id == R.id.action_account_plus)
         {
-            contacts.clear();
 
-            contacts.addAll(SQLite.select()
-                    .from(Contact.class)
-                    .queryList());
-
-            adapter.notifyDataSetChanged();
+                Intent intent = new Intent(getContext(), ContactEditorActivity.class);
+                intent.putExtra("requestCode", ADD_CONTACT_REQUEST_CODE);
+                startActivityForResult(intent, ADD_CONTACT_REQUEST_CODE);
         }
 
         return super.onOptionsItemSelected(item);
@@ -156,7 +182,7 @@ public class ContactsFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if (requestCode == 1)
+        if (requestCode == ADD_CONTACT_REQUEST_CODE)
         {
             if (resultCode == Activity.RESULT_OK)
             {

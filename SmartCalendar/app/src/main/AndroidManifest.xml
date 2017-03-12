@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.ContactInfoActivity" />
-        <activity android:name=".activities.ContactEditorActivity"></activity>
+        <activity android:name=".activities.ContactEditorActivity" />
     </application>
 
 </manifest>
