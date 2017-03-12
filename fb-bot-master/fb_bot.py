@@ -1,7 +1,8 @@
 from flask import Flask, request
 import requests
 import json
-
+import fb_layout
+ 
 BOOK = []
 app = Flask(__name__)
 
@@ -9,13 +10,38 @@ ACCESS_TOKEN = "EAAB4yRJJXpQBAPZC57WEk31t8Ot3dOq40gEZAcXBlN5JPDnJXIu56szS3adjKtX
 VERIFY_TOKEN = "secret"
 
 
-def fb_reply(user_id, msg):
+def fb_answr(user_id, msg):
+
+    if msg != msg.format(''):
+        usr = requests.get("https://graph.facebook.com/v2.6/"+user_id+"?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=" + ACCESS_TOKEN) 
+        usrData = usr.json()
+   
+        msg = msg.format(usrData['first_name'])
+    
     data = {
         "recipient": {"id": user_id},
         "message": {"text": msg}
     }
-    resp = requests.post("https://graph.facebook.com/v2.6/me/messages?access_token=" + ACCESS_TOKEN, json=data)
-    print(resp.content)
+    r = requests.post("https://graph.facebook.com/v2.6/me/messages?access_token=" + ACCESS_TOKEN, json=data)
+    print(r.content)
+
+def fb_butt(user_id,text,buttList):
+    
+    if text != text.format(''):
+        usr = requests.get("https://graph.facebook.com/v2.6/"+user_id+"?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=" + ACCESS_TOKEN) 
+        usrData = usr.json()
+   
+        text = text.format(usrData['first_name'])
+
+    msg = fb_layout.buttons(text,buttList)
+    print(msg)
+
+    data = {
+        "recipient": {"id": user_id},
+        "message": msg
+    }
+    r = requests.post("https://graph.facebook.com/v2.6/me/messages?access_token=" + ACCESS_TOKEN, json=data)
+    print(r.content)
 
 
 def handle_verification(args):
@@ -42,6 +68,30 @@ def handle_communication(args):
     return data
 
 
+
+@app.route('/', methods=['GET'])
+def handle_get():
+    args = request.args
+    if request.args['hub.mode'] == 'subscribe':
+        return handle_verification(args)
+    elif request.args['hub.mode'] == 'communication':
+        return handle_communication(args)
+    else:
+        return "Invalid request"
+
+
+def handle_facebook_postback(data):
+    timemsg = data['entry'][0]['messaging'][0]['timestamp']
+    send_ID = data['entry'][0]['messaging'][0]['sender']['id']
+    page_ID = data['entry'][0]['id']
+    message = data['entry'][0]['messaging'][0]['postback']['payload']
+
+    BOOK.append({
+        'time':timemsg,
+        'sdID':send_ID,
+        'pgID':page_ID,
+        'msg':message})
+
 def handle_facebook_message(data):
     timemsg = data['entry'][0]['messaging'][0]['timestamp']
     send_ID = data['entry'][0]['messaging'][0]['sender']['id']
@@ -55,30 +105,30 @@ def handle_facebook_message(data):
         'msg':message})
 
 def handle_bot_message(data):
-    msg_type= data['type']
-    text    = data['text']
-    chat_id = data['chatid']
-    if msg_type == 'facebook_msg':
-        answer = fb_reply(chat_id,text)
-    return answer
+    sdr_type = data['sdrtype']
+    msg_type = data['msgtype']
+    text     = data['text']
+    chat_id  = data['chatid']
+    if sdr_type == 'facebook_msg':
+        if msg_type == 'answer': 
+            reply = fb_answr(chat_id,text)
+        elif msg_type == 'buttons':
+            buttList = data['bttlist']
+            reply = fb_butt(chat_id,text,buttList)
 
-@app.route('/', methods=['GET'])
-def handle_get():
-    args = request.args
-    if request.args['hub.mode'] == 'subscribe':
-        return handle_verification(args)
-    elif request.args['hub.mode'] == 'communication':
-        return handle_communication(args)
-    else:
-        return "Invalid request"
-
+    return reply
 
 @app.route('/', methods=['POST'])
-def handle_incoming_messages():
+def handle_post():
     data = request.json
     if data["object"] == "page":
         # this means that we have a facebook msg
-        handle_facebook_message(data)
+        if 'postback' in data['entry'][0]['messaging'][0].keys():
+            # this means that we have postback (button result)
+            handle_facebook_postback(data)
+        else:
+            # this means that we have a handwrited msg from user
+            handle_facebook_message(data)
 
     elif data ["object"] == "bot":
         # this means thet we have a bot msg
