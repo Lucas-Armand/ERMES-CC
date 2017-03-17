@@ -1,1 +1,100 @@
-[{"name": "Consut\u00f3rio A", "employers": [{"schedules": {"2017-02-07": [{"service": "consulta", "client": "Lucas Armand", "time:": ["10:00", "10:30"]}], "2017-02-27": [{"contactID": 318089574, "job": "consulta", "time": ["10:00", "10:30"]}], "2017-02-08": [{"service": "consulta", "client": "Lucas Armand", "time:": ["13:00", "13:30"]}, {"service": "consulta", "client": "Lucas Armand", "time:": ["15:00", "15:30"]}], "2017-03-06": [{"contactID": 318089574, "job": "consulta", "time": ["10:00", "10:30"]}], "2017-02-09": [{"service": "consulta", "client": "Lucas Armand", "time:": ["13:00", "13:30"]}]}, "nome": "Dr. Alberto"}]}]
+[
+    {
+        "employers": [
+            {
+                "nome": "Dr. Alberto",
+                "schedules": {
+                    "2017-02-07": [
+                        {
+                            "client": "Lucas Armand",
+                            "service": "consulta",
+                            "time:": [
+                                "10:00",
+                                "10:30"
+                            ]
+                        }
+                    ],
+                    "2017-02-08": [
+                        {
+                            "client": "Lucas Armand",
+                            "service": "consulta",
+                            "time:": [
+                                "13:00",
+                                "13:30"
+                            ]
+                        },
+                        {
+                            "client": "Lucas Armand",
+                            "service": "consulta",
+                            "time:": [
+                                "15:00",
+                                "15:30"
+                            ]
+                        }
+                    ],
+                    "2017-02-09": [
+                        {
+                            "client": "Lucas Armand",
+                            "service": "consulta",
+                            "time:": [
+                                "13:00",
+                                "13:30"
+                            ]
+                        }
+                    ],
+                    "2017-02-27": [
+                        {
+                            "contactID": 318089574,
+                            "job": "consulta",
+                            "time": [
+                                "10:00",
+                                "10:30"
+                            ]
+                        }
+                    ],
+                    "2017-03-06": [
+                        {
+                            "contactID": 318089574,
+                            "job": "consulta",
+                            "time": [
+                                "10:00",
+                                "10:30"
+                            ]
+                        }
+                    ],
+                    "2017-03-16": [
+                        {
+                            "contactID": "1272971316150819",
+                            "job": "consulta",
+                            "time": [
+                                "13:00",
+                                "13:30"
+                            ]
+                        }
+                    ],
+                    "2017-03-20": [
+                        {
+                            "contactID": "1272971316150819",
+                            "job": "consulta",
+                            "time": [
+                                "10:00",
+                                "10:30"
+                            ]
+                        }
+                    ],
+                    "2017-03-23": [
+                        {
+                            "contactID": "1272971316150819",
+                            "job": "consulta",
+                            "time": [
+                                "13:30",
+                                "14:00"
+                            ]
+                        }
+                    ]
+                }
+            }
+        ],
+        "name": "Consut\u00f3rio A"
+    }
+]
