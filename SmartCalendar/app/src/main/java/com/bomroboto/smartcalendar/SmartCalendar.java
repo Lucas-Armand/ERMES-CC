@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.res.Configuration;
 
 import com.raizlabs.android.dbflow.config.FlowConfig;
+import com.raizlabs.android.dbflow.config.FlowLog;
 import com.raizlabs.android.dbflow.config.FlowManager;
 
 /**
@@ -19,6 +20,9 @@ public class SmartCalendar extends Application
 
         // This instantiates DBFlow
         FlowManager.init(new FlowConfig.Builder(this).build());
+
+        // Set verbose logging
+        FlowLog.setMinimumLoggingLevel(FlowLog.Level.V);
     }
 
     @Override
