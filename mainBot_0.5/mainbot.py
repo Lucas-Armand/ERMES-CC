@@ -17,7 +17,7 @@ tok_buffer = ''
 dictTag = {}
 concatenationList = ['bom', 'boa', 'Bom', 'Boa']
 TOKEN = "292444370:AAGiqsll_zwYbIRMQ9Hg_8pfihj8y1Ig8Ac"
-URL = "https://bcd920bf.ngrok.io"
+URL = "http://localhost:5000"
 business_ID = 0
 employer_ID = 0
 
@@ -69,15 +69,18 @@ def get_last_chat_id_name_and_text(updates):
             last_update = num_updates - 1
             text = updates[last_update]['msg']
             chat_id = updates[last_update]['sdID']
-            name = '*'
+            name = '{}'
     else:
         text, chat_id,name = None,None,None
 
     return (text, chat_id, name)
 
 
-def send_message(text, chat_id):
-    r = requests.post(URL, json = {'object':'bot', 'type':'facebook_msg', 'text':text, 'chatid':chat_id})
+def send_message(text, chat_id, msgtype, *butts):
+    data = {'object':'bot', 'sdrtype':'facebook_msg','msgtype':msgtype, 'text':text, 'chatid':chat_id}
+    if msgtype == 'buttons':
+        data['bttlist'] = butts[0]
+    r = requests.post(URL, json = data)
 
 def cleaner(sentence, markers):
 
@@ -318,7 +321,7 @@ def greetAnswerConstruct(tags,name):
             aswr += random.choice(oiAswr)
             gTags[:] = [tag for tag in gTags if tag != 'oi']
         else:
-            aswr = boaAswr()
+            aswr = boaAswr(gTags)
             gTags[:] = [tag for tag in gTags if tag != 'bom dia' and
                         tag != 'boa tarde' and tag != 'boa noite']
             boaFlag = True
@@ -339,7 +342,7 @@ def greetAnswerConstruct(tags,name):
     # if i don't answer wet the 'Bom dia' of client
     if 'bom dia' in gTags or 'boa tarde' in gTags or 'boa noite' in gTags:
         aswr += ', '
-        aswr += boaAswr()
+        aswr += boaAswr(gTags)
 
     if not boaFlag and not tdFlag:
         rdm = random.random()
@@ -513,7 +516,7 @@ def answer(tags, dataTable, schdTable, name):
 
         answer += 'O que posso fazer por você hoje ?'
         options = ['Marcar um horário',
-                   'Remarcar meu horário',
+                   #'Remarcar meu horário',
                    'Desmarcar meu horário',
                    'Informações a respeito do atendimento']
         return (answer, options, None)
@@ -527,7 +530,8 @@ def answer(tags, dataTable, schdTable, name):
     if not tags['date']:
 
         answer += 'Qual data seria melhor para marcarmos?'
-        options = ['segunda', 'terça', 'quarta', 'quinta', 'sexta']
+        #options = ['segunda', 'terça', 'quarta', 'quinta', 'sexta']
+        options = None
         return (answer, options, None)
 
     else:
@@ -544,10 +548,10 @@ def answer(tags, dataTable, schdTable, name):
         answer += 'Qual horário você tem interesse :'
         options = avaibleTime(dataTable, schdTable, tags, tags['date'],
                               business_ID, employer_ID, 0.5)
-        return (answer, options, None)
+        return (answer, options[0:2], None)
     else:
 
-        answer += 'Horário confirmado:'
+        answer += 'Horário confirmado:'+'\n'+tags['date']+'\n'+tags['time']
         options = [tags['date'], tags['time']]
         return (answer, options, True)
 
@@ -621,7 +625,7 @@ def get_jsonTable(jsonName):
 def post_jsonTable(jsonName, data):
 
     with open(jsonName, 'w') as outfile:
-            json.dump(data, outfile)
+            json.dump(data, outfile, indent=4, sort_keys=True)
 
 
 def main():
@@ -640,11 +644,13 @@ def main():
             else:
                 tags = new_tags
             resp, opts, tags['confirm'] = answer(tags, dataTable, schdTable, name)
-            send_message(resp, chat)
+            if opts:
+                print (opts)
+                send_message(resp,chat,'buttons',opts)
+            else:
+                send_message(resp, chat,'answer')
             print ('  resposta:')
             print (resp)
-            for opt in opts:
-                send_message(opt, chat)
             userTable = saveTags(chat, tags, userTable, 'user.json')
 
             last_textchat = (text, chat)
@@ -659,7 +665,7 @@ def main():
 #            print (name+' '+str(chat) +'  '+text)
 #            send_message(text, chat)
 #            last_textchat = (text, chat)
-        time.sleep(0.5)
+        time.sleep(0.5)  
 
 
 
