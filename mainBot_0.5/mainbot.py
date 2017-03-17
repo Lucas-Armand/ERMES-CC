@@ -21,7 +21,7 @@ URL = "http://localhost:5000"
 business_ID = 0
 employer_ID = 0
 
-#
+#1
 # c_KEYWORDS = ("Olá","Ola","ola","olá","Oi", "bom dia", "bom tarde",
 #           "boa noite","Tudo bem?","Tudo bem","tudo bem","tudo bem")
 # SCHEDULLING_KEYWORDS = ("marcar","combinar","definir","sondar",
