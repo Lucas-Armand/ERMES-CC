@@ -691,6 +691,7 @@ def main():
             else:
                 tags = new_tags
             resp, opts, tags['confirm'] = answer(tags, dataTable, schdTable, name)
+            print (tags)
             if opts:
                 print (opts)
                 send_message(resp,chat,'buttons',opts)
@@ -703,7 +704,7 @@ def main():
             last_textchat = (text, chat)
 
             print(tags['confirm'])
-
+            test = input('')
             if tags['confirm'] == True:
                 schdTable = schedule(tags, chat, dataTable, schdTable)
                 post_jsonTable('schedule.json', schdTable)
