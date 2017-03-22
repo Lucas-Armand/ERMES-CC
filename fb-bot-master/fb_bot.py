@@ -6,9 +6,9 @@ import fb_layout
 BOOK = []
 app = Flask(__name__)
 
-ACCESS_TOKEN = "EAAB4yRJJXpQBAPZC57WEk31t8Ot3dOq40gEZAcXBlN5JPDnJXIu56szS3adjKtXNBTOOyU1CKy5NTwU0hKamFwlLioXEY24hVPZBZCnsdqBFNu0YXPA4twge1XZCtPNvldc6JwzAFZA2DifRoSABSZCPg4nSkltU0iJeZB2AAsxYvgZDZD"
-VERIFY_TOKEN = "secret"
+ACCESS_TOKEN = "EAAB4yRJJXpQBAAj5ysy9umYvbnmkuZCkFuALZAUaH9fUekByciA6XzVQH6agRE08PUabVi2E6BbBNZBX1v8OzZAj4J0VOPFIVEkv8NZBXngmoifyjxb47ucMjIEt9QHB07dUrZCVN7RheCJZC4SFTjCTkkh0rE6F2EZAXkqWUZBeZAeQZDZD"
 
+VERIFY_TOKEN = "secret"
 
 def fb_answr(user_id, msg):
 
@@ -24,7 +24,6 @@ def fb_answr(user_id, msg):
     }
     r = requests.post("https://graph.facebook.com/v2.6/me/messages?access_token=" + ACCESS_TOKEN, json=data)
     print(r.content)
-
 def fb_butt(user_id,text,buttList):
     
     if text != text.format(''):
