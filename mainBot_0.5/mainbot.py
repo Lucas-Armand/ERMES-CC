@@ -13,9 +13,9 @@ import dictDate
 import dictGreeting
 
 
-tok_buffer = ''
+tok_buffer = '' # é utilizado dentro de função;
 dictTag = {}
-concatenationList = ['bom', 'boa', 'Bom', 'Boa']
+concatenationList = ['bom', 'boa', 'Bom', 'Boa'] # é utilizado dentro de função;
 TOKEN = "292444370:AAGiqsll_zwYbIRMQ9Hg_8pfihj8y1Ig8Ac"
 URL = "http://localhost:5000"
 business_ID = 0
@@ -76,19 +76,23 @@ def get_last_chat_id_name_and_text(updates):
     return (text, chat_id, name)
 
 
-def send_message(text, chat_id, msgtype, *butts):
+def send_message(text, chat_id, msgtype, *butts):    
     data = {'object':'bot', 'sdrtype':'facebook_msg','msgtype':msgtype, 'text':text, 'chatid':chat_id}
     if msgtype == 'buttons':
         data['bttlist'] = butts[0]
     r = requests.post(URL, json = data)
 
 def cleaner(sentence, markers):
-
+    
+     # retorna uma nova sentença em que os marcadores de pontuação não estão presentes;   
+    
     clean = ''.join(c for c in sentence if c not in markers)
     return clean
 
 
 def tokenTest(token):
+    
+    # função que recebe uma string e retorna valor verdadeiro se a string for considerada uma token;
 
     #
     littleWordsList = ['dia','oi','ola','olá','bem','bom','tudo','como','vai','boa']
@@ -105,6 +109,8 @@ def tokenTest(token):
 
 
 def tokenConcatenation(tokens):
+    
+    # Não entendi porque essa função está sendo utilizada;
 
     #
     concatenationList = ['bom', 'boa','dia','tudo','como']
@@ -125,64 +131,92 @@ def tokenConcatenation(tokens):
 
 
 def tokenization(text):
+    
+    # função que quebra o texto em tokens;
 
     cleanSentence = cleaner(text, '?!;)([],.')
     pre_tokens = cleanSentence.split(' ')
-    pre_tokens = [pt for pt in pre_tokens if pt!='']
+    pre_tokens = [pt for pt in pre_tokens if pt!=''] # se houver espaços no início ou no final do texto, são retirados; 
     pre_tokens = [w[0].lower()+w[1:] for w in pre_tokens]   # lower first letter
-    tokens = [token for token in pre_tokens if tokenTest(token)]
-    tokens = tokenConcatenation(tokens)
+    tokens = [token for token in pre_tokens if tokenTest(token)] # para cada palavra no pre_tokens que é de fato token, adiciona-se a lista token;
+    tokens = tokenConcatenation(tokens) # não entendi essa função
 
     print(tokens)
     return tokens
 
 
 def tagRequestTest(tok):
+    
+    # retorna verdadeiro se a string tok for uma das chaves (marcar, agendar, remarcar ...) do dicionario dictRequest 
 
     if tok in dictRequest.dictKeys:
         return True
 
 
 def tagDateTest(tok):
+    
+    # retorna verdadeiro se a string tok for uma das chaves (dia 20, amanhã, quarta ...) do dicionario dictDate
 
     if tok in dictDate.dictKeys:
         return True
 
 
 def tagTimeTest(tok):
+    
+    # retorna verdadeiro se a string tok for uma das chaves (manhã, tarde e noite) do dicionario dictTime; ok, mas não é essencial na minha visão;
 
     if tok in dictTime.dictKeys:
         return True
 
 
 def tagGreetTest(tok):
+    
+    # mesmo raciocionio das funcoes acima;
 
     if tok in dictGreeting.dictKeys:
         return True
 
 def requestTagConstruct(tok):
+    
+    # funcao que verificar se o tok e um dos comandos de agendar, remarcar ou cancelar, dentre os varios possiveis dessas tres classes. E se nao for nenhum deles?
+    
     if tok in dictRequest.schedule.keys():
-        result = dictRequest.schedule[tok]
+        result = dictRequest.schedule[tok]      # result recebe o valor correspondente a chave tok no dictRequest.schedule;
     if tok in dictRequest.reschedule.keys():
-        return dictRequest.reschedule[tok]
+        return dictRequest.reschedule[tok]      # result recebe o valor correspondente a chave tok no dictRequest.reschedule;
     if tok in dictRequest.cancelation.keys():
         return dictRequest.cancelation[tok]
-    if tok in dictRequest.information.keys():
+    if tok in dictRequest.information.keys():   # mesmo raciocionio acima para cancelamento;
         return dictRequest.information[tok]
-    return(result)
+    return (result)
 
 
 def dateTagConstruct(tok):
 
-    tdy = date.today()
+    # funcao que retorna a data considerando as varias maneiras que o usuario pode entrar com ela;
+    # considera apenas o mês presente; não verificar se o dia selecionado ja passou como faz com os dias da semana;
+    # fazer somente para o mês seguinte;
+    # verificar se tok está no formato /;
 
-    if tok in dictDate.month.keys():
+    tdy = date.today()
+    
+    
+    if '/' in tok:
+        toklista = tok.split('/')
+        if len(toklista) = 2:
+            dt = date(tdy.year, toklista[1],toklista[0])
+            return dt.isoformat()
+        elif len(toklista) = 3:
+            dt = date(tdy.year, toklista[1], toklista[0])
+            return dt.isoformat()
+        
+    elif tok in dictD/ate.month.keys():
 
         month_day = dictDate.month[tok]
         dt = date(tdy.year, tdy.month, month_day)
         return dt.isoformat()
 
-    if tok in dictDate.week.keys():
+    elif tok in dictDate.week.keys():
 
         print(tok)
 
@@ -193,13 +227,15 @@ def dateTagConstruct(tok):
         dt = tdy + datetime.timedelta(days=delta)
         return dt.isoformat()
 
-    if tok in dictDate.relative.keys():
+    elif tok in dictDate.relative.keys():
         relative_day = dictDate.relative[tok]
         dt = tdy +datetime.timedelta(days = relative_day)
         return dt.isoformat()
 
 
 def timeTagConstruct(tok):
+    
+    # na minha visão esta incompleta; Não acho que dar a opção de marcar na hora seja válido;
 
     if tok in dictTime.time.keys():
 
@@ -216,6 +252,8 @@ def timeTagConstruct(tok):
 
 
 def greetTagConstruct(tok):
+    
+    # para responder com o mesmo greeting ou para interpretar o greeting?
 
     tag = dictGreeting.greeting[tok]
     return tag
@@ -231,11 +269,11 @@ def findTags(toks, chat):
     tags['user'] = str(chat)
 
     for tok in toks:
-        if tagRequestTest(tok): tags['request'] = requestTagConstruct(tok)
-        if tagDateTest(tok): tags['date'] = dateTagConstruct(tok)
-        if tagTimeTest(tok): tags['time'] = timeTagConstruct(tok)
-        if re.search(r'\d{2}:\d{2}',tok): tags['time'] = timeTagConstruct(tok)
-        if tagGreetTest(tok): tags['greeting'].append(greetTagConstruct(tok))
+        if tagRequestTest(tok): tags['request'] = requestTagConstruct(tok) # se for uma tag de request, pega-se o valor correspondente a chave e coloca em tags - padronizaçao
+        if tagDateTest(tok): tags['date'] = dateTagConstruct(tok) # mesma coisa se for uma tag de data
+        if tagTimeTest(tok): tags['time'] = timeTagConstruct(tok) # mesma coisa se for uma tag de hora
+        if re.search(r'\d{2}:\d{2}',tok): tags['time'] = timeTagConstruct(tok) # mesma coisa se for hora;
+        if tagGreetTest(tok): tags['greeting'].append(greetTagConstruct(tok)) # nao entendo a necessidade disso;
     return tags
 #
 #    features = [str(tok) for tok in tokens if len(str(tok))>2]
@@ -244,6 +282,9 @@ def findTags(toks, chat):
 
 
 def knowTags(users,chatID):
+    
+    # cada user tem uma tag (função acima); no arquivo users tem o número direto e na tag na função acim tem user também. Não entendi;    
+    
     if str(chatID) in users.keys():
         tags = users[str(chatID)]
         tags['user'] = str(chatID)
@@ -253,6 +294,9 @@ def knowTags(users,chatID):
 
 
 def mergerTags(nTag, oTag):
+    
+    # nao entendi;    
+    
     mTag ={}
     for k in nTag.keys():
         mTag[k] =  nTag[k] if nTag[k]!='' else oTag[k]
@@ -260,6 +304,8 @@ def mergerTags(nTag, oTag):
 
 
 def saveTags(chatID, tags, users, name):
+    
+    # nao entendi;
 
     if str(chatID) in users.keys():
         del users[str(chatID)]
@@ -272,6 +318,7 @@ def saveTags(chatID, tags, users, name):
 
 
 def boaAswr(gTags):
+
 
     # this feature generate a greeting that vary (time of day of or the sentence
     # of the interlocutor
@@ -360,7 +407,7 @@ def validDate(date, data, n):
 
     # this feature find the valid days in the nexts 'n' days to schedule
 
-    timeAvaible = data[business_ID]['employers'][employer_ID]['time']
+    timeAvaible = data[business_ID]['employers'][employer_ID]['time'] # retorna um dicionario de dias da semana e horarios;
     d = date.split('-')
     dayChose = datetime.datetime(int(d[0]),int(d[1]),int(d[2]))
     nDays = [ dayChose+datetime.timedelta(days=i) for i in range(n) ]
@@ -535,7 +582,7 @@ def answer(tags, dataTable, schdTable, name):
         return (answer, options, None)
 
     else:
-        dates = validDate(tags['date'], dataTable, 7)
+        dates = validDate(tags['date'], dataTable, 7) # porque datas validas nos proximos 7 dias? Isso tem que ser de acordo com o horizonte de tempo que o nosso cliente quer marcar as consultas.
         if dates[0] != tags['date']:
             answer += 'Infelizmente, não temos disponibilidade no dia solicitados, as datas para agendamento mais proximas são:'
             options = list(dates) + ['Escolher outra data',
