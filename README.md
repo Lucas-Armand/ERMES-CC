@@ -46,7 +46,7 @@ Estamos usando python 3.5 para programar o bot, segue algumas referências:
 
 7) Problemas são imprevisíveis! Mantenha sempre o repositório oficial atualizado, fez alguma alteração significativa? Pull request!
 
-#Servidores e VM
+# Servidores e VM
 
 Pessoal criei uma virtual Machine pelo Microsoft Azure!
 Para entrar você tem que abrir o seu terminal e digitar:
@@ -89,6 +89,17 @@ que você começou agora, para referencia:
  $ python3 fb_bot.py
  
 + vim: é código do fb_bot.py aberto no vim
+
+# Como configurar uma VM
+
+1) Intalar o pip
+      sudo apt-get install python3-setuptools
+      sudo easy_install3 pip
+2) Intalart ngrok
+      sudo apt-get update
+      sudo apt-get install ngrok-server
+3) Install requests
+      sudo pip install requests
 
 # BIBLIOGRAFIA
 
