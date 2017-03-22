@@ -51,14 +51,14 @@ Estamos usando python 3.5 para programar o bot, segue algumas referências:
 Pessoal criei uma virtual Machine pelo Microsoft Azure!
 Para entrar você tem que abrir o seu terminal e digitar:
 
-$ ssh bomroboto.brazilsouth.cloudapp.azure.com -l bomroboto
+$ ssh ermes.brazilsouth.cloudapp.azure.com -l ermes
 
-$ password: aa123456789BB
+$ password: Ermesbomrobot0
 
 Uma vez que vocẽ entrou você verá um novo usuário e maquina
 no terminal:
 
-$ bomroboto@bomrobotoVM:
+$ ermes@ermesVM:
 
 agora você tem que abrir "tmux" que uma aplicação que permite 
 você operar varias janelas do terminal em uma janela só, assim 
