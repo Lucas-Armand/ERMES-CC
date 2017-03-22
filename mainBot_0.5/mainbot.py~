@@ -203,10 +203,10 @@ def dateTagConstruct(tok):
     
     if '/' in tok:
         toklista = tok.split('/')
-        if len(toklista) == 2:
+        if len(toklista) = 2:
             dt = date(tdy.year, toklista[1],toklista[0])
             return dt.isoformat()
-        elif len(toklista) == 3:
+        elif len(toklista) = 3:
             dt = date(tdy.year, toklista[1], toklista[0])
             return dt.isoformat()
         
