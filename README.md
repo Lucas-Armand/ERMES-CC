@@ -92,9 +92,11 @@ que você começou agora, para referencia:
 
 # Como configurar uma VM
 
-1) Intalar o pip
+1) Intalar o pip`
+      ```
       sudo apt-get install python3-setuptools
       sudo easy_install3 pip
+      ```
 2) Intalart ngrok
       sudo apt-get update
       sudo apt-get install ngrok-server
