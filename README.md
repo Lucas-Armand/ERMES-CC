@@ -46,19 +46,19 @@ Estamos usando python 3.5 para programar o bot, segue algumas referências:
 
 7) Problemas são imprevisíveis! Mantenha sempre o repositório oficial atualizado, fez alguma alteração significativa? Pull request!
 
-#Servidores e VM
+# Servidores e VM
 
 Pessoal criei uma virtual Machine pelo Microsoft Azure!
 Para entrar você tem que abrir o seu terminal e digitar:
 
-$ ssh bomroboto.brazilsouth.cloudapp.azure.com -l bomroboto
+$ ssh ermes.brazilsouth.cloudapp.azure.com -l ermes
 
-$ password: aa123456789BB
+$ password: Ermesbomrobot0
 
 Uma vez que vocẽ entrou você verá um novo usuário e maquina
 no terminal:
 
-$ bomroboto@bomrobotoVM:
+$ ermes@ermesVM:
 
 agora você tem que abrir "tmux" que uma aplicação que permite 
 você operar varias janelas do terminal em uma janela só, assim 
@@ -89,6 +89,53 @@ que você começou agora, para referencia:
  $ python3 fb_bot.py
  
 + vim: é código do fb_bot.py aberto no vim
+
+# Como configurar uma VM
+
+1) Instalar o pip:
+
+```
+sudo apt-get install python3-setuptools
+sudo easy_install3 pip
+```
+
+2) Instalar ngrok:
+
+```
+sudo apt-get update
+sudo apt-get install ngrok-server
+sudo apt-get install ngrok-client
+```
+
+3) Instalar requests:
+
+```
+sudo pip install requests
+```
+
+4)  Instalar Flask:
+
+```
+sudo pip install flask
+```
+
+5) Instalar git:
+
+```
+sudo apt-get install git
+```
+
+6) Clonar repositório:
+ 
+```
+git clone https://github.com/Lucas-Armand/BOMROBOTO.git
+```
+
+6) Instalar VIM:
+ 
+```
+git clone https://github.com/Lucas-Armand/BOMROBOTO.git
+```
 
 # BIBLIOGRAFIA
 
