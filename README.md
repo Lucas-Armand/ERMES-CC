@@ -134,7 +134,9 @@ git clone https://github.com/Lucas-Armand/BOMROBOTO.git
 6) Instalar VIM:
  
 ```
-git clone https://github.com/Lucas-Armand/BOMROBOTO.git
+cp -i BOMROBOTO/vim/.vimrc ./.vimrc
+mkdir -p ~/.vim/autoload ~/.vim/bundle && \
+curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 ```
 
 # BIBLIOGRAFIA
