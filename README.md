@@ -92,17 +92,47 @@ que você começou agora, para referencia:
 
 # Como configurar uma VM
 
-1) Intalar o pip`
+1) Instalar o pip`:
       ```
       sudo apt-get install python3-setuptools
+      
       sudo easy_install3 pip
       ```
-2) Intalart ngrok
-      sudo apt-get update
-      sudo apt-get install ngrok-server
-3) Install requests
-      sudo pip install requests
+2) Instalar ngrok:
 
+      ```
+      sudo apt-get update
+      
+      sudo apt-get install ngrok-server
+      ```
+3) Instalar requests:
+      ```
+      sudo pip install requests
+      ```
+4)  Instalar Flask:
+      ```
+      sudo pip install flask
+      
+      ```
+5) Instalar git:
+
+      ```
+      sudo apt-get install git
+
+      ```
+6) Clonar repositório:
+ 
+      ```
+      git clone https://github.com/Lucas-Armand/BOMROBOTO.git
+
+      ```
+
+6) Instalar VIM:
+ 
+      ```
+      git clone https://github.com/Lucas-Armand/BOMROBOTO.git
+
+      ```
 # BIBLIOGRAFIA
 
 http://masnun.com/2016/05/22/building-a-facebook-messenger-bot-with-python.html
