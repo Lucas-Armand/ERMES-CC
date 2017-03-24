@@ -576,7 +576,7 @@ def answer(tags, dataTable, schdTable, name):
 
     if not tags['date']:
 
-        answer += 'Qual data seria melhor para marcarmos?'
+        answer += 'Qual data seria melhor para marcarmos?\n\nVoce pode escrever em qualquer um dos formatos abaixo:\n\nquarta\segunda-feira\namanhã\n13/03\n13'
         #options = ['segunda', 'terça', 'quarta', 'quinta', 'sexta']
         options = None
         return (answer, options, None)
