@@ -98,7 +98,6 @@ def tokenTest(token):
     littleWordsList = ['dia','oi','ola','olá','bem','bom','tudo','como','vai','boa']
     #
     if token.isdigit() : return True                                            #test if token is a number
-    if re.search(r'\d{2}:\d{2}', token): return True                             #test if token is in time format
     if re.search(r'\d{1}º', token) or re.search(r'\d{1}ª',token): return True    #test if token is a ordinal number
     if len(token)>4: return True                                                #test if token is big enought
     if len(token)==0: return False
@@ -156,10 +155,10 @@ def tagRequestTest(tok):
 def tagDateTest(tok):
     
     # retorna verdadeiro se a string tok for uma das chaves (dia 20, amanhã, quarta ...) do dicionario dictDate
-
     if tok in dictDate.dictKeys:
         return True
-
+    elif re.search(r'\d{2}/\d{2}', tok): 
+        return True
 
 def tagTimeTest(tok):
     
@@ -179,7 +178,7 @@ def tagGreetTest(tok):
 def requestTagConstruct(tok):
     
     # funcao que verificar se o tok e um dos comandos de agendar, remarcar ou cancelar, dentre os varios possiveis dessas tres classes. E se nao for nenhum deles?
-    
+    print ('teste 3') 
     if tok in dictRequest.schedule.keys():
         result = dictRequest.schedule[tok]      # result recebe o valor correspondente a chave tok no dictRequest.schedule;
     if tok in dictRequest.reschedule.keys():
@@ -199,15 +198,16 @@ def dateTagConstruct(tok):
     # verificar se tok está no formato /;
 
     tdy = date.today()
-    
+
     
     if '/' in tok:
+        print ('novo tipo de data = '+ tok)
         toklista = tok.split('/')
         if len(toklista) == 2:
-            dt = date(tdy.year, toklista[1],toklista[0])
+            dt = date(tdy.year, int(toklista[1]), int(toklista[0]))
             return dt.isoformat()
         elif len(toklista) == 3:
-            dt = date(tdy.year, toklista[1], toklista[0])
+            dt = date(int(toklista[2]), int(toklista[1]), int(toklista[0]))
             return dt.isoformat()
         
     elif tok in dictD/ate.month.keys():
@@ -704,7 +704,6 @@ def main():
             last_textchat = (text, chat)
 
             print(tags['confirm'])
-            test = input('')
             if tags['confirm'] == True:
                 schdTable = schedule(tags, chat, dataTable, schdTable)
                 post_jsonTable('schedule.json', schdTable)
