@@ -681,7 +681,12 @@ def main():
     userTable = get_jsonTable('users.json')
     last_textchat = (None, None)
     while True:
-        text, chat, name = get_last_chat_id_name_and_text(get_updates())
+        #
+        text = input('') 
+        chat = '1234'
+        name = 'Lucas'
+        #
+        #text, chat, name = get_last_chat_id_name_and_text(get_updates())
         if (text, chat) != last_textchat:
             toks = tokenization(text)
             new_tags = findTags(toks, chat)
@@ -694,11 +699,20 @@ def main():
             print (tags)
             if opts:
                 print (opts)
-                send_message(resp,chat,'buttons',opts)
+                #send_message(resp,chat,'buttons',opts)
+                pass
             else:
-                send_message(resp, chat,'answer')
-            print ('  resposta:')
+                #send_message(resp, chat,'answer')
+                pass
+
+            print ('')
+            print ('')
             print (resp)
+            if opts:
+                for opt in opts:
+                    print (opt) 
+            print ('')
+            print ('')
             userTable = saveTags(chat, tags, userTable, 'user.json')
 
             last_textchat = (text, chat)
