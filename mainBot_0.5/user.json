@@ -1,11 +1,11 @@
 {
     "1234": {
-        "confirm": null,
+        "confirm": "",
         "date": "",
         "greeting": [],
         "job": "consulta",
         "lastcall": 24,
-        "request": "schedule",
+        "request": "",
         "time": ""
     },
     "318089574": {
