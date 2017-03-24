@@ -1,0 +1,15 @@
+
+greeting ={
+    'ola':'oi',
+    'olá':'oi',
+    'oi': 'oi',
+    'prazer':'oi',
+    'boa tarde':'boa tarde',
+    'bom dia':'bom dia',
+    'boa noite':'boa noite',
+    'tudo bem':'td bm?',
+    'tudo bom':'td bm?',
+    'como vai':'td bm?'
+}
+
+dictKeys = list(greeting.keys())

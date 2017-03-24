@@ -493,7 +493,7 @@ def avaibleTime(data, sched, tag, date, business_ID, employer_ID, delta):
             print (tag['request'])
 
 
-def answer(tags, dataTable, schdTable, name):
+def answer(tags, datatable, schdtable, name):
 
     # this feature analyze the tags and the schedule and make a answer for the
     # client.
@@ -553,6 +553,14 @@ def answer(tags, dataTable, schdTable, name):
         answer += 'Horário confirmado:'+'\n'+tags['date']+'\n'+tags['time']
         options = [tags['date'], tags['time']]
         return (answer, options, True)
+
+
+def master(new_tags, old_tags, datatable, schdtable, name):
+
+    statesList = ['dissatisfied', 'home', 'day', 'hour', 'information',
+                  'confirm', 'eu','endereço','+', 'horários','planos',
+                  'serviços', 'satisfied']
+
 
 
 def scheduleCreator(t0, tags, chatID, dataTable):
@@ -638,11 +646,18 @@ def main():
             toks = tokenization(text)
             new_tags = findTags(toks, chat)
             old_tags = knowTags(userTable, chat)
+
+
+            # i will resume this in a new function call "master"
+            resp, opts, tags = master(new_tags, old_tags, dataTable, schdTable, name)
             if old_tags is not None:
                 tags = mergerTags(new_tags, old_tags)
             else:
                 tags = new_tags
             resp, opts, tags['confirm'] = answer(tags, dataTable, schdTable, name)
+            # this
+
+
             if opts:
                 print (opts)
                 send_message(resp,chat,'buttons',opts)
