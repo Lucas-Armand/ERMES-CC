@@ -1,30 +1,10 @@
-<<<<<<< HEAD
-{
-    "1234": {
-        "confirm": null,
-        "date": "",
-        "greeting": [],
-        "job": "consulta",
-        "lastcall": 25,
-        "request": "healthplans",
-        "time": ""
-    },
-    "318089574": {
-        "confirm": "",
-        "date": "",
-        "job": "",
-        "lastcall": "",
-        "request": "",
-        "time": ""
-    }
-=======
 {
     "1234": {
         "confirm": "",
         "date": "",
         "greeting": [],
         "job": "consulta",
-        "lastcall": 24,
+        "lastcall": 26,
         "request": "",
         "time": ""
     },
@@ -36,5 +16,4 @@
         "request": "",
         "time": ""
     }
->>>>>>> master
 }
