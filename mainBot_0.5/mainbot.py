@@ -439,8 +439,6 @@ def expandTB(tB, timeExpand):
         delta_time = datetime.timedelta(hours=dt)
         n_time = time - delta_time
         n_tB.append(str(n_time.hour)+':'+str(n_time.minute))
-
-
     return n_tB
 
 
@@ -707,6 +705,7 @@ def answer(tags, dataTable, schdTable, name, chat):
             options = list(dates) + ['Escolher outra data',
                                      'Informações sobre horários de atendimento do consultório']
             return(answer, options, None)
+
 
     if not tags['time']:
 
