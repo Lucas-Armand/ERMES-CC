@@ -75,26 +75,26 @@ def get_last_chat_id_name_and_text(updates):
     return (text, chat_id, name)
 
 
-def send_message(text, chat_id, msgtype, *butts):    
+def send_message(text, chat_id, msgtype, *butts):
     data = {'object':'bot', 'sdrtype':'facebook_msg','msgtype':msgtype, 'text':text, 'chatid':chat_id}
     if msgtype == 'buttons':
         data['bttlist'] = butts[0]
     r = requests.post(URL, json = data)
 
 def cleaner(sentence, markers):
-    
-     # retorna uma nova sentença em que os marcadores de pontuação não estão presentes;   
-    
+
+     # retorna uma nova sentença em que os marcadores de pontuação não estão presentes;
+
     clean = ''.join(c for c in sentence if c not in markers)
     return clean
 
 
 def tokenTest(token):
-    
+
     # função que recebe uma string e retorna valor verdadeiro se a string for considerada uma token;
 
     #
-    littleWordsList = ['dia','oi','ola','olá','bem','bom','tudo','como','vai','boa']
+    littleWordsList = ['dia','oi','ola','olá','bem','bom','tudo','como','vai','boa','meu','mais']
     #
     if token.isdigit() : return True                                            #test if token is a number
     if re.search(r'\d{1}º', token) or re.search(r'\d{1}ª',token): return True    #test if token is a ordinal number
@@ -107,11 +107,11 @@ def tokenTest(token):
 
 
 def tokenConcatenation(tokens):
-    
+
     # Não entendi porque essa função está sendo utilizada;
 
     #
-    concatenationList = ['bom', 'boa','dia','tudo','como']
+    concatenationList = ['bom', 'boa','dia','tudo','como','meu','mais']
     #
     tok_buffer = ''
     new_tokens = []
@@ -129,12 +129,12 @@ def tokenConcatenation(tokens):
 
 
 def tokenization(text):
-    
+
     # função que quebra o texto em tokens;
 
     cleanSentence = cleaner(text, '?!;)([],.')
     pre_tokens = cleanSentence.split(' ')
-    pre_tokens = [pt for pt in pre_tokens if pt!=''] # se houver espaços no início ou no final do texto, são retirados; 
+    pre_tokens = [pt for pt in pre_tokens if pt!=''] # se houver espaços no início ou no final do texto, são retirados;
     pre_tokens = [w[0].lower()+w[1:] for w in pre_tokens]   # lower first letter
     tokens = [token for token in pre_tokens if tokenTest(token)] # para cada palavra no pre_tokens que é de fato token, adiciona-se a lista token;
     tokens = tokenConcatenation(tokens) # não entendi essa função
@@ -144,23 +144,22 @@ def tokenization(text):
 
 
 def tagRequestTest(tok):
-    
-    # retorna verdadeiro se a string tok for uma das chaves (marcar, agendar, remarcar ...) do dicionario dictRequest 
+
+    # retorna verdadeiro se a string tok for uma das chaves (marcar, agendar, remarcar ...) do dicionario dictRequest
 
     if tok in dictRequest.dictKeys:
         return True
 
-
 def tagDateTest(tok):
-    
+
     # retorna verdadeiro se a string tok for uma das chaves (dia 20, amanhã, quarta ...) do dicionario dictDate
     if tok in dictDate.dictKeys:
         return True
-    elif re.search(r'\d{2}/\d{2}', tok): 
+    elif re.search(r'\d{2}/\d{2}', tok):
         return True
 
 def tagTimeTest(tok):
-    
+
     # retorna verdadeiro se a string tok for uma das chaves (manhã, tarde e noite) do dicionario dictTime; ok, mas não é essencial na minha visão;
 
     if tok in dictTime.dictKeys:
@@ -168,16 +167,16 @@ def tagTimeTest(tok):
 
 
 def tagGreetTest(tok):
-    
+
     # mesmo raciocionio das funcoes acima;
 
     if tok in dictGreeting.dictKeys:
         return True
 
 def requestTagConstruct(tok):
-    
+
     # funcao que verificar se o tok e um dos comandos de agendar, remarcar ou cancelar, dentre os varios possiveis dessas tres classes. E se nao for nenhum deles?
-    print ('teste 3') 
+    print ('teste 3')
     if tok in dictRequest.schedule.keys():
         result = dictRequest.schedule[tok]      # result recebe o valor correspondente a chave tok no dictRequest.schedule;
     if tok in dictRequest.reschedule.keys():
@@ -186,6 +185,8 @@ def requestTagConstruct(tok):
         return dictRequest.cancelation[tok]
     if tok in dictRequest.information.keys():   # mesmo raciocionio acima para cancelamento;
         return dictRequest.information[tok]
+    if tok in dictRequest.restart.keys():       # mesmo raciocionio acima para retornar ao inicio to atendimento;
+        return dictRequest.restart[tok]
     return (result)
 
 
@@ -198,7 +199,7 @@ def dateTagConstruct(tok):
 
     tdy = date.today()
 
-    
+
     if '/' in tok:
         print ('novo tipo de data = '+ tok)
         toklista = tok.split('/')
@@ -208,8 +209,8 @@ def dateTagConstruct(tok):
         elif len(toklista) == 3:
             dt = date(int(toklista[2]), int(toklista[1]), int(toklista[0]))
             return dt.isoformat()
-        
-    elif tok in dictD/ate.month.keys():
+
+    elif tok in dictDate.month.keys():
 
         month_day = dictDate.month[tok]
         dt = date(tdy.year, tdy.month, month_day)
@@ -233,7 +234,7 @@ def dateTagConstruct(tok):
 
 
 def timeTagConstruct(tok):
-    
+
     # na minha visão esta incompleta; Não acho que dar a opção de marcar na hora seja válido;
 
     if tok in dictTime.time.keys():
@@ -251,7 +252,7 @@ def timeTagConstruct(tok):
 
 
 def greetTagConstruct(tok):
-    
+
     # para responder com o mesmo greeting ou para interpretar o greeting?
 
     tag = dictGreeting.greeting[tok]
@@ -281,9 +282,9 @@ def findTags(toks, chat):
 
 
 def knowTags(users,chatID):
-    
-    # cada user tem uma tag (função acima); no arquivo users tem o número direto e na tag na função acim tem user também. Não entendi;    
-    
+
+    # cada user tem uma tag (função acima); no arquivo users tem o número direto e na tag na função acim tem user também. Não entendi;
+
     if str(chatID) in users.keys():
         tags = users[str(chatID)]
         tags['user'] = str(chatID)
@@ -292,18 +293,21 @@ def knowTags(users,chatID):
         return None
 
 
-def mergerTags(nTag, oTag):
-    
-    # nao entendi;    
-    
-    mTag ={}
-    for k in nTag.keys():
-        mTag[k] =  nTag[k] if nTag[k]!='' else oTag[k]
-    return mTag
+def mergerTags(nTag, oTag, chat):
+
+    # nao entendi;
+    if nTag['request'] != 'restart':
+        mTag ={}
+        for k in nTag.keys():
+            mTag[k] =  nTag[k] if nTag[k]!='' else oTag[k]
+        return mTag
+    else:
+        mTags = findTags([],chat)
+        return mTags
 
 
 def saveTags(chatID, tags, users, name):
-    
+
     # nao entendi;
 
     if str(chatID) in users.keys():
@@ -314,7 +318,6 @@ def saveTags(chatID, tags, users, name):
     print (users)
     print (tags)
     return(users)
-
 
 def boaAswr(gTags):
 
@@ -540,7 +543,79 @@ def avaibleTime(data, sched, tag, date, business_ID, employer_ID, delta):
             print (tag['request'])
 
 
-def answer(tags, dataTable, schdTable, name):
+def getMyInformation(tags, schdTable, business_ID, employer_ID, contact_ID):
+    job = tags['job']
+    schds = schdTable[business_ID]['employers'][employer_ID]['schedules']
+
+    test = False
+    for date in schds.keys():
+        schdDay = schds[date]
+        for schd in schdDay:
+            if schd['contactID'] == contact_ID:
+                test = True
+                time = schd['time']
+                return date, job, time, test
+
+    date = None
+    job = None
+    time = None
+    return date, job, time, test
+
+
+def constructMyInformation(tags, schdTable, business_ID, employer_ID, contact_ID):
+    date, job, time, test = getMyInformation(tags, schdTable, business_ID, employer_ID, contact_ID)
+    if test == True:
+        answer = ''
+        answer += 'Você tem um(a) '+ job+' marcado em:\n'
+        answer += date+'\n'
+        answer += time[0]+'\n'
+        options = ['Outras informações','Retornar ao menu inicial']
+    else:
+        answer = 'Você, aparentemente, não tem nenhum horário marcado.'
+        options = ['Outras informações','Retornar ao menu inicial']
+    return answer, options
+
+
+def getAddress(business_ID, dataTable):
+
+    address = dataTable[business_ID]['address']
+    return address
+
+
+def constructAddress(business_ID, dataTable):
+    address = getAddress(business_ID, dataTable)
+    answer = "O nosso endereço é:\n"
+    answer += address
+    options = ['Outras informações','Retornar ao menu inicial']
+    return answer, options
+
+def constructHealthPlans(dataTable, business_ID):
+
+    plans = dataTable[business_ID]['healthplans']
+    answer = 'Nós trabalhos com os seguintes planos:\n'
+    for plan in plans:
+        answer += plan+'\n'
+    options = ['Outras informações','Retornar ao menu inicial']
+    return answer, options
+
+def constructServices(dataTable, business_ID):
+
+    services = dataTable[business_ID]['services']
+    if len(services)>1:
+        answer = 'Em nosso consultório nós realizamos:\n'
+        for serv in services:
+            answer += serv['name']+', pelo valor de  R$'
+            answer += str(serv['price'])+' no particular.\n'
+    else:
+        answer = 'Nosso consultório só realiza\n'
+        for serv in services:
+            answer += serv['name']+', pelo valor de  R$'
+            answer += str(serv['price'].__truc__)+',00 no particular.\n'
+
+    options = ['Outras informações','Retornar ao menu inicial']
+    return answer, options
+
+def answer(tags, dataTable, schdTable, name, chat):
 
     # this feature analyze the tags and the schedule and make a answer for the
     # client.
@@ -569,9 +644,41 @@ def answer(tags, dataTable, schdTable, name):
 
     elif tags['request'] == 'information':
 
-        answer += 'Information:'
-        options = ['information']
+        answer += 'Qual informação você precisa?'
+        options = ['Meu horário',
+                   'Endereço',
+                   'Mais informações']
+
         return (answer, options, None)
+
+    elif tags['request'] == 'myinformation' :
+
+        answer,options = constructMyInformation(tags, schdTable, business_ID, employer_ID, chat)
+        return (answer, options, None)
+
+    elif tags['request'] == 'address':
+
+        answer, options = constructAddress(business_ID, dataTable)
+        return (answer, options, None)
+
+    elif tags['request'] == 'plus':
+
+        answer = 'O que mais eu posso fazer por voce?'
+        options = ['Planos de Saude',
+                   'Tabela de Serviços',
+                   'Retornar ao menu inicial']
+        return (answer, options, None)
+
+    elif tags['request'] == 'healthplans':
+
+        answer,options = constructHealthPlans(dataTable, business_ID)
+        return (answer, options, None)
+
+    elif tags['request'] == 'services':
+
+        answer,options = constructServices(dataTable, business_ID)
+        return (answer, options, None)
+
 
     if not tags['date']:
 
@@ -588,6 +695,7 @@ def answer(tags, dataTable, schdTable, name):
                                      'Informações sobre horários de atendimento do consultório']
 
             return(answer, options, None)
+
 
     if not tags['time']:
 
@@ -681,7 +789,7 @@ def main():
     last_textchat = (None, None)
     while True:
         #
-        text = input('') 
+        text = input('')
         chat = '1234'
         name = 'Lucas'
         #
@@ -691,10 +799,10 @@ def main():
             new_tags = findTags(toks, chat)
             old_tags = knowTags(userTable, chat)
             if old_tags is not None:
-                tags = mergerTags(new_tags, old_tags)
+                tags = mergerTags(new_tags, old_tags, chat)
             else:
                 tags = new_tags
-            resp, opts, tags['confirm'] = answer(tags, dataTable, schdTable, name)
+            resp, opts, tags['confirm'] = answer(tags, dataTable, schdTable, name, chat)
             print (tags)
             if opts:
                 print (opts)
@@ -702,14 +810,20 @@ def main():
                 pass
             else:
                 #send_message(resp, chat,'answer')
+                #informações
+                #meu horário
+                #endereço
+                #mais informações
+                #
                 pass
 
             print ('')
             print ('')
             print (resp)
+            print ('')
             if opts:
                 for opt in opts:
-                    print (opt) 
+                    print (opt)
             print ('')
             print ('')
             userTable = saveTags(chat, tags, userTable, 'user.json')

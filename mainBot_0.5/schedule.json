@@ -6,7 +6,7 @@
                 "schedules": {
                     "2017-02-07": [
                         {
-                            "client": "Lucas Armand",
+                            "contactID": "Lucas Armand",
                             "service": "consulta",
                             "time:": [
                                 "10:00",
@@ -16,7 +16,7 @@
                     ],
                     "2017-02-08": [
                         {
-                            "client": "Lucas Armand",
+                            "contactID": "Lucas Armand",
                             "service": "consulta",
                             "time:": [
                                 "13:00",
@@ -24,7 +24,7 @@
                             ]
                         },
                         {
-                            "client": "Lucas Armand",
+                            "contactID": "Lucas Armand",
                             "service": "consulta",
                             "time:": [
                                 "15:00",
@@ -34,7 +34,7 @@
                     ],
                     "2017-02-09": [
                         {
-                            "client": "Lucas Armand",
+                            "contactID": "Lucas Armand",
                             "service": "consulta",
                             "time:": [
                                 "13:00",
@@ -99,6 +99,14 @@
                             "time": [
                                 "10:00",
                                 "10:30"
+                            ]
+                        },
+                        {
+                            "contactID": "1234",
+                            "job": "consulta",
+                            "time": [
+                                "11:00",
+                                "11:30"
                             ]
                         }
                     ],

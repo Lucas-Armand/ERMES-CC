@@ -1,1 +1,193 @@
-[{"clients": [{"@contact": "", "cel": "", "name": "", "next service": ""}], "services": [{"duration": 0.5, "name": "consulta", "price": 80.0}, {"duration": 1, "name": "per\u00edcia", "price": 150.0}, {"duration": 0.5, "name": "revis\u00e3o", "price": 60.0}], "name": "Consut\u00f3rio A", "employers": [{"jobs": ["consulta", "per\u00edcia", "revis\u00e3o"], "time": {"0": ["10:00 ~ 12:00"], "1": ["13:00 ~ 17:00"], "2": ["13:00 ~ 17:00"], "3": ["13:00 ~ 17:00"], "4": [""], "5": [""], "6": [""]}, "nome": "Dr. Alberto"}, {"jobs": ["consulta", "revis\u00e3o"], "time": {"0": [""], "1": ["08:00 ~ 12:00", "13:00 ~ 17:00"], "2": ["08:00 ~ 12:00", "13:00 ~ 17:00"], "3": ["08:00 ~ 12:00", "13:00 ~ 17:00"], "4": [""], "5": [""], "6": [""]}, "nome": "Dra. Bianca"}, {"jobs": ["consulta", "per\u00edcia"], "time": {"0": ["10:00 ~ 14:00"], "1": ["10:00 ~ 14:00"], "2": ["10:00 ~ 14:00"], "3": ["10:00 ~ 14:00"], "4": ["10:00 ~ 14:00"], "5": ["10:00 ~ 14:00"], "6": [""]}, "nome": "Dr. Carlos"}]}, {"clients": [{"@contact": "", "cel": "", "name": "", "next service": ""}], "services": [{"duration": 0.5, "name": "consulta", "price": 80.0}, {"duration": 1, "name": "per\u00edcia", "price": 150.0}], "name": "Consut\u00f3rio B", "employers": [{"jobs": ["consulta", "revis\u00e3o"], "time": {"0": ["08:00 ~ 12:00", "13:00 ~ 17:00"], "1": ["08:00 ~ 12:00", "13:00 ~ 17:00"], "2": ["08:00 ~ 12:00", "13:00 ~ 17:00"], "3": ["08:00 ~ 12:00", "13:00 ~ 17:00"], "4": ["08:00 ~ 12:00", "13:00 ~ 17:00"], "5": [""], "6": [""]}, "nome": "Dra. Bianca"}]}]
+[
+    {
+        "healthplans":[
+                "UNIMED",
+                "AMS",
+                "Bradesco Saúde",
+                "Amil",
+                "SulAmérica"],
+        "clients": [
+            {
+                "@contact": "",
+                "cel": "",
+                "name": "",
+                "next service": ""
+            }
+        ],
+        "employers": [
+            {
+                "jobs": [
+                    "consulta",
+                    "per\u00edcia",
+                    "revis\u00e3o"
+                ],
+                "nome": "Dr. Alberto",
+                "time": {
+                    "0": [
+                        "10:00 ~ 12:00"
+                    ],
+                    "1": [
+                        "13:00 ~ 17:00"
+                    ],
+                    "2": [
+                        "13:00 ~ 17:00"
+                    ],
+                    "3": [
+                        "13:00 ~ 17:00"
+                    ],
+                    "4": [
+                        ""
+                    ],
+                    "5": [
+                        ""
+                    ],
+                    "6": [
+                        ""
+                    ]
+                }
+            },
+            {
+                "jobs": [
+                    "consulta",
+                    "revis\u00e3o"
+                ],
+                "nome": "Dra. Bianca",
+                "time": {
+                    "0": [
+                        ""
+                    ],
+                    "1": [
+                        "08:00 ~ 12:00",
+                        "13:00 ~ 17:00"
+                    ],
+                    "2": [
+                        "08:00 ~ 12:00",
+                        "13:00 ~ 17:00"
+                    ],
+                    "3": [
+                        "08:00 ~ 12:00",
+                        "13:00 ~ 17:00"
+                    ],
+                    "4": [
+                        ""
+                    ],
+                    "5": [
+                        ""
+                    ],
+                    "6": [
+                        ""
+                    ]
+                }
+            },
+            {
+                "jobs": [
+                    "consulta",
+                    "per\u00edcia"
+                ],
+                "nome": "Dr. Carlos",
+                "time": {
+                    "0": [
+                        "10:00 ~ 14:00"
+                    ],
+                    "1": [
+                        "10:00 ~ 14:00"
+                    ],
+                    "2": [
+                        "10:00 ~ 14:00"
+                    ],
+                    "3": [
+                        "10:00 ~ 14:00"
+                    ],
+                    "4": [
+                        "10:00 ~ 14:00"
+                    ],
+                    "5": [
+                        "10:00 ~ 14:00"
+                    ],
+                    "6": [
+                        ""
+                    ]
+                }
+            }
+        ],
+        "address":"Av. Athos da Silveira Ramos, 274, Sala C201",
+        "name": "Consut\u00f3rio A",
+        "services": [
+            {
+                "duration": 0.5,
+                "name": "consulta",
+                "price": 80.0
+            },
+            {
+                "duration": 1,
+                "name": "per\u00edcia",
+                "price": 150.0
+            },
+            {
+                "duration": 0.5,
+                "name": "revis\u00e3o",
+                "price": 60.0
+            }
+        ]
+    },
+    {
+        "clients": [
+            {
+                "@contact": "",
+                "cel": "",
+                "name": "",
+                "next service": ""
+            }
+        ],
+        "employers": [
+            {
+                "jobs": [
+                    "consulta",
+                    "revis\u00e3o"
+                ],
+                "nome": "Dra. Bianca",
+                "time": {
+                    "0": [
+                        "08:00 ~ 12:00",
+                        "13:00 ~ 17:00"
+                    ],
+                    "1": [
+                        "08:00 ~ 12:00",
+                        "13:00 ~ 17:00"
+                    ],
+                    "2": [
+                        "08:00 ~ 12:00",
+                        "13:00 ~ 17:00"
+                    ],
+                    "3": [
+                        "08:00 ~ 12:00",
+                        "13:00 ~ 17:00"
+                    ],
+                    "4": [
+                        "08:00 ~ 12:00",
+                        "13:00 ~ 17:00"
+                    ],
+                    "5": [
+                        ""
+                    ],
+                    "6": [
+                        ""
+                    ]
+                }
+            }
+        ],
+        "name": "Consut\u00f3rio B",
+        "services": [
+            {
+                "duration": 0.5,
+                "name": "consulta",
+                "price": 80.0
+            },
+            {
+                "duration": 1,
+                "name": "per\u00edcia",
+                "price": 150.0
+            }
+        ]
+    }
+]
