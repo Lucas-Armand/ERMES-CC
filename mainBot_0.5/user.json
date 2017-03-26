@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
     "1234": {
         "confirm": null,
@@ -16,4 +17,24 @@
         "request": "",
         "time": ""
     }
+=======
+{
+    "1234": {
+        "confirm": "",
+        "date": "",
+        "greeting": [],
+        "job": "consulta",
+        "lastcall": 24,
+        "request": "",
+        "time": ""
+    },
+    "318089574": {
+        "confirm": "",
+        "date": "",
+        "job": "",
+        "lastcall": "",
+        "request": "",
+        "time": ""
+    }
+>>>>>>> master
 }
