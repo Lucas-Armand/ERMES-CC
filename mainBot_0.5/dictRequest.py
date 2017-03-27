@@ -35,6 +35,7 @@ information = {
     'mais informações':'plus',
     'mais informaçoes':'plus',
     'plano':'healthplans',
+    'planos':'healthplans',
     'convênio':'healthplans',
     'convenio':'healthplans'
     }

@@ -209,9 +209,6 @@ def dateTagConstruct(tok):
         elif len(toklista) == 3:
             dt = date(int(toklista[2]), int(toklista[1]), int(toklista[0]))
             return dt.isoformat()
-<<<<<<< HEAD
-=======
-        
     elif tok in dictDate.month.keys():
 
         month_day = dictDate.month[tok]
@@ -442,7 +439,7 @@ def expandTB(tB, timeExpand):
         delta_time = datetime.timedelta(hours=dt)
         n_time = time - delta_time
         n_tB.append(str(n_time.hour)+':'+str(n_time.minute))
-        
+
 
     return n_tB
 
@@ -499,8 +496,8 @@ def gridArrange(tGrid, tBlocks):
 
     FMT = '%H:%M'
     print ('Erro')
-    print (tGrid)    
-    print (tBlocks)    
+    print (tGrid)
+    print (tBlocks)
     timeGrid = [datetime.datetime.strptime(t, FMT) for t in tGrid]
 
     timeBlocks = [[datetime.datetime.strptime(t[0], FMT),
@@ -512,7 +509,7 @@ def gridArrange(tGrid, tBlocks):
 
     newGrid = []
     #while not i == n:
-    for i in range(n):     
+    for i in range(n):
         time = timeGrid[i]
         for j in range(len(timeBlocks)):
             if time <= timeBlocks[j][0] or time >= timeBlocks[j][1]:
@@ -540,7 +537,7 @@ def avaibleTime(data, sched, tag, date, business_ID, employer_ID, delta):
                 services = sched[business_ID]['employers'][employer_ID]['schedules'][date]
                 print ('services')
                 print (services)
-                timeBlocks=[]                
+                timeBlocks=[]
                 for tB in services:
                     print (tB['time'])
                     timeBlocks.append(expandTB(tB['time'],[timeService,0]))
@@ -713,16 +710,16 @@ def answer(tags, dataTable, schdTable, name, chat):
 
 
     if not tags['time']:
-        
+
         options2 = avaibleTime(dataTable, schdTable, tags, tags['date'], business_ID, employer_ID, 0.5)
         options = None
-        
-        r = ''        
+
+        r = ''
         for i in range(len(options2)):
-            r = r+str(options2[i])+'\n'    
+            r = r+str(options2[i])+'\n'
         answer += 'Os horários disponíveis para esse dia são'+'\n\n'+r+'\n'+'Por favor, digite o horário.'
         return (answer, options, None)
-    
+
     else:
 
         answer += 'Horário confirmado:'+'\n'+tags['date']+'\n'+tags['time']
