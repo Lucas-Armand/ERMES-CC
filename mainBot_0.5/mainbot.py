@@ -212,7 +212,6 @@ def dateTagConstruct(tok):
 <<<<<<< HEAD
 =======
         
->>>>>>> 4397222d0e1327aa18b28a2a20925c3350280255
     elif tok in dictDate.month.keys():
 
         month_day = dictDate.month[tok]
@@ -443,11 +442,8 @@ def expandTB(tB, timeExpand):
         delta_time = datetime.timedelta(hours=dt)
         n_time = time - delta_time
         n_tB.append(str(n_time.hour)+':'+str(n_time.minute))
-<<<<<<< HEAD
-=======
         
 
->>>>>>> 4397222d0e1327aa18b28a2a20925c3350280255
     return n_tB
 
 
@@ -503,13 +499,8 @@ def gridArrange(tGrid, tBlocks):
 
     FMT = '%H:%M'
     print ('Erro')
-<<<<<<< HEAD
-    print (tGrid)
-    print (tBlocks)
-=======
     print (tGrid)    
     print (tBlocks)    
->>>>>>> 4397222d0e1327aa18b28a2a20925c3350280255
     timeGrid = [datetime.datetime.strptime(t, FMT) for t in tGrid]
 
     timeBlocks = [[datetime.datetime.strptime(t[0], FMT),
@@ -521,11 +512,7 @@ def gridArrange(tGrid, tBlocks):
 
     newGrid = []
     #while not i == n:
-<<<<<<< HEAD
-    for i in range(n):
-=======
     for i in range(n):     
->>>>>>> 4397222d0e1327aa18b28a2a20925c3350280255
         time = timeGrid[i]
         for j in range(len(timeBlocks)):
             if time <= timeBlocks[j][0] or time >= timeBlocks[j][1]:
@@ -553,11 +540,7 @@ def avaibleTime(data, sched, tag, date, business_ID, employer_ID, delta):
                 services = sched[business_ID]['employers'][employer_ID]['schedules'][date]
                 print ('services')
                 print (services)
-<<<<<<< HEAD
-                timeBlocks=[]
-=======
                 timeBlocks=[]                
->>>>>>> 4397222d0e1327aa18b28a2a20925c3350280255
                 for tB in services:
                     print (tB['time'])
                     timeBlocks.append(expandTB(tB['time'],[timeService,0]))
@@ -728,20 +711,6 @@ def answer(tags, dataTable, schdTable, name, chat):
                                      'Informações sobre horários de atendimento do consultório']
             return(answer, options, None)
 
-<<<<<<< HEAD
-
-    if not tags['time']:
-
-        options2 = avaibleTime(dataTable, schdTable, tags, tags['date'], business_ID, employer_ID, 0.5)
-        options = None
-
-        r = ''
-        for i in range(len(options2)):
-            r = r+str(options2[i])+'\n'
-        answer += 'Os horários disponíveis para esse dia são'+'\n\n'+r+'\n'+'Por favor, digite o horário.'
-        return (answer, options, None)
-
-=======
 
     if not tags['time']:
         
@@ -754,7 +723,6 @@ def answer(tags, dataTable, schdTable, name, chat):
         answer += 'Os horários disponíveis para esse dia são'+'\n\n'+r+'\n'+'Por favor, digite o horário.'
         return (answer, options, None)
     
->>>>>>> 4397222d0e1327aa18b28a2a20925c3350280255
     else:
 
         answer += 'Horário confirmado:'+'\n'+tags['date']+'\n'+tags['time']
