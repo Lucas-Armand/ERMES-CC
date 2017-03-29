@@ -693,7 +693,10 @@ def answer(tags, dataTable, schdTable, name, chat):
 
     if not tags['date']:
 
-        answer += 'Qual data seria melhor para marcarmos?\n\nVoce pode escrever em qualquer um dos formatos abaixo:\n\nquarta\nsegunda-feira\namanhã\n13/03\n31\ndia 26'
+        answer += 'Qual data seria melhor para marcarmos?\n\n'
+        answer += '(Nosso roboto entende "datas" escritas em linguagem natural, '
+        answer += 'sinta-se a vontade para escreva normalmente.\n'
+        answer += 'Alguns exemplos de como escolher uma data: "segunda-feira","quarta","13/03","amanhã","dia 6")'
         #options = ['segunda', 'terça', 'quarta', 'quinta', 'sexta']
         options = None
         return (answer, options, None)
@@ -799,18 +802,20 @@ def post_jsonTable(jsonName, data):
             json.dump(data, outfile, indent=4, sort_keys=True)
 
 
-def main():
+def atendimento(testMode):
     dataTable = get_jsonTable('data.json')
     schdTable = get_jsonTable('schedule.json')
     userTable = get_jsonTable('users.json')
     last_textchat = (None, None)
     while True:
-        #
-        text = input('')
-        chat = '1234'
-        name = 'Lucas'
-        #
-        #text, chat, name = get_last_chat_id_name_and_text(get_updates())
+        if testMode == True:
+            #
+            text = input('')
+            chat = '1234'
+            name = 'Lucas'
+            #
+        else:
+            text, chat, name = get_last_chat_id_name_and_text(get_updates())
         if (text, chat) != last_textchat:
             toks = tokenization(text)
             new_tags = findTags(toks, chat)
@@ -822,27 +827,25 @@ def main():
             resp, opts, tags['confirm'] = answer(tags, dataTable, schdTable, name, chat)
             print (tags)
             if opts:
-                print (opts)
-                #send_message(resp,chat,'buttons',opts)
-                pass
+                if testMode == True:
+                    pass
+                else:
+                    send_message(resp,chat,'buttons',opts)
             else:
-                #send_message(resp, chat,'answer')
-                #informações
-                #meu horário
-                #endereço
-                #mais informações
-                #
-                pass
-
-            print ('')
-            print ('')
-            print (resp)
-            print ('')
-            if opts:
-                for opt in opts:
-                    print (opt)
-            print ('')
-            print ('')
+                if testMode == True:
+                    pass
+                else:
+                    send_message(resp, chat,'answer')
+            if testMode == True:
+                print ('')
+                print ('')
+                print (resp)
+                print ('')
+                if opts:
+                    for opt in opts:
+                        print (opt)
+                print ('')
+                print ('')
             userTable = saveTags(chat, tags, userTable, 'user.json')
 
             last_textchat = (text, chat)
@@ -858,7 +861,9 @@ def main():
 #            last_textchat = (text, chat)
         time.sleep(0.5)
 
+def main():
+    atendimento(True)
 
 
-if __name__ == '__main__':
+if  __name__ == '__main__':
     main()

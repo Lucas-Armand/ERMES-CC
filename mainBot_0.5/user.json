@@ -1,10 +1,10 @@
 {
     "1234": {
-        "confirm": null,
+        "confirm": "",
         "date": "",
         "greeting": [],
         "job": "consulta",
-        "lastcall": 27,
+        "lastcall": 29,
         "request": "",
         "time": ""
     },
