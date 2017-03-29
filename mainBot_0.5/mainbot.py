@@ -694,9 +694,10 @@ def answer(tags, dataTable, schdTable, name, chat):
     if not tags['date']:
 
         answer += 'Qual data seria melhor para marcarmos?\n\n'
-        answer += '(Nosso roboto entende "datas" escritas em linguagem natural, '
-        answer += 'sinta-se a vontade para escreva normalmente.\n'
-        answer += 'Alguns exemplos de como escolher uma data: "segunda-feira","quarta","13/03","amanhã","dia 6")'
+        answer += '(Obs: Nosso roboto entende "datas" escritas de forma natural.'
+                  
+        answer += ' Sinta-se à vontade para escrever sua data como: "segunda-feira", "quarta", "13/03", "amanhã", "dia 6")'
+        
         #options = ['segunda', 'terça', 'quarta', 'quinta', 'sexta']
         options = None
         return (answer, options, None)
@@ -862,7 +863,7 @@ def atendimento(testMode):
         time.sleep(0.5)
 
 def main():
-    atendimento(True)
+    atendimento(False)
 
 
 if  __name__ == '__main__':
