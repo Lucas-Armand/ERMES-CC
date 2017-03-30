@@ -83,8 +83,11 @@ def send_message(text, chat_id, msgtype, *butts):
 
 
 def send_image(chat_id,img_tag):
+    print(chat_id)
+    print(img_tag)
     data = {'object':'bot', 'sdrtype':'facebook_msg','msgtype':'image', 'text':img_tag, 'chatid':chat_id}
     r = requests.post(URL, json = data)
+    print (r)
 
 
 def cleaner(sentence, markers):
