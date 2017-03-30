@@ -1,0 +1,192 @@
+[
+    {
+        "employers": [
+            {
+                "nome": "Dr. Alberto",
+                "schedules": {
+                    "2017-02-07": [
+                        {
+                            "contactID": "Lucas Armand",
+                            "service": "consulta",
+                            "time:": [
+                                "10:00",
+                                "10:30"
+                            ]
+                        }
+                    ],
+                    "2017-02-08": [
+                        {
+                            "contactID": "Lucas Armand",
+                            "service": "consulta",
+                            "time:": [
+                                "13:00",
+                                "13:30"
+                            ]
+                        },
+                        {
+                            "contactID": "Lucas Armand",
+                            "service": "consulta",
+                            "time:": [
+                                "15:00",
+                                "15:30"
+                            ]
+                        }
+                    ],
+                    "2017-02-09": [
+                        {
+                            "contactID": "Lucas Armand",
+                            "service": "consulta",
+                            "time:": [
+                                "13:00",
+                                "13:30"
+                            ]
+                        }
+                    ],
+                    "2017-02-27": [
+                        {
+                            "contactID": 318089574,
+                            "job": "consulta",
+                            "time": [
+                                "10:00",
+                                "10:30"
+                            ]
+                        }
+                    ],
+                    "2017-03-06": [
+                        {
+                            "contactID": 318089574,
+                            "job": "consulta",
+                            "time": [
+                                "10:00",
+                                "10:30"
+                            ]
+                        },
+                        {
+                            "contactID": "1234",
+                            "job": "consulta",
+                            "time": [
+                                "11:00",
+                                "11:30"
+                            ]
+                        }
+                    ],
+                    "2017-03-07": [
+                        {
+                            "contactID": "1338902312892895",
+                            "job": "consulta",
+                            "time": [
+                                "16:30",
+                                "17:00"
+                            ]
+                        }
+                    ],
+                    "2017-03-16": [
+                        {
+                            "contactID": "1272971316150819",
+                            "job": "consulta",
+                            "time": [
+                                "13:00",
+                                "13:30"
+                            ]
+                        }
+                    ],
+                    "2017-03-20": [
+                        {
+                            "contactID": "1272971316150819",
+                            "job": "consulta",
+                            "time": [
+                                "10:00",
+                                "10:30"
+                            ]
+                        }
+                    ],
+                    "2017-03-23": [
+                        {
+                            "contactID": "1272971316150819",
+                            "job": "consulta",
+                            "time": [
+                                "13:30",
+                                "14:00"
+                            ]
+                        }
+                    ],
+                    "2017-03-27": [
+                        {
+                            "contactID": "1274992282547178",
+                            "job": "consulta",
+                            "time": [
+                                "10:00",
+                                "10:30"
+                            ]
+                        },
+                        {
+                            "contactID": "1234",
+                            "job": "consulta",
+                            "time": [
+                                "11:00",
+                                "11:30"
+                            ]
+                        },
+                        {
+                            "contactID": "1234",
+                            "job": "consulta",
+                            "time": [
+                                "10:30",
+                                "11:00"
+                            ]
+                        }
+                    ],
+                    "2017-03-28": [
+                        {
+                            "contactID": "1234",
+                            "job": "consulta",
+                            "time": [
+                                "14:00",
+                                "14:30"
+                            ]
+                        }
+                    ],
+                    "2017-03-29": [
+                        {
+                            "contactID": "1234",
+                            "job": "consulta",
+                            "time": [
+                                "13:00",
+                                "13:30"
+                            ]
+                        }
+                    ],
+                    "2017-04-03": [
+                        {
+                            "contactID": "1234",
+                            "job": "consulta",
+                            "time": [
+                                "11:30",
+                                "12:00"
+                            ]
+                        },
+                        {
+                            "contactID": "1234",
+                            "job": "consulta",
+                            "time": [
+                                "11:00",
+                                "11:30"
+                            ]
+                        }
+                    ],
+                    "2017-04-24": [
+                        {
+                            "contactID": "1338902312892895",
+                            "job": "consulta",
+                            "time": [
+                                "10:00",
+                                "10:30"
+                            ]
+                        }
+                    ]
+                }
+            }
+        ],
+        "name": "Consut\u00f3rio A"
+    }
+]
