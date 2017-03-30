@@ -2,7 +2,8 @@ from flask import Flask, request
 import requests
 import json
 import fb_layout
- 
+import random
+import urlTable
 BOOK = []
 app = Flask(__name__)
 
@@ -13,28 +14,46 @@ VERIFY_TOKEN = "secret"
 def fb_answr(user_id, msg):
 
     if msg != msg.format(''):
-        usr = requests.get("https://graph.facebook.com/v2.6/"+user_id+"?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=" + ACCESS_TOKEN) 
+        usr = requests.get("https://graph.facebook.com/v2.6/"+user_id+"?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=" + ACCESS_TOKEN)
         usrData = usr.json()
-   
+
         msg = msg.format(usrData['first_name'])
-    
+
     data = {
         "recipient": {"id": user_id},
         "message": {"text": msg}
     }
     r = requests.post("https://graph.facebook.com/v2.6/me/messages?access_token=" + ACCESS_TOKEN, json=data)
     print(r.content)
+
+
 def fb_butt(user_id,text,buttList):
-    
+
     if text != text.format(''):
-        usr = requests.get("https://graph.facebook.com/v2.6/"+user_id+"?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=" + ACCESS_TOKEN) 
+        usr = requests.get("https://graph.facebook.com/v2.6/"+user_id+"?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=" + ACCESS_TOKEN)
         usrData = usr.json()
-   
+
         text = text.format(usrData['first_name'])
 
     msg = fb_layout.buttons(text,buttList)
     print(msg)
 
+    data = {
+        "recipient": {"id": user_id},
+        "message": msg
+    }
+    r = requests.post("https://graph.facebook.com/v2.6/me/messages?access_token=" + ACCESS_TOKEN, json=data)
+    print(r.content)
+
+
+def fb_img(user_id,img_tag):
+    urls = urlTable.urlDict[img_tag]
+    if len(urls)>1:
+        url = random.chose(urls)
+    else:
+        url = urls[0]
+
+    msg = fb_layout.picture(url)
     data = {
         "recipient": {"id": user_id},
         "message": msg
@@ -54,7 +73,7 @@ def handle_verification(args):
 def resetBook():
     if BOOK != []:
         tr = int(BOOK[-1]['time']) # time of reference
-        for dic in BOOK: 
+        for dic in BOOK:
             if tr - int(dic['time']) < 600000:
                 break
             else:
@@ -109,11 +128,13 @@ def handle_bot_message(data):
     text     = data['text']
     chat_id  = data['chatid']
     if sdr_type == 'facebook_msg':
-        if msg_type == 'answer': 
+        if msg_type == 'answer':
             reply = fb_answr(chat_id,text)
         elif msg_type == 'buttons':
             buttList = data['bttlist']
             reply = fb_butt(chat_id,text,buttList)
+        elif msg_type == 'image':
+            reply = fb_img(chat_id,text)
 
     return reply
 

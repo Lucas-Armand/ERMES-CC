@@ -81,6 +81,12 @@ def send_message(text, chat_id, msgtype, *butts):
         data['bttlist'] = butts[0]
     r = requests.post(URL, json = data)
 
+
+def send_image(chat_id,img_tag):
+    data = {'object':'bot', 'sdrtype':'facebook_msg','msgtype':'image', 'text':img_tag, 'chatid':chat_id}
+    r = requests.post(URL, json = data)
+
+
 def cleaner(sentence, markers):
 
      # retorna uma nova sentença em que os marcadores de pontuação não estão presentes;
@@ -277,7 +283,9 @@ def findTags(toks, chat):
         if tagTimeTest(tok): tags['time'] = timeTagConstruct(tok) # mesma coisa se for uma tag de hora
         if re.search(r'\d{2}:\d{2}',tok): tags['time'] = timeTagConstruct(tok) # mesma coisa se for hora;
         if tagGreetTest(tok): tags['greeting'].append(greetTagConstruct(tok)) # nao entendo a necessidade disso;
-        if tagConfirmTest(tok): tags['confirm'] = True
+        if tagConfirmTest(tok):
+            print ('uma parda muuuuuuitp loca ta rolandoa qui')
+            tags['confirm'] = True
     return tags
 #
 #    features = [str(tok) for tok in tokens if len(str(tok))>2]
@@ -743,7 +751,7 @@ def answer(tags, dataTable, schdTable, name, chat):
     else:
         answer += 'Muito obrigado por testar nosso roboto!'
         options = None
-        return (answer, options, None)
+        return (answer, options, True)
 
 
 
@@ -854,6 +862,11 @@ def atendimento(testMode):
                     pass
                 else:
                     send_message(resp, chat,'answer')
+
+            tags['confirm']
+
+            if tags['confirm'] == True: #Last msg
+                send_image(chat,tags['request'])
             if testMode == True:
                 print ('')
                 print ('')
