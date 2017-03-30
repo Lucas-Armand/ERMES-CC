@@ -49,15 +49,16 @@ def fb_butt(user_id,text,buttList):
 def fb_img(user_id,img_tag):
     urls = urlTable.urlDict[img_tag]
     if len(urls)>1:
-        url = random.chose(urls)
+        url = random.choice(urls)
     else:
         url = urls[0]
-
+    
     msg = fb_layout.picture(url)
     data = {
         "recipient": {"id": user_id},
         "message": msg
     }
+    print (data)
     r = requests.post("https://graph.facebook.com/v2.6/me/messages?access_token=" + ACCESS_TOKEN, json=data)
     print(r.content)
 

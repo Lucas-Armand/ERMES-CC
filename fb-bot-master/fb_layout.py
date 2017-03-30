@@ -24,12 +24,13 @@ def buttons(text,buttTextList):
     return msg
 
 def picture(url):
-  msg = {
+    msg = {
     "attachment":{
-      "type":"image",
-      "payload":{
-        "url":url
-      }
+        "type":"image",
+        "payload":{
+            "url":url
+            }
+        }
     }
     return msg
 

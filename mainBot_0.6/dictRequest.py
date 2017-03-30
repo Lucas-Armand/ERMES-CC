@@ -8,7 +8,7 @@ schedule ={
     'cães':'dog',
     'cachorro':'dog',
     'cachorros':'dog',
-    'gato':'ca',
+    'gato':'cat',
     'gatos':'cat',
     'bichano':'cat',
     'felino':'cat',
