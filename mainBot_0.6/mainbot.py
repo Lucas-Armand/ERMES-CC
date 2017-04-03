@@ -160,11 +160,15 @@ def tagRequestTest(tok):
         return True
 
 def tagDateTest(tok):
-
+    print ('Erro!')
     # retorna verdadeiro se a string tok for uma das chaves (dia 20, amanhã, quarta ...) do dicionario dictDate
     if tok in dictDate.dictKeys:
+        print ('Erro!')
+        print (tok)
         return True
     elif re.search(r'\d{2}/\d{2}', tok):
+        return True
+    elif re.search(r'\d{4}[-/]\d{2}[-/]\d{2}', tok):
         return True
 
 def tagTimeTest(tok):
@@ -212,7 +216,15 @@ def dateTagConstruct(tok):
     # verificar se tok está no formato /;
 
     tdy = date.today()
-
+    
+    if '-' in tok:
+        toklista = tok.split('-')
+        if len(toklista) == 2:
+            dt = date(tdy.year, int(toklista[1]), int(toklista[0]))
+            return dt.isoformat()
+        elif len(toklista) == 3:
+            dt = date(int(toklista[0]), int(toklista[1]), int(toklista[2]))
+            return dt.isoformat()
 
     if '/' in tok:
         print ('novo tipo de data = '+ tok)
@@ -226,6 +238,7 @@ def dateTagConstruct(tok):
     elif tok in dictDate.month.keys():
 
         month_day = dictDate.month[tok]
+        print (month_day)
         dt = date(tdy.year, tdy.month, month_day)
         return dt.isoformat()
 
@@ -281,6 +294,8 @@ def findTags(toks, chat):
     tags['user'] = str(chat)
 
     for tok in toks:
+        print ('Erro!')
+        print (tok)
         if tagRequestTest(tok): tags['request'] = requestTagConstruct(tok) # se for uma tag de request, pega-se o valor correspondente a chave e coloca em tags - padronizaçao
         if tagDateTest(tok): tags['date'] = dateTagConstruct(tok) # mesma coisa se for uma tag de data
         if tagTimeTest(tok): tags['time'] = timeTagConstruct(tok) # mesma coisa se for uma tag de hora
@@ -545,26 +560,28 @@ def avaibleTime(data, sched, tag, date, business_ID, employer_ID, delta):
 
             timeService = job['duration']
             print (sched[business_ID]['employers'][employer_ID]['schedules'].keys())
-            if date in sched[business_ID]['employers'][employer_ID]['schedules'].keys():
+            #if date in sched[business_ID]['employers'][employer_ID]['schedules'].keys():
                 # if there is same shedule already done at this date
                 # i need to show a list of possibles shedule times
-                print ('ola ola ola ')
-                services = sched[business_ID]['employers'][employer_ID]['schedules'][date]
-                print ('services')
-                print (services)
-                timeBlocks=[]
-                for tB in services:
-                    print (tB['time'])
-                    timeBlocks.append(expandTB(tB['time'],[timeService,0]))
-                print ('timeBlocks')
-                print (timeBlocks)
-                timeBlocks = mergerBlocks(timeBlocks)
-                timeGrid = TimeGrid(business_ID, employer_ID, data, date, delta)
-                timeGrid = gridArrange(timeGrid, timeBlocks)
-                return timeGrid
-            else:
-                timeGrid = TimeGrid(business_ID, employer_ID, data, date, delta)
-                return timeGrid
+                #print ('ola ola ola ')
+                #services = sched[business_ID]['employers'][employer_ID]['schedules'][date]
+                #print ('services')
+                #print (services)
+                #timeBlocks=[]
+                #for tB in services:
+                #    print (tB['time'])
+                #    timeBlocks.append(expandTB(tB['time'],[timeService,0]))
+                #print ('timeBlocks')
+                #print (timeBlocks)
+                #timeBlocks = mergerBlocks(timeBlocks)
+                #timeGrid = TimeGrid(business_ID, employer_ID, data, date, delta)
+                #timeGrid = gridArrange(timeGrid, timeBlocks)
+                #return timeGrid
+            #else:
+                #timeGrid = TimeGrid(business_ID, employer_ID, data, date, delta)
+                #return timeGrid
+            timeGrid = TimeGrid(business_ID, employer_ID, data, date, delta)
+            return timeGrid
         else:
             print (tag['request'])
 
@@ -744,7 +761,7 @@ def answer(tags, dataTable, schdTable, name, chat):
         answer += 'Qual data seria melhor para marcarmos?\n\n'
         answer += '(Obs: Nosso roboto entende "datas" escritas de forma natural.'
 
-        answer += ' Sinta-se à vontade para escrever sua data como: "segunda-feira", "quarta", "13/03", "amanhã", "dia 6")'
+        answer += ' Sinta-se à vontade para escrever sua data como: "sexta-feira", "quinta", "13/04", "amanhã", "dia 6")'
 
         #options = ['segunda', 'terça', 'quarta', 'quinta', 'sexta']
         options = None
@@ -752,11 +769,17 @@ def answer(tags, dataTable, schdTable, name, chat):
 
     else:
         dates = validDate(tags['date'], dataTable, 7)
+        print ('Erro')
         print(tags['date'])
         print (dates) # porque datas validas nos proximos 7 dias? Isso tem que ser de acordo com o horizonte de tempo que o nosso cliente quer marcar as consultas.
         if dates[0] != tags['date']:
-            answer += 'Infelizmente, não temos disponibilidade no dia solicitado, as datas para agendamento mais proximas são:'
-            options = list(dates) + ['Escolher outra data',
+            r =''
+            for i in range(len(dates)):
+                r = r+str(dates[i])+'\n'
+            
+            answer += 'Infelizmente, não temos disponibilidade no dia solicitado. As datas para agendamento mais próximas estão abaixo. Sinta-se a vontade em digitar ou utilizar os botões para agendar um novo horário.\n\n' + r
+            
+            options = ['Cancelar e retornar',
                                      'Informações sobre horários de atendimento do consultório']
             return(answer, options, None)
 
@@ -771,10 +794,26 @@ def answer(tags, dataTable, schdTable, name, chat):
             r = r+str(options2[i])+'\n'
         answer += 'Os horários disponíveis para esse dia são'+'\n\n'+r+'\n'+'Por favor, digite o horário.'
         return (answer, options, None)
+    else:
+        options2 = avaibleTime(dataTable, schdTable, tags, tags['date'], business_ID, employer_ID, 0.5)
+        options = None
+        
+        verificador = 0
+        for i in range(len(options2)):
+            if options2[i] == tags['time']:
+                verificador = verificador+1
+        
+        if verificador == 0:
+            r = ''
+            for i in range(len(options2)):
+                r = r+str(options2[i])+'\n'
+            answer += 'Esse não é um horário válido. Os horários disponíveis para esse dia são'+'\n\n'+r+'\n'+'Por favor, digite novamente o horário.'
+            return (answer,options,None)
+
 
     if not tags['confirm']:
 
-        answer += 'Você gostária de realizar um agendamento em:'+'\n'+tags['date']+'\n'+tags['time']
+        answer += 'Você gostaria de realizar um agendamento em:'+'\n'+tags['date']+'\n'+tags['time']
         options = ['Confirmar agendamento',
                    'Cancelar e retornar']
         return (answer, options, None)
@@ -883,6 +922,8 @@ def atendimento(testMode):
             text, chat, name = get_last_chat_id_name_and_text(get_updates())
         if (text, chat) != last_textchat:
             toks = tokenization(text)
+            print ('Erro!')
+            print (toks)
             new_tags = findTags(toks, chat)
             old_tags = knowTags(userTable, chat)
             if old_tags is not None:
@@ -917,6 +958,10 @@ def atendimento(testMode):
                         print (opt)
                 print ('')
                 print ('')
+            else:
+                if tags['confirm'] == True: #Last msg
+                    send_image(chat,tags['request'])
+            
             userTable = saveTags(chat, tags, userTable, 'user.json')
 
             last_textchat = (text, chat)
@@ -942,4 +987,5 @@ def main():
 
 
 if  __name__ == '__main__':
+
     main()
