@@ -40,7 +40,7 @@ reschedule = {
     }
 
 cancelation ={
-    'cancelar':'cancelation',
+    'desmarcar':'cancelation',
     'excluir':'cancelation',
     'infelizmente':'cancelation'
     }
@@ -64,7 +64,7 @@ information = {
     'convenio':'healthplans'
     }
 restart = {
-    'retornar':'restart',
+    'cancelar':'restart',
     'voltar':'restart',
     'iniciar':'restart',
     'inicial':'restart'

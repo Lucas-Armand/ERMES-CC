@@ -287,7 +287,6 @@ def findTags(toks, chat):
         if re.search(r'\d{2}:\d{2}',tok): tags['time'] = timeTagConstruct(tok) # mesma coisa se for hora;
         if tagGreetTest(tok): tags['greeting'].append(greetTagConstruct(tok)) # nao entendo a necessidade disso;
         if tagConfirmTest(tok):
-            print ('uma parda muuuuuuitp loca ta rolandoa qui')
             tags['confirm'] = True
     return tags
 #
@@ -577,11 +576,13 @@ def getMyInformation(tags, schdTable, business_ID, employer_ID, contact_ID):
     test = False
     for date in schds.keys():
         schdDay = schds[date]
-        for schd in schdDay:
+        n = len(schdDay)
+        for i in range(n):
+            schd = schdDay[i]
             if schd['contactID'] == contact_ID:
                 test = True
                 time = schd['time']
-                return date, job, time, test
+                return date, job, time, test, i
 
     date = None
     job = None
@@ -590,7 +591,7 @@ def getMyInformation(tags, schdTable, business_ID, employer_ID, contact_ID):
 
 
 def constructMyInformation(tags, schdTable, business_ID, employer_ID, contact_ID):
-    date, job, time, test = getMyInformation(tags, schdTable, business_ID, employer_ID, contact_ID)
+    date, job, time, test, schdIndex = getMyInformation(tags, schdTable, business_ID, employer_ID, contact_ID)
     if test == True:
         answer = ''
         answer += 'Você tem um(a) '+ job+' marcado em:\n'
@@ -640,6 +641,23 @@ def constructServices(dataTable, business_ID):
             answer += str(serv['price'].__truc__)+',00 no particular.\n'
 
     options = ['Outras informações','Retornar ao menu inicial']
+    return answer, options
+
+def constructCancelation(tags, schdTable, business_ID, employer_ID, contact_ID):
+
+    date, job, time, test, schdIndex = getMyInformation(tags, schdTable, business_ID, employer_ID, contact_ID)
+
+    if test == True:
+
+        answer = ''
+        answer += 'Você tem um(a) '+ job+' marcado em:\n'
+        answer += date+'\n'
+        answer += time[0]+'\n'
+        answer += 'Tem certeza que deseja desmarcar ?'
+        options = ['Confirmar','Outras informações','Retornar ao menu inicial']
+    else:
+        answer = 'Você, aparentemente, não tem nenhum horário marcado.'
+        options = ['Outras informações','Retornar ao menu inicial']
     return answer, options
 
 def answer(tags, dataTable, schdTable, name, chat):
@@ -711,6 +729,15 @@ def answer(tags, dataTable, schdTable, name, chat):
         answer += 'Qual é o seu bichinho de estimação?'
         options = ['Cão','Gato','Porquinho da India']
         return (answer, options, None)
+
+    elif tags['request'] == 'cancelation':
+        if not tags['confirm']:
+            answer, options = constructCancelation(tags, schdTable, business_ID, employer_ID, chat)
+            return (answer, options, None)
+        else:
+            answer += 'Muito obrigado por testar nosso roboto!'
+            options = None
+            return (answer, options, True)
 
     if not tags['date']:
 
@@ -818,6 +845,15 @@ def schedule(tags, chatID, dataTable, schdTable):
     return schdTable
 
 
+def cancelation(tags, contact_ID, business_ID, employer_ID, schdTable):
+
+    date, job, time, test, schdIndex = getMyInformation(tags, schdTable, business_ID, employer_ID, contact_ID)
+    schdDay = schdTable[business_ID]['employers'][employer_ID]['schedules'][date]
+    schdDay.pop(schdIndex)
+
+    return schdTable
+
+
 def get_jsonTable(jsonName):
 
     with open(jsonName) as data_file:
@@ -869,7 +905,8 @@ def atendimento(testMode):
             tags['confirm']
 
             if tags['confirm'] == True: #Last msg
-                send_image(chat,tags['request'])
+                if tags['request'] == 'schedule':
+                    send_image(chat,tags['request'])
             if testMode == True:
                 print ('')
                 print ('')
@@ -886,17 +923,22 @@ def atendimento(testMode):
 
             print(tags['confirm'])
             if tags['confirm'] == True:
-                schdTable = schedule(tags, chat, dataTable, schdTable)
-                post_jsonTable('schedule.json', schdTable)
+                if tags['request'] == 'schedule':
+                    schdTable = schedule(tags, chat, dataTable, schdTable)
+                    post_jsonTable('schedule.json', schdTable)
+                elif tags ['request'] == 'cancelation':
+                    schdTable = cancelation(tags, chat, business_ID, employer_ID, schdTable)
+                    post_jsonTable('schedule.json', schdTable)
                 tags = findTags([],chat)
                 userTable = saveTags(chat, tags, userTable, 'user.json')
+
 #            print (name+' '+str(chat) +'  '+text)
 #            send_message(text, chat)
 #            last_textchat = (text, chat)
         time.sleep(0.5)
 
 def main():
-    atendimento(False)
+    atendimento(testMode = True)
 
 
 if  __name__ == '__main__':
