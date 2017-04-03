@@ -168,6 +168,8 @@ def tagDateTest(tok):
         return True
     elif re.search(r'\d{2}/\d{2}', tok):
         return True
+    elif re.search(r'\d{4}[-/]\d{2}[-/]\d{2}', tok):
+        return True
 
 def tagTimeTest(tok):
 
@@ -214,7 +216,15 @@ def dateTagConstruct(tok):
     # verificar se tok está no formato /;
 
     tdy = date.today()
-
+    
+    if '-' in tok:
+        toklista = tok.split('-')
+        if len(toklista) == 2:
+            dt = date(tdy.year, int(toklista[1]), int(toklista[0]))
+            return dt.isoformat()
+        elif len(toklista) == 3:
+            dt = date(int(toklista[0]), int(toklista[1]), int(toklista[2]))
+            return dt.isoformat()
 
     if '/' in tok:
         print ('novo tipo de data = '+ tok)
@@ -933,4 +943,5 @@ def main():
 
 
 if  __name__ == '__main__':
+
     main()
