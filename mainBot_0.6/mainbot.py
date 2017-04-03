@@ -939,7 +939,7 @@ def atendimento(testMode):
         time.sleep(0.5)
 
 def main():
-    atendimento(True)
+    atendimento(False)
 
 
 if  __name__ == '__main__':
