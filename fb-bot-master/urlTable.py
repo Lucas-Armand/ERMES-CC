@@ -10,7 +10,7 @@ urlDict ={
     'snake':['https://68.media.tumblr.com/508a00a7710aae9ab4e638428d087744/tumblr_inline_nawb6agnPz1rzwmlr.jpg'],
     'spider':['https://img.buzzfeed.com/buzzfeed-static/static/2014-07/31/15/enhanced/webdr10/enhanced-7792-1406834332-1.jpg'],
     'ant':['http://2.bp.blogspot.com/-hyozC-J5pA8/VfMHX4W9ySI/AAAAAAAAAKQ/s66Q-yOZGgA/s1600/Bugs%2Blife%2BDot.jpg'],
-    'guinea pig':['https://github.com/Lucas-Armand/BOMROBOTO/blob/master/mainBot_0.6/IMAGES/21648-Yellow-mother-and-baby-Guinea-pigs-white-background.jpg'],
+    'guinea pig':['https://www.google.com.br/url?sa=i&rct=j&q=&esrc=s&source=imgres&cd=&cad=rja&uact=8&ved=0ahUKEwj2mfPfuIjTAhVPPJAKHfW6BhYQjRwIBw&url=http%3A%2F%2Fwww.porquinhodaindia.net%2F&psig=AFQjCNFO5ccCVW4cOIjtKOcc4bSyToRIog&ust=149131427790546'],
     'pig':['http://critterbabies.com/wp-content/uploads/2014/11/p2.jpg'],
-    'bird':['https://github.com/Lucas-Armand/BOMROBOTO/blob/master/mainBot_0.6/IMAGES/animal-baby-bird-cute-eyes-Favim.com-253710.jpg'],
-    'fish':['https://github.com/Lucas-Armand/BOMROBOTO/blob/master/mainBot_0.6/IMAGES/54a0faf2033a7e58429a537824a52532.png']}
+    'bird':['https://euamoanatureza.files.wordpress.com/2010/09/pardal-filhote.jpg'],
+    'fish':['http://revoada.net/wp-content/uploads/2013/07/18.jpg']}
