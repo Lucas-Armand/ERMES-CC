@@ -736,8 +736,13 @@ def answer(tags, dataTable, schdTable, name, chat):
         print(tags['date'])
         print (dates) # porque datas validas nos proximos 7 dias? Isso tem que ser de acordo com o horizonte de tempo que o nosso cliente quer marcar as consultas.
         if dates[0] != tags['date']:
-            answer += 'Infelizmente, não temos disponibilidade no dia solicitado. As datas para agendamento mais próximas estão abaixo. Sinta-se a vontade em digitar ou utilizar os botões para agendar um novo horário.'
-            options = list(dates) + ['Cancelar e retornar',
+            r =''
+            for i in range(len(dates)):
+                r = r+str(dates[i])+'\n'
+            
+            answer += 'Infelizmente, não temos disponibilidade no dia solicitado. As datas para agendamento mais próximas estão abaixo. Sinta-se a vontade em digitar ou utilizar os botões para agendar um novo horário.\n\n' + r
+            
+            options = ['Cancelar e retornar',
                                      'Informações sobre horários de atendimento do consultório']
             return(answer, options, None)
 
@@ -924,7 +929,7 @@ def atendimento(testMode):
         time.sleep(0.5)
 
 def main():
-    atendimento(False)
+    atendimento(True)
 
 
 if  __name__ == '__main__':
