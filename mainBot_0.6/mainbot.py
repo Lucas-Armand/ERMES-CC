@@ -673,7 +673,7 @@ def answer(tags, dataTable, schdTable, name, chat):
         answer += 'O que posso fazer por você hoje?'
         options = ['Marcar uma consulta',
                    #'Remarcar meu horário',
-                   'Desmarcar meu horário',
+                   'Desmarcar agendamento',
                    'Informações']
         return (answer, options, None)
 
@@ -891,6 +891,7 @@ def atendimento(testMode):
         else:
             text, chat, name = get_last_chat_id_name_and_text(get_updates())
 
+        print ('ChaID:'+str(chat)+'     Text:'+str(text))
 
         if (text, chat) != last_textchat:
             toks = tokenization(text)                           #quebrar o "text" in "toks"
@@ -911,25 +912,23 @@ def atendimento(testMode):
             # basicamente se eu estou no modo de teste então eu vou "printar" as
             # resposta no terminal, caso não eu tenho que envialas para o
             # webhook que vai mandar para o facebook
-            if testMode ==  True:
-                #Cabeçalho
+            #Cabeçalho
+            print ('')
+            print ('Nome :      ' + name)
+            print ('ChatId :    ' + chat)
+            print ('Input :     ' + text)
+            print ('Tokens :    ' + str(toks))
+            print ('Tags :      '+ str(tags))
+            print ('')
+            print ('BotAnswer :')
+            print (resp)
+            if opts:
                 print ('')
-                print ('Nome :      ' + name)
-                print ('ChatId :    ' + chat)
-                print ('Input :     ' + text)
-                print ('Tokens :    ' + str(toks))
-                print ('Tags :      '+ str(tags))
-                print ('')
-                print ('BotAnswer :')
-                print (resp)
-                if opts:
-                    print ('')
-                    for opt in opts:
-                        print (opt)
-                    print('')
-                    print('')
-
-            else:
+                for opt in opts:
+                    print (opt)
+                print('')
+                print('')
+            if testMode == False:
                 if opts:
                     send_message(resp,chat,'buttons',opts)
                 else:
@@ -937,7 +936,7 @@ def atendimento(testMode):
 
             #se o atendimento é bem sucedido eu devo inviar uma image
             if tags['confirm'] == True: #Last msg
-                if tags['request'] != 'canceltaion':
+                if tags['request'] != 'cancelation':
                     if testMode == True:
                         print ('Imagem Request = '+tags['request'])
                         print ('')
@@ -957,10 +956,14 @@ def atendimento(testMode):
             userTable = saveTags(chat, tags, userTable, 'user.json')
 
             last_textchat = (text, chat)
-            time.sleep(0.5)
+        time.sleep(0.5)
 
 def main():
-    atendimento(testMode = True)
+    try:
+        atendimento(testMode = False)
+    except:
+        #test
+        time.sleep(0.1)
 
 
 if  __name__ == '__main__':
