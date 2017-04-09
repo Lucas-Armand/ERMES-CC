@@ -35,8 +35,6 @@ def get_url(url):
 
 def get_json_from_url(url):
     content = get_url(url)
-    print (url)
-    print (content)
     js = json.loads(content)
     return js
 
@@ -83,11 +81,8 @@ def send_message(text, chat_id, msgtype, *butts):
 
 
 def send_image(chat_id,img_tag):
-    print(chat_id)
-    print(img_tag)
     data = {'object':'bot', 'sdrtype':'facebook_msg','msgtype':'image', 'text':img_tag, 'chatid':chat_id}
     r = requests.post(URL, json = data)
-    print (r)
 
 
 def cleaner(sentence, markers):
@@ -148,7 +143,6 @@ def tokenization(text):
     tokens = [token for token in pre_tokens if tokenTest(token)] # para cada palavra no pre_tokens que é de fato token, adiciona-se a lista token;
     tokens = tokenConcatenation(tokens) # não entendi essa função
 
-    print(tokens)
     return tokens
 
 
@@ -160,11 +154,8 @@ def tagRequestTest(tok):
         return True
 
 def tagDateTest(tok):
-    print ('Erro!')
     # retorna verdadeiro se a string tok for uma das chaves (dia 20, amanhã, quarta ...) do dicionario dictDate
     if tok in dictDate.dictKeys:
-        print ('Erro!')
-        print (tok)
         return True
     elif re.search(r'\d{2}/\d{2}', tok):
         return True
@@ -194,7 +185,6 @@ def tagConfirmTest(tok):
 def requestTagConstruct(tok):
 
     # funcao que verificar se o tok e um dos comandos de agendar, remarcar ou cancelar, dentre os varios possiveis dessas tres classes. E se nao for nenhum deles?
-    print ('teste 3')
     if tok in dictRequest.schedule.keys():
         result = dictRequest.schedule[tok]      # result recebe o valor correspondente a chave tok no dictRequest.schedule;
     if tok in dictRequest.reschedule.keys():
@@ -216,7 +206,7 @@ def dateTagConstruct(tok):
     # verificar se tok está no formato /;
 
     tdy = date.today()
-    
+
     if '-' in tok:
         toklista = tok.split('-')
         if len(toklista) == 2:
@@ -227,7 +217,6 @@ def dateTagConstruct(tok):
             return dt.isoformat()
 
     if '/' in tok:
-        print ('novo tipo de data = '+ tok)
         toklista = tok.split('/')
         if len(toklista) == 2:
             dt = date(tdy.year, int(toklista[1]), int(toklista[0]))
@@ -238,13 +227,10 @@ def dateTagConstruct(tok):
     elif tok in dictDate.month.keys():
 
         month_day = dictDate.month[tok]
-        print (month_day)
         dt = date(tdy.year, tdy.month, month_day)
         return dt.isoformat()
 
     elif tok in dictDate.week.keys():
-
-        print(tok)
 
         week_day = dictDate.week[tok]
         if week_day < tdy.weekday():
@@ -294,8 +280,6 @@ def findTags(toks, chat):
     tags['user'] = str(chat)
 
     for tok in toks:
-        print ('Erro!')
-        print (tok)
         if tagRequestTest(tok): tags['request'] = requestTagConstruct(tok) # se for uma tag de request, pega-se o valor correspondente a chave e coloca em tags - padronizaçao
         if tagDateTest(tok): tags['date'] = dateTagConstruct(tok) # mesma coisa se for uma tag de data
         if tagTimeTest(tok): tags['time'] = timeTagConstruct(tok) # mesma coisa se for uma tag de hora
@@ -344,8 +328,6 @@ def saveTags(chatID, tags, users, name):
     del tags['user']
     users[str(chatID)] = tags
     post_jsonTable(name, users)
-    print (users)
-    print (tags)
     return(users)
 
 def boaAswr(gTags):
@@ -459,12 +441,8 @@ def expandTB(tB, timeExpand):
     # this feature increase a tB changin yours beginning and/or finish:
 
     n_tB = []
-    print (tB)
-    print (timeExpand)
     for t, dt in zip(tB, timeExpand):
         FMT = '%H:%M'
-        print (t)
-        print (dt)
         time = datetime.datetime.strptime(t, FMT)
         delta_time = datetime.timedelta(hours=dt)
         n_time = time - delta_time
@@ -525,9 +503,6 @@ def gridArrange(tGrid, tBlocks):
     # this festure merge the timeGrid with timeBlocks in a avaible timeGrid
 
     FMT = '%H:%M'
-    print ('Erro')
-    print (tGrid)
-    print (tBlocks)
     timeGrid = [datetime.datetime.strptime(t, FMT) for t in tGrid]
 
     timeBlocks = [[datetime.datetime.strptime(t[0], FMT),
@@ -544,7 +519,6 @@ def gridArrange(tGrid, tBlocks):
         for j in range(len(timeBlocks)):
             if time <= timeBlocks[j][0] or time >= timeBlocks[j][1]:
                  newGrid.append(time.strftime('%H:%M'))
-    print (newGrid)
 
     return(newGrid)
 
@@ -559,7 +533,6 @@ def avaibleTime(data, sched, tag, date, business_ID, employer_ID, delta):
             # test to find the right service:
 
             timeService = job['duration']
-            print (sched[business_ID]['employers'][employer_ID]['schedules'].keys())
             #if date in sched[business_ID]['employers'][employer_ID]['schedules'].keys():
                 # if there is same shedule already done at this date
                 # i need to show a list of possibles shedule times
@@ -583,7 +556,7 @@ def avaibleTime(data, sched, tag, date, business_ID, employer_ID, delta):
             timeGrid = TimeGrid(business_ID, employer_ID, data, date, delta)
             return timeGrid
         else:
-            print (tag['request'])
+            pass
 
 
 def getMyInformation(tags, schdTable, business_ID, employer_ID, contact_ID):
@@ -604,7 +577,7 @@ def getMyInformation(tags, schdTable, business_ID, employer_ID, contact_ID):
     date = None
     job = None
     time = None
-    return date, job, time, test
+    return date, job, time, test, None
 
 
 def constructMyInformation(tags, schdTable, business_ID, employer_ID, contact_ID):
@@ -769,16 +742,13 @@ def answer(tags, dataTable, schdTable, name, chat):
 
     else:
         dates = validDate(tags['date'], dataTable, 7)
-        print ('Erro')
-        print(tags['date'])
-        print (dates) # porque datas validas nos proximos 7 dias? Isso tem que ser de acordo com o horizonte de tempo que o nosso cliente quer marcar as consultas.
         if dates[0] != tags['date']:
             r =''
             for i in range(len(dates)):
                 r = r+str(dates[i])+'\n'
-            
+
             answer += 'Infelizmente, não temos disponibilidade no dia solicitado. As datas para agendamento mais próximas estão abaixo. Sinta-se a vontade em digitar ou utilizar os botões para agendar um novo horário.\n\n' + r
-            
+
             options = ['Cancelar e retornar',
                                      'Informações sobre horários de atendimento do consultório']
             return(answer, options, None)
@@ -797,12 +767,12 @@ def answer(tags, dataTable, schdTable, name, chat):
     else:
         options2 = avaibleTime(dataTable, schdTable, tags, tags['date'], business_ID, employer_ID, 0.5)
         options = None
-        
+
         verificador = 0
         for i in range(len(options2)):
             if options2[i] == tags['time']:
                 verificador = verificador+1
-        
+
         if verificador == 0:
             r = ''
             for i in range(len(options2)):
@@ -828,9 +798,6 @@ def answer(tags, dataTable, schdTable, name, chat):
 def scheduleCreator(t0, tags, chatID, dataTable):
 
     #
-    print ('scheduleCreator')
-    #
-
     jobs = dataTable[business_ID]['services']
     for job in jobs:
         if job['name'] == tags['job']:
@@ -853,7 +820,7 @@ def scheduleCreator(t0, tags, chatID, dataTable):
 def schedule(tags, chatID, dataTable, schdTable):
 
     # this feature make anew schedule on the scheduleTable
-
+    print('Teste 1')
     time = datetime.datetime.strptime(tags['time'], '%H:%M')
     new_schd = scheduleCreator(time, tags, chatID, dataTable)
 
@@ -861,6 +828,7 @@ def schedule(tags, chatID, dataTable, schdTable):
     if tags['date'] in schdEmployer.keys():  # test is i have same one schdule
                                              # at 'this' day
 
+        print('Teste 2')
         # if ys i need to organize my schedules cronologic in a list
         # (schdDayList)
 
@@ -879,6 +847,7 @@ def schedule(tags, chatID, dataTable, schdTable):
         # if not, i need to generate a new list for 'this day' ans save the new
         # schdule on this list:
 
+        print('Teste 3')
         schdEmployer[tags['date']] = [new_schd]
 
     return schdTable
@@ -912,6 +881,7 @@ def atendimento(testMode):
     userTable = get_jsonTable('users.json')
     last_textchat = (None, None)
     while True:
+        #Aqui eu recebo as informações iniciais (chat = UserID , text = UserMsg, name = UserName)
         if testMode == True:
             #
             text = input('')
@@ -920,67 +890,74 @@ def atendimento(testMode):
             #
         else:
             text, chat, name = get_last_chat_id_name_and_text(get_updates())
+
+
         if (text, chat) != last_textchat:
-            toks = tokenization(text)
-            print ('Erro!')
-            print (toks)
-            new_tags = findTags(toks, chat)
-            old_tags = knowTags(userTable, chat)
+            toks = tokenization(text)                           #quebrar o "text" in "toks"
+            new_tags = findTags(toks, chat)                     #apartir dos tokens eu vou achar as tags do usuário
+            old_tags = knowTags(userTable, chat)                #aqui eu relembro as tags que ele ja tem
+
+            #aqui eu vou inserir as novas tags nas antigas
             if old_tags is not None:
                 tags = mergerTags(new_tags, old_tags, chat)
             else:
                 tags = new_tags
+
+
+            #aqui eu uso "answer" que gera uma resposta a partir das tags do usuário
             resp, opts, tags['confirm'] = answer(tags, dataTable, schdTable, name, chat)
-            print (tags)
-            if opts:
-                if testMode == True:
-                    pass
-                else:
-                    send_message(resp,chat,'buttons',opts)
+
+            # essa parte é meio confusa por causa da questão do "testMode" mas
+            # basicamente se eu estou no modo de teste então eu vou "printar" as
+            # resposta no terminal, caso não eu tenho que envialas para o
+            # webhook que vai mandar para o facebook
+            if testMode ==  True:
+                #Cabeçalho
+                print ('')
+                print ('Nome :      ' + name)
+                print ('ChatId :    ' + chat)
+                print ('Input :     ' + text)
+                print ('Tokens :    ' + str(toks))
+                print ('Tags :      '+ str(tags))
+                print ('')
+                print ('BotAnswer :')
+                print (resp)
+                if opts:
+                    print ('')
+                    for opt in opts:
+                        print (opt)
+                    print('')
+                    print('')
+
             else:
-                if testMode == True:
-                    pass
+                if opts:
+                    send_message(resp,chat,'buttons',opts)
                 else:
                     send_message(resp, chat,'answer')
 
-            tags['confirm']
-
+            #se o atendimento é bem sucedido eu devo inviar uma image
             if tags['confirm'] == True: #Last msg
-                if tags['request'] == 'schedule':
-                    send_image(chat,tags['request'])
-            if testMode == True:
-                print ('')
-                print ('')
-                print (resp)
-                print ('')
-                if opts:
-                    for opt in opts:
-                        print (opt)
-                print ('')
-                print ('')
-            else:
-                if tags['confirm'] == True: #Last msg
-                    send_image(chat,tags['request'])
-            
-            userTable = saveTags(chat, tags, userTable, 'user.json')
+                if tags['request'] != 'canceltaion':
+                    if testMode == True:
+                        print ('Imagem Request = '+tags['request'])
+                        print ('')
+                        print ('')
+                    else:
+                        send_image(chat,tags['request'])
 
-            last_textchat = (text, chat)
-
-            print(tags['confirm'])
-            if tags['confirm'] == True:
-                if tags['request'] == 'schedule':
+                    #se o atendimento for bem sucedido eu tbm devo salvar em 'scdTable'
                     schdTable = schedule(tags, chat, dataTable, schdTable)
                     post_jsonTable('schedule.json', schdTable)
                 elif tags ['request'] == 'cancelation':
+                    #se a pessoa quiser cancelar o atendimento então devo tirar de 'schdTable'
                     schdTable = cancelation(tags, chat, business_ID, employer_ID, schdTable)
                     post_jsonTable('schedule.json', schdTable)
                 tags = findTags([],chat)
-                userTable = saveTags(chat, tags, userTable, 'user.json')
 
-#            print (name+' '+str(chat) +'  '+text)
-#            send_message(text, chat)
-#            last_textchat = (text, chat)
-        time.sleep(0.5)
+            userTable = saveTags(chat, tags, userTable, 'user.json')
+
+            last_textchat = (text, chat)
+            time.sleep(0.5)
 
 def main():
     atendimento(testMode = True)
