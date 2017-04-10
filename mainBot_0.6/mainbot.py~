@@ -962,7 +962,7 @@ def atendimento(testMode):
 
 def main():
     try:
-        atendimento(testMode = False)
+        atendimento(testMode = True)
     except:
         #test
         time.sleep(0.1)
