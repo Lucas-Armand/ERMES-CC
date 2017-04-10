@@ -154,6 +154,7 @@ def tagRequestTest(tok):
         return True
 
 def tagDateTest(tok):
+    
     # retorna verdadeiro se a string tok for uma das chaves (dia 20, amanhã, quarta ...) do dicionario dictDate
     if tok in dictDate.dictKeys:
         return True
@@ -206,8 +207,9 @@ def dateTagConstruct(tok):
     # verificar se tok está no formato /;
 
     tdy = date.today()
+    
 
-    if '-' in tok:
+    if '-' in tok and tok not in dictDate.week.keys():
         toklista = tok.split('-')
         if len(toklista) == 2:
             dt = date(tdy.year, int(toklista[1]), int(toklista[0]))
@@ -224,12 +226,13 @@ def dateTagConstruct(tok):
         elif len(toklista) == 3:
             dt = date(int(toklista[2]), int(toklista[1]), int(toklista[0]))
             return dt.isoformat()
+    
     elif tok in dictDate.month.keys():
 
         month_day = dictDate.month[tok]
         dt = date(tdy.year, tdy.month, month_day)
         return dt.isoformat()
-
+    
     elif tok in dictDate.week.keys():
 
         week_day = dictDate.week[tok]
@@ -655,7 +658,6 @@ def answer(tags, dataTable, schdTable, name, chat):
     # this feature analyze the tags and the schedule and make a answer for the
     # client.
 
-
     if tags['greeting']:
         answer = greetAnswerConstruct(tags,name)
     else:
@@ -960,7 +962,7 @@ def atendimento(testMode):
 
 def main():
     try:
-        atendimento(testMode = False)
+        atendimento(testMode = True)
     except:
         #test
         time.sleep(0.1)
