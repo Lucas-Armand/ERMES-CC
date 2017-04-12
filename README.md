@@ -138,6 +138,56 @@ cp -i BOMROBOTO/vim/.vimrc ./.vimrc
 mkdir -p ~/.vim/autoload ~/.vim/bundle && \
 curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 ```
+# INSCRIÇÃO LEAN STARTUP
+
+Nome do grupo ou empresa *
+   ERMES CONVERSATIONAL COMMERCE 
+
+Descrição resumida da empresa ou grupo (até 50 palavras) *
+   Um grupo de três amigos com um protótipo já pronto para ser o primeiro passo na mudança da forma como a relação entre pessoas e empresas acontece atualmente. Acreditamos que chatbot é a principal ferramenta para trazer automação, inteligência e acessibilidade, que são as características imprescindíveis à mudança.
+
+Público alvo atual?*
+   O público alvo atual é composto por pequenas empresas cujos serviços prestados precisam ser agendados pelos clientes. Mais especificamente, pensamos em consultórios médicos, odontológicos, veterinários e salões de beleza.
+
+Qual problema busca resolver para o público alvo atualmente?*
+   Queremos resolver o problema de ineficiência dos mecanismos de agendamento existentes dentro desse público alvo, que contribuem para a falta de visibilidade e pouco aproveitamento efetivo do tempo de trabalho. Acreditamos que com maior visibilidade e acessibilidade, proporcionadas pelo chatbot como ferramenta de agendamento, o número de potenciais clientes do nosso público alvo aumentará. Além disso, acreditamos que podemos retirar toda a preocupação dos gestores de pequenas empresas com o agendamento de seus serviços, fazendo-os otimizar o preenchimento de seu tempo efetivo de trabalho e deixando-os focados somente na realização da atividade fim.
+
+
+Empresa ja existe? Se sim, qual a faixa de faturamento? *
+A empresa ainda não tem faturamento
+
+A empresa ou grupo faz uso, ou pretende fazer uso, de alguma tecnologia para entregar sua oferta? Se sim, qual tipo de tecnologia? *
+   Nós pretendemos utilizar a tecnologia de chatbots 
+   
+O grupo ou empresa está vinculado a alguma instituição de apoio (Universidade, Laboratório, Incubadora, Parque Tecnológico, Aceleradora, Outros)? Se sim, aponte qual a instituição. *
+   O grupo não tem nenhuma ligaçõa direta com nem uma instituição de apoio
+
+Integrante 1 - Contato Principal *
+Lucas Armand Souza Assis de Oliveira
+
+E-mail do Integrante 1 *
+oliveira.armand@poli.ufrj.br
+
+Telefone do Integrante 1 *
+21 97927-4976
+
+LinkedIn do Integrante 1
+
+Integrante 2 *
+
+E-mail do Integrante 2 *
+
+Telefone do Integrante 2 *
+
+LinkedIn do Integrante 2
+
+Integrante 3
+
+E-mail do Integrante 3
+
+Telefone do Integrante 3
+
+LinkedIn do Integrante 3
 
 # BIBLIOGRAFIA
 
