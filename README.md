@@ -173,11 +173,13 @@ A empresa ainda não tem faturamento
 ``
 A empresa ou grupo faz uso, ou pretende fazer uso, de alguma tecnologia para entregar sua oferta? Se sim, qual tipo de tecnologia? *
 ``
-Nós pretendemos utilizar a tecnologia de chatbots 
-``   
+Pretendemos utilizar a tecnologia de chatbots integrada as redes sociais do nosso cliente (b2b), que realizará o atendimento/agendamentamento e sincronizará essas informações através de um único aplicativo. Utilizaremos,tambem, Machine Learning para aprimorar a nossa plataforma.
+
+Nossa Protótipo para referência: https://www.facebook.com/VaterinariaChatbot/
+``   
 O grupo ou empresa está vinculado a alguma instituição de apoio (Universidade, Laboratório, Incubadora, Parque Tecnológico, Aceleradora, Outros)? Se sim, aponte qual a instituição. *
 ``
-   O grupo não tem nenhuma ligaçõa direta com nem uma instituição de apoio
+   Atualmente não tem nenhuma ligaçõa direta com instituições de apoio (mais gostariamos)
 ``
 Integrante 1 - Contato Principal *
 ``
