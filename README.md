@@ -141,59 +141,74 @@ curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 # INSCRIÇÃO LEAN STARTUP
 
 Nome do grupo ou empresa *
-``
-   ERMES CONVERSATIONAL COMMERCE 
-``
-Descrição resumida da empresa ou grupo (até 50 palavras) *
-``Nós somos desenvolvedores, somos, talvez(5), um pouco jonvens, mas acima(10) de tudo somos três amigos(15) com um protótipo na mão(20) e muita vontate de transformar(25) isso num negócio. A ERMES(30) (É um Robo Marcando Esse(35) Serviço?)
-começou no inicio do(40) ano e até aqui nós(45) ja desenvolvemos um protótipo e(50) testamos através das redes sociais.
 
-   Um grupo de três amigos com um protótipo já pronto para ser o primeiro passo na mudança da forma como a relação entre pessoas e empresas acontece atualmente. Acreditamos que chatbot é a principal ferramenta para trazer automação, inteligência e acessibilidade, que são as características imprescindíveis à mudança.
-   
+```
+   ERMES Conversitional Commerce 
+```
+
+Descrição resumida da empresa ou grupo (até 50 palavras) *
+
+```
    Somos três jovens amigos, desenvolvedores, com a vontade de transformar o modo como a comunicação entre pessoas e empresas acontece atualmente. O ERMES (É um Robô Marcando Esse Serviço?) teve inicio no ano de 2017, atravéz de um protótipo testado nas redes sociais. Nosso próximo desafio é valida-lo no mercado.
-``
+```
+
 Público alvo atual?*
-``
-   O público alvo atual é composto por pequenas empresas cujos serviços prestados precisam ser agendados pelos clientes. Mais especificamente, pensamos em consultórios médicos, odontológicos, veterinários e salões de beleza.
-   
-   
+
+```   
    Nosso público alvo é composto de pequenas e médias empresas cujos serviços prestados precisam ser agendados atravéz de um contato entre o fornecedor e o clientes. Visamos principalmente o mercado de empresas de delivery, consultórios médicos, salões de beleza, veterinários & petshop , etc. Em média, nos últimos anos,segundo dados oficiais o somatório destes mercados movimentou alguma coisa em torno de R$ 40 bilhões por ano. Nossa idéia é oferecer uma solução, ainda que não completamente customizada, mas que possa atender as necessidades da maioria dos empreendedores deste público alvo.
-``
+```
 
 Qual problema busca resolver para o público alvo atualmente?*
-``
+
+```
    A baixa eficiência dos mecanismos de agendamento de serviços existentes dentro desse público alvo, que contribuem para a dificultar a acessibilidade, por parte do cliente, e o baixo aproveitamento efetivo do tempo de trabalho, por parte do fornecedor. 
 
 	A pesar do atendimento ao cliente ser fundamental para pequenas e médias empresas a maior parte do agendamento ou do suporte com dúvidas é um processo mecânico, ou seja, pode ser automatizado sem perda de qualidade. O chatbot permitira maior  acessibilidade, com atendimento 24 horas, o que aumenta o número de potenciais clientes do nosso público alvo. Além disso, acreditamos que podemos retirar toda a preocupação, com agendamento, do gestor de uma pequena e média empresa, que muita das vezes se divide entre apoio ao cliente e a realização da atividade fim.
-``
+```
 
 Empresa ja existe? Se sim, qual a faixa de faturamento? *
-``
+
+```
 A empresa ainda não tem faturamento
-``
+```
+
 A empresa ou grupo faz uso, ou pretende fazer uso, de alguma tecnologia para entregar sua oferta? Se sim, qual tipo de tecnologia? *
-``
+
+```
 Pretendemos utilizar a tecnologia de chatbots integrada as redes sociais do nosso cliente (b2b), que realizará o atendimento/agendamentamento e sincronizará essas informações através de um único aplicativo. Utilizaremos,tambem, Machine Learning para aprimorar a nossa plataforma.
 
 Nossa Protótipo para referência: https://www.facebook.com/VaterinariaChatbot/
-``   
+```  
+
 O grupo ou empresa está vinculado a alguma instituição de apoio (Universidade, Laboratório, Incubadora, Parque Tecnológico, Aceleradora, Outros)? Se sim, aponte qual a instituição. *
-``
-   Atualmente não tem nenhuma ligaçõa direta com instituições de apoio (mais gostariamos)
-``
+
+```
+   Atualmente não temos nenhuma ligaçõa direta com instituições de apoio (mais gostariamos!)
+```
+
 Integrante 1 - Contato Principal *
-``
+
+```
 Lucas Armand Souza Assis de Oliveira
-``
+```
+
 E-mail do Integrante 1 *
-``
+
+```
 oliveira.armand@poli.ufrj.br
-``
+```
+
 Telefone do Integrante 1 *
-``
+
+```
 21 97927-4976
-``
+```
+
 LinkedIn do Integrante 1
+
+```
+https://www.linkedin.com/in/lucas-armand-246583b1/
+```
 
 Integrante 2 *
 
