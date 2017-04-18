@@ -1,3 +1,4 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Readme.md</title><style></style></head><body id="preview">
 <h2><a id="ERMES_API_0"></a><strong>ERMES API</strong></h2>
 <p><strong>Demorou, mas chegou! :D</strong><br>
 Mas por que demorou? Foram necessárias várias otimizações para a API alcançar a simplicidade que ela possui agora sem perder a eficiência, e isso custou bastante tempo e pesquisas (mas é claro que eu acabei perdendo tempo com outras coisas como jogos e horário de sono desregulado).</p>
@@ -160,7 +161,7 @@ Date: Thu, 06 Apr 2017 20:18:38 GMT</p>
 </blockquote>
 <h3><a id="Retrieves_a_specific_business_176"></a>Retrieves a specific business</h3>
 <blockquote>
-<p>GET /api/businesses/{id}<br>
+<p>GET /api/businesses/{businessId}<br>
 Host: {ngrok-link}<br>
 Authorization: Basic dXNlckBlbWFpbC5jb206MTIzNDU=<br>
 Content-Length: 0<br>
@@ -220,7 +221,7 @@ Date: Thu, 06 Apr 2017 22:51:19 GMT</p>
 </code></pre>
 <h3><a id="Updates_a_specific_business_237"></a>Updates a specific business</h3>
 <blockquote>
-<p>PUT /api/businesses/{id}<br>
+<p>PUT /api/businesses/{businessId}<br>
 Host: {ngrok-link}<br>
 Authorization: Basic dXNlckBlbWFpbC5jb206MTIzNDU=<br>
 Content-Type: application/json<br>
@@ -249,7 +250,7 @@ Date: Fri, 07 Apr 2017 01:16:57 GMT</p>
 <h2><a id="Service_266"></a>Service</h2>
 <h3><a id="Retrieves_the_services_of_a_business_268"></a>Retrieves the services of a business</h3>
 <blockquote>
-<p>GET /api/businesses/3/services<br>
+<p>GET /api/businesses/{businessId}/services<br>
 Host: {ngrok-link}<br>
 Authorization: Basic YWRtaW5AZW1haWwuY29tOjEyMzQ1</p>
 </blockquote>
@@ -276,7 +277,7 @@ Date: Tue, 18 Apr 2017 10:56:44 GMT</p>
 </code></pre>
 <h4><a id="Creates_a_new_service_for_a_business_296"></a>Creates a new service for a business</h4>
 <blockquote>
-<p>POST /api/businesses/3/services<br>
+<p>POST /api/businesses/{businessId}/services<br>
 Host: {ngrok-link}<br>
 Authorization: Basic YWRtaW5AZW1haWwuY29tOjEyMzQ1<br>
 Content-Type: application/json<br>
@@ -297,7 +298,7 @@ Date: Tue, 18 Apr 2017 11:00:47 GMT</p>
 </blockquote>
 <h3><a id="Retrieves_a_specific_service_of_business_318"></a>Retrieves a specific service of business</h3>
 <blockquote>
-<p>GET /api/businesses/3/services/6<br>
+<p>GET /api/businesses/{businessId}/services/{serviceId}<br>
 Host: {ngrok-link}<br>
 Authorization: Basic YWRtaW5AZW1haWwuY29tOjEyMzQ1</p>
 </blockquote>
@@ -317,7 +318,7 @@ Date: Tue, 18 Apr 2017 11:01:17 GMT</p>
 </code></pre>
 <h3><a id="Updates_a_specific_service_of_business_339"></a>Updates a specific service of business</h3>
 <blockquote>
-<p>PUT /api/businesses/3/services/6<br>
+<p>PUT /api/businesses/{businessId}/services/{serviceId}<br>
 Host: {ngrok-link}<br>
 Authorization: Basic YWRtaW5AZW1haWwuY29tOjEyMzQ1<br>
 Content-Type: application/json<br>
@@ -338,7 +339,7 @@ Date: Tue, 18 Apr 2017 11:01:26 GMT</p>
 </blockquote>
 <h3><a id="Deletes_a_specific_service_of_a_business_361"></a>Deletes a specific service of a business</h3>
 <blockquote>
-<p>DELETE /api/businesses/3/services/6<br>
+<p>DELETE /api/businesses/{businessId}/services/{serviceId}<br>
 Host: {ngrok-link}<br>
 Authorization: Basic YWRtaW5AZW1haWwuY29tOjEyMzQ1</p>
 </blockquote>
@@ -347,3 +348,5 @@ Authorization: Basic YWRtaW5AZW1haWwuY29tOjEyMzQ1</p>
 <p>HTTP/1.1 204<br>
 Date: Tue, 18 Apr 2017 11:01:40 GMT</p>
 </blockquote>
+
+</body></html>
