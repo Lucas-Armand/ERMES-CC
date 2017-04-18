@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><title>Readme.md</title><style></style></head><body id="preview">
+<!DOCTYPE html><html><head><meta charset="utf-8"></head><body id="preview">
 <h2><a id="ERMES_API_0"></a><strong>ERMES API</strong></h2>
 <p><strong>Demorou, mas chegou! :D</strong><br>
 Mas por que demorou? Foram necessárias várias otimizações para a API alcançar a simplicidade que ela possui agora sem perder a eficiência, e isso custou bastante tempo e pesquisas (mas é claro que eu acabei perdendo tempo com outras coisas como jogos e horário de sono desregulado).</p>
