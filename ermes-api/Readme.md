@@ -7,7 +7,7 @@ Mas por que demorou? Foram necessárias várias otimizações para a API alcanç
 Ela vai ficar executando 24h no meu ambiente local e vocês poderão acessá-la pela internet através do link que o Ngrok vai gerar.</p>
 
 <p><h3><strong>URL: <em>http://4eaa7f75.ngrok.io/api/</em></strong><br>
-(atualizado em ??/04/2017)</h3></p>
+(atualizado em 21/04/2017)</h3></p>
 
 <p><strong>Observação</strong>: Eu sugiro a vocês utilizarem o Insomnia ou o Postman (clients para testar requisições em APIs). É bem mais fácil e intuitivo do que usar o cURL puro, por exemplo.</p>
 <h1><a id="Autenticao_15"></a>Autenticação</h1>
