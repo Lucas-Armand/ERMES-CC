@@ -44,16 +44,16 @@ Date: Thu, 06 Apr 2017 21:44:13 GMT</p>
 <h1><a id="Requests_46"></a>Requests</h1>
 <h2><a id="As_entidades_funcionam_com_o_mesmo_padro_de_requests_48"></a>As entidades funcionam com o mesmo padrão de requests.</h2>
 <p>Tudo será melhor especificado na próxima atualização da API.</p>
-<p><strong>Listar bisnetos</strong><br>
-GET/pais/{paiId}/filhos/{filhoId}/bisnetos</p>
-<p><strong>Criar bisneto</strong> (com bisneto especificado em JSON no corpo do request)<br>
-POST /pais/{paiId}/filhos/{filhoId}/bisnetos</p>
-<p><strong>Selecionar bisneto</strong><br>
-GET /pais/{paiId}/filhos/{filhoId}/bisnetos/{bisnetoId}</p>
-<p><strong>Atualizar bisneto</strong> (com bisneto especificado em JSON no corpo do request)<br>
-PUT /pais/{paiId}/filhos/{filhoId}/bisnetos/{bisnetoId}</p>
-<p><strong>Deletar bisneto</strong><br>
-DELETE /pais/{paiId}/filhos/{filhoId}/bisnetos/{bisnetoId}</p>
+<p><strong>Listar netos</strong><br>
+GET/pais/{paiId}/filhos/{filhoId}/netos</p>
+<p><strong>Criar neto</strong> (com bisneto especificado em JSON no corpo do request)<br>
+POST /pais/{paiId}/filhos/{filhoId}/netos</p>
+<p><strong>Selecionar neto</strong><br>
+GET /pais/{paiId}/filhos/{filhoId}/netos/{netoId}</p>
+<p><strong>Atualizar neto</strong> (com bisneto especificado em JSON no corpo do request)<br>
+PUT /pais/{paiId}/filhos/{filhoId}/netos/{netoId}</p>
+<p><strong>Deletar neto</strong><br>
+DELETE /pais/{paiId}/filhos/{filhoId}/netos/{netoId}</p>
 <h2><a id="Exemplos_de_requests_66"></a>Exemplos de requests</h2>
 <h2><a id="Business_68"></a>Business</h2>
 <h3><a id="Retrieves_a_list_of_businesses_70"></a>Retrieves a list of businesses</h3>
