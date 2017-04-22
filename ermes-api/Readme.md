@@ -6,8 +6,8 @@ Mas por que demorou? Foram necessárias várias otimizações para a API alcanç
 <p>A nossa API faz basicamente o que todas fazem: servir de intermediária entre as aplicações e o banco de dados. Por enquanto ela permite apenas que você insira e pegue informações do banco, mas em breve ela terá funções para evitar o overwork das aplicações.<br>
 Ela vai ficar executando 24h no meu ambiente local e vocês poderão acessá-la pela internet através do link que o Ngrok vai gerar.</p>
 
-<p><h3><strong>URL: <em>http://4eaa7f75.ngrok.io/api/</em></strong><br>
-(atualizado em 21/04/2017)</h3></p>
+<p><h3><strong>URL: <em>http://3ca02eac.ngrok.io/api/</em></strong><br>
+(atualizado em 22/04/2017)</h3></p>
 
 <p><strong>Observação</strong>: Eu sugiro a vocês utilizarem o Insomnia ou o Postman (clients para testar requisições em APIs). É bem mais fácil e intuitivo do que usar o cURL puro, por exemplo.</p>
 <h1><a id="Autenticao_15"></a>Autenticação</h1>
