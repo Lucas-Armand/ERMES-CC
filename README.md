@@ -1,3 +1,11 @@
+# Aceleradoras:
+
+Oxigênio Aceleradora (Porto Seguro) [SP] = As inscrições vão até 07/05 - http://bit.ly/OxigenioInsc4thBatch
+ACE (antiga aceleratech) [RJ/SP] = inscrições sempre abertas - http://info.goace.vc/inscricoes
+Wayra Brasil (Telefonica) [SP] = ultimas inscriçes foram até 13/11 - http://bit.ly/wayra_ideia (pré inscrição)
+Startup Farm [SP] = ahead2 foi até 19/01 e o ahead3 foi até 23/03 
+
+
 # BOMROBOTO
 
 #O Projeto
