@@ -1,8 +1,11 @@
 # Aceleradoras:
 
 Oxigênio Aceleradora (Porto Seguro) [SP] = As inscrições vão até 07/05 - http://bit.ly/OxigenioInsc4thBatch
+
 ACE (antiga aceleratech) [RJ/SP] = inscrições sempre abertas - http://info.goace.vc/inscricoes
+
 Wayra Brasil (Telefonica) [SP] = ultimas inscriçes foram até 13/11 - http://bit.ly/wayra_ideia (pré inscrição)
+
 Startup Farm [SP] = ahead2 foi até 19/01 e o ahead3 foi até 23/03 
 
 
@@ -98,7 +101,7 @@ que você começou agora, para referencia:
  
 + vim: é código do fb_bot.py aberto no vim
 
-# Como configurar uma VM
+# Como configurar uma nova VM
 
 1) Instalar o pip:
 
@@ -111,8 +114,9 @@ sudo easy_install3 pip
 
 ```
 sudo apt-get update
-sudo apt-get install ngrok-server
-sudo apt-get install ngrok-client
+wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip
+sudo apt install unzip
+unzip ngrok-stable-linux-amd64.zip
 ```
 
 3) Instalar requests:
@@ -146,6 +150,38 @@ cp -i BOMROBOTO/vim/.vimrc ./.vimrc
 mkdir -p ~/.vim/autoload ~/.vim/bundle && \
 curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 ```
+
+
+7) Executar o ngrok:
+ 
+```
+tmux
+ngrok http 8080
+Ctrl+B $ ngrok 
+Ctrl+B D
+```
+
+
+8) Executar o server:
+ 
+```
+tmux
+cd BOMROBOTO/fb-master
+python3 fb_bot.py
+Ctrl+B $ fb_bot
+Ctrl+B d
+```
+
+8) Executar o BOT:
+ 
+```
+tmux
+cd BOMROBOTO/main_botXX
+python3 mainbot.py
+Ctrl+B $ bot
+Ctrl+B d
+```
+
 # INSCRIÇÃO LEAN STARTUP
 
 Nome do grupo ou empresa *
