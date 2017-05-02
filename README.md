@@ -182,6 +182,14 @@ Ctrl+B $ bot
 Ctrl+B d
 ```
 
+9) Ativar portugues:
+
+```
+echo 'export LANG=C' >>~/.bashrc
+echo 'export LANG=en_US.UTF-8' >>~/.bashrc
+source ~/.bashrc
+```
+
 # INSCRIÇÃO LEAN STARTUP
 
 Nome do grupo ou empresa *
