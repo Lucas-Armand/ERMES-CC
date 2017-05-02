@@ -59,6 +59,8 @@ Estamos usando python 3.5 para programar o bot, segue algumas referências:
 
 # Servidores e VM
 
+1) Microsoft Azure
+
 Pessoal criei uma virtual Machine pelo Microsoft Azure!
 Para entrar você tem que abrir o seu terminal e digitar:
 
@@ -100,6 +102,15 @@ que você começou agora, para referencia:
  $ python3 fb_bot.py
  
 + vim: é código do fb_bot.py aberto no vim
+
+2) Amazon
+
+Então tem uma preconfiguração que quem sabe mais é o Andrei (eu n anotei)
+mas o comando que eu uso para logar é:
+
+```
+ sudo ssh -i ~/.ssh/ermes-amazon-key.pem ubuntu@52.26.167.85
+```
 
 # Como configurar uma nova VM
 
@@ -188,6 +199,13 @@ Ctrl+B d
 echo 'export LANG=C' >>~/.bashrc
 echo 'export LANG=en_US.UTF-8' >>~/.bashrc
 source ~/.bashrc
+```
+OU	
+	
+```
+sudo locale-gen et_EE et_EE.UTF-8 en_US en_US.UTF-8
+sudo dpkg-reconfigure locales
+
 ```
 
 # INSCRIÇÃO LEAN STARTUP
