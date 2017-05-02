@@ -105,9 +105,24 @@ que você começou agora, para referencia:
 
 2) Amazon
 
-Então tem uma preconfiguração que quem sabe mais é o Andrei (eu n anotei)
-mas o comando que eu uso para logar é:
+Para acessar pela primeira vez a VM na amazon baixe os arquivos da pasta
+"Amazon" que estão no Drive na pasta "ERMES".
 
+Depois você deve mover o arquivo "ermes-amazon-key.pem" para o diretório 
+"~/.ssh"
+
+```
+mv /onde/vc/baixo/ermes-amazon-key.pem ~/.ssh
+```
+OU
+```
+cp /onde/vc/baixo/ermes-amazon-key.pem ~/.ssh
+```
+
+Depois siga o tutorial a partir do terceiro item:
+https://aws.amazon.com/pt/getting-started/tutorials/launch-a-virtual-machine/
+
+Para acessar o VM no dia-a-dia basta executar:
 ```
  sudo ssh -i ~/.ssh/ermes-amazon-key.pem ubuntu@52.26.167.85
 ```
