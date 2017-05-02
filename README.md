@@ -59,7 +59,7 @@ Estamos usando python 3.5 para programar o bot, segue algumas referências:
 
 # Servidores e VM
 
-1) Microsoft Azure
+## Microsoft Azure VM
 
 Pessoal criei uma virtual Machine pelo Microsoft Azure!
 Para entrar você tem que abrir o seu terminal e digitar:
@@ -103,7 +103,7 @@ que você começou agora, para referencia:
  
 + vim: é código do fb_bot.py aberto no vim
 
-2) Amazon
+## Amazon VM
 
 Para acessar pela primeira vez a VM na amazon baixe os arquivos da pasta
 "Amazon" que estão no Drive na pasta "ERMES".
