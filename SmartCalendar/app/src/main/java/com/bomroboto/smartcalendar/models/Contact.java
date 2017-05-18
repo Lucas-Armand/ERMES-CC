@@ -34,6 +34,10 @@ public class Contact extends BaseModel implements Serializable {
     @Column
     String picture;
 
+    public Contact() {
+        super();
+    }
+
     public Contact(int id, String name, String address, String phone, String email, String picture) {
         this.id = id;
         this.name = name;
@@ -49,10 +53,6 @@ public class Contact extends BaseModel implements Serializable {
 
     public void setPicture(String picture) {
         this.picture = picture;
-    }
-
-    public Contact() {
-        super();
     }
 
     public int getId() {

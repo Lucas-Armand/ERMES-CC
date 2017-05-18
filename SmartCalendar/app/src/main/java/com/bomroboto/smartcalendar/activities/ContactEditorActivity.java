@@ -44,17 +44,17 @@ public class ContactEditorActivity extends AppCompatActivity
             {
                 case ContactsFragment.ADD_CONTACT_REQUEST_CODE:
                     getSupportActionBar().setTitle("Adicionar contato");
+                    contact = new Contact();
                     break;
 
                 case ContactInfoActivity.EDIT_CONTACT_REQUEST_CODE:
                     getSupportActionBar().setTitle("Editar contato");
+                    contact = (Contact) getIntent().getSerializableExtra("contact");
                     break;
             }
 
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
-        contact = (Contact) getIntent().getSerializableExtra("contact");
 
         initViews();
     }

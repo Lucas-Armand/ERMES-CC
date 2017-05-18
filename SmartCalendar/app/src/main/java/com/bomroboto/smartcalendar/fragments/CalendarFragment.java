@@ -3,6 +3,7 @@ package com.bomroboto.smartcalendar.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -103,7 +104,7 @@ public class CalendarFragment extends Fragment
         MarkTodayDecorator(Activity context)
         {
             // get the primary color of the style sheet
-            color = context.getResources().getColor(R.color.primary);
+            color = ContextCompat.getColor(context, R.color.primary);
         }
 
         @Override

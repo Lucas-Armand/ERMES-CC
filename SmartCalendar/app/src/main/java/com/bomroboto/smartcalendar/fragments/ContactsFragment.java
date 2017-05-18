@@ -170,7 +170,6 @@ public class ContactsFragment extends Fragment
 
         if (id == R.id.action_account_plus)
         {
-
                 Intent intent = new Intent(getContext(), ContactEditorActivity.class);
                 intent.putExtra("requestCode", ADD_CONTACT_REQUEST_CODE);
                 startActivityForResult(intent, ADD_CONTACT_REQUEST_CODE);
