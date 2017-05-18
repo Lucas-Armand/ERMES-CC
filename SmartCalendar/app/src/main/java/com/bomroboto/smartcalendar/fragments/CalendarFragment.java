@@ -90,35 +90,35 @@ public class CalendarFragment extends Fragment
 
         return super.onOptionsItemSelected(item);
     }
-}
 
-/**
- * It's okay to leave MarkTodayDecorator here (and not in a specific package) for now. After all,
- * MarkTodayDecorator will only be used by CalendarFragment.
- */
+    /**
+     * It's okay to leave MarkTodayDecorator here (and not in a specific package) for now. After all,
+     * MarkTodayDecorator will only be used by CalendarFragment.
+     */
 
-class MarkTodayDecorator implements DayViewDecorator
-{
-    int color;
-
-    public MarkTodayDecorator(Activity context)
+    private class MarkTodayDecorator implements DayViewDecorator
     {
-        // get the primary color of the style sheet
-        color = context.getResources().getColor(R.color.primary);
-    }
+        int color;
 
-    @Override
-    public boolean shouldDecorate(CalendarDay day)
-    {
-        // if day is the current day, decorate
-        return day.equals(CalendarDay.today());
-    }
+        MarkTodayDecorator(Activity context)
+        {
+            // get the primary color of the style sheet
+            color = context.getResources().getColor(R.color.primary);
+        }
 
-    @Override
-    public void decorate(DayViewFacade view)
-    {
-        // mark the current day with a dot
-        view.addSpan(new DotSpan(5, color));
+        @Override
+        public boolean shouldDecorate(CalendarDay day)
+        {
+            // if day is the current day, decorate
+            return day.equals(CalendarDay.today());
+        }
+
+        @Override
+        public void decorate(DayViewFacade view)
+        {
+            // mark the current day with a dot
+            view.addSpan(new DotSpan(5, color));
+        }
     }
 }
 
