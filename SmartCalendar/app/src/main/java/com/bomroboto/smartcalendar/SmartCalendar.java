@@ -3,16 +3,26 @@ package com.bomroboto.smartcalendar;
 import android.app.Application;
 import android.content.res.Configuration;
 
-import com.bomroboto.smartcalendar.models.*;
-import com.prolificinteractive.materialcalendarview.CalendarUtils;
+import com.bomroboto.smartcalendar.data.SmartCalendarDatabase;
+import com.bomroboto.smartcalendar.models.Address;
+import com.bomroboto.smartcalendar.models.Appointment;
+import com.bomroboto.smartcalendar.models.Business;
+import com.bomroboto.smartcalendar.models.Customer;
+import com.bomroboto.smartcalendar.models.DayOfWeek;
+import com.bomroboto.smartcalendar.models.Employee;
+import com.bomroboto.smartcalendar.models.Schedule;
+import com.bomroboto.smartcalendar.models.Service;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowLog;
 import com.raizlabs.android.dbflow.config.FlowManager;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
-import org.joda.time.*;
+import org.joda.time.DateTime;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -30,6 +40,8 @@ public class SmartCalendar extends Application {
         // Set verbose logging
         FlowLog.setMinimumLoggingLevel(FlowLog.Level.V);
 
+        FlowManager.getDatabase(SmartCalendarDatabase.class).reset(this);
+
         populateDatebase();
     }
 
@@ -40,7 +52,7 @@ public class SmartCalendar extends Application {
                 .from(Business.class).queryList();
 
         if (businesses.isEmpty()) {
-            Business business = new Business("Multi Oral", LocalTime.parse("8:00"), LocalTime.parse("20:00"), "Saúde");
+            Business business = new Business("Multi Oral", new LocalTime(8, 00), new LocalTime(20, 00), "Saúde");
             List<Service> services = new ArrayList<>();
             List<Customer> customers = new ArrayList<>();
             List<Employee> employees = new ArrayList<>();
@@ -60,33 +72,35 @@ public class SmartCalendar extends Application {
                     new Address("Travessa do Outro Bairro", 666, "Outro Bairro", "Cidade")));
             business.setCustomers(customers);
 
-            List<Schedule> schedules1 = new ArrayList<>();
-            schedules1.add(new Schedule(DayOfWeek.MONDAY, LocalTime.parse("10:00"), LocalTime.parse("19:00"), LocalTime.parse("12:00"),
-                    LocalTime.parse("13:00"), true));
-            schedules1.add(new Schedule(DayOfWeek.TUESDAY, LocalTime.parse("7:00"), LocalTime.parse("16:00"), LocalTime.parse("12:00"),
-                    LocalTime.parse("13:00"), true));
-            List<Schedule> schedules2 = new ArrayList<>();
-            schedules2.add(new Schedule(DayOfWeek.WEDNESDAY, LocalTime.parse("7:00"), LocalTime.parse("16:00"),
-                    LocalTime.parse("12:00"), LocalTime.parse("13:00"), true));
-            schedules2.add(new Schedule(DayOfWeek.THURSDAY, LocalTime.parse("8:00"), LocalTime.parse("17:00"), LocalTime.parse("13:00"),
-                    LocalTime.parse("14:00"), true));
-            List<Schedule> schedules3 = new ArrayList<>();
-            schedules3.add(new Schedule(DayOfWeek.FRIDAY, LocalTime.parse("8:00"), LocalTime.parse("14:00"), LocalTime.parse("13:00"),
-                    LocalTime.parse("14:00"), true));
+            ArrayList<Schedule> schedules1 = new ArrayList<>();
+            schedules1.add(new Schedule(DayOfWeek.MONDAY, new LocalTime(10, 00), new LocalTime(19, 00), new LocalTime(12, 00),
+                    new LocalTime(13, 00), true));
+            schedules1.add(new Schedule(DayOfWeek.TUESDAY, new LocalTime(7, 00), new LocalTime(16, 00), new LocalTime(12, 00),
+                    new LocalTime(13, 00), true));
+            ArrayList<Schedule> schedules2 = new ArrayList<>();
+            schedules2.add(new Schedule(DayOfWeek.WEDNESDAY, new LocalTime(7, 00), new LocalTime(16, 00),
+                    new LocalTime(12, 00), new LocalTime(13, 00), true));
+            schedules2.add(new Schedule(DayOfWeek.THURSDAY, new LocalTime(8, 00), new LocalTime(17, 00), new LocalTime(13, 00),
+                    new LocalTime(14, 00), true));
+            ArrayList<Schedule> schedules3 = new ArrayList<>();
+            schedules3.add(new Schedule(DayOfWeek.FRIDAY, new LocalTime(8, 00), new LocalTime(14, 00), new LocalTime(13, 00),
+                    new LocalTime(14, 00), true));
 
             employees.add(new Employee("Dre", "Guess", schedules1));
             employees.add(new Employee("Dentista", "Graduada", schedules2));
             employees.add(new Employee("Dentista", "Estagiária", schedules3));
             business.setEmployees(employees);
 
-            DateTime dateTime = new DateTime();
-
-            appointments.add(new Appointment(LocalDate.parse(dateTime.getYear() + "-" + Months.FIVE + "-" + 25), LocalTime.parse("10:30"),
+            appointments.add(new Appointment(new LocalDate(2017, Calendar.MAY, 25), new LocalTime(10, 30),
                     business.getServices().get(0), business.getCustomers().get(0), business.getEmployees().get(0),
                     "Aguardando confirmação"));
 
-            appointments.add(new Appointment(LocalDate.parse(dateTime.getYear() + "-" + Months.FIVE + "-" + 30), LocalTime.parse("15:30"),
+            appointments.add(new Appointment(new LocalDate(2017, Calendar.MAY, 25), new LocalTime(15, 30),
                     business.getServices().get(1), business.getCustomers().get(1), business.getEmployees().get(1),
+                    "Confirmado"));
+
+            appointments.add(new Appointment(new LocalDate(2017, Calendar.MAY, 30), new LocalTime(15, 30),
+                    business.getServices().get(2), business.getCustomers().get(2), business.getEmployees().get(2),
                     "Confirmado"));
             business.setAppointments(appointments);
 

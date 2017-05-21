@@ -1,10 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true">
+    tools:context="com.bomroboto.smartcalendar.views.activities.AppointmentInfoActivity">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvContacts"
+        android:id="@+id/rvAppointments"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="16dp"
@@ -13,13 +15,14 @@
         android:visibility="gone" />
 
     <TextView
-        android:id="@+id/tvNoContacts"
+        android:id="@+id/tvNoAppointments"
         style="@style/Base.TextAppearance.AppCompat.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:layout_marginTop="8dp"
-        android:text="Você não possui contatos salvos."
+        android:text="Não há compromissos para este dia"
         android:textColor="@color/secondary_text" />
+
 </RelativeLayout>

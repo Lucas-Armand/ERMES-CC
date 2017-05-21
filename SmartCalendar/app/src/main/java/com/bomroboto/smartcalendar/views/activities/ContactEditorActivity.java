@@ -1,4 +1,4 @@
-package com.bomroboto.smartcalendar.activities;
+package com.bomroboto.smartcalendar.views.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.bomroboto.smartcalendar.R;
-import com.bomroboto.smartcalendar.fragments.ContactsFragment;
+import com.bomroboto.smartcalendar.views.fragments.ContactsFragment;
 import com.bomroboto.smartcalendar.models.Contact;
 
 import java.util.Random;

@@ -1,39 +1,52 @@
 package com.bomroboto.smartcalendar.models;
 
+import com.bomroboto.smartcalendar.data.SmartCalendarDatabase;
 import com.raizlabs.android.dbflow.annotation.Column;
+import com.raizlabs.android.dbflow.annotation.ForeignKey;
 import com.raizlabs.android.dbflow.annotation.PrimaryKey;
+import com.raizlabs.android.dbflow.annotation.Table;
+import com.raizlabs.android.dbflow.sql.language.SQLite;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalTime;
 
+import java.io.Serializable;
+
 /**
  * Created by Andrei Benincasa on 17/05/2017.
  */
 
-public class Appointment extends BaseModel {
+@Table(database = SmartCalendarDatabase.class)
+public class Appointment extends BaseModel implements Serializable {
 
     @Column
     @PrimaryKey(autoincrement = true)
     private Long id;
 
     @Column
-    LocalDate date;
+    private LocalDate date;
 
     @Column
-    LocalTime time;
+    private LocalTime time;
 
     @Column
-    Service service;
+    @ForeignKey
+    private Service service;
 
     @Column
-    Customer customer;
+    @ForeignKey
+    private Customer customer;
 
     @Column
-    Employee employee;
+    @ForeignKey
+    private Employee employee;
 
     @Column
-    String status;
+    private String status;
+
+    @ForeignKey(stubbedRelationship = true)
+    private Business business;
 
     public Appointment() {
         super();
@@ -103,5 +116,22 @@ public class Appointment extends BaseModel {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Business getBusiness() {
+        if (business == null) {
+            business = SQLite.select()
+                    .from(Business.class)
+                    .where(Service_Table.business_id.eq(getId()))
+                    .querySingle();
+        }
+
+        return business;
+    }
+
+    public void setBusiness(Business business) {
+        if (business != null) {
+            this.business = business;
+        }
     }
 }

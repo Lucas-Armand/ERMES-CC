@@ -1,4 +1,4 @@
-package com.bomroboto.smartcalendar.fragments;
+package com.bomroboto.smartcalendar.views.fragments;
 
 
 import android.app.Activity;
@@ -16,13 +16,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bomroboto.smartcalendar.R;
-import com.bomroboto.smartcalendar.activities.ContactEditorActivity;
-import com.bomroboto.smartcalendar.activities.ContactInfoActivity;
-import com.bomroboto.smartcalendar.adapters.ContactsAdapter;
+import com.bomroboto.smartcalendar.views.activities.ContactEditorActivity;
+import com.bomroboto.smartcalendar.views.activities.ContactInfoActivity;
+import com.bomroboto.smartcalendar.views.adapters.ContactsAdapter;
+import com.bomroboto.smartcalendar.models.Business;
 import com.bomroboto.smartcalendar.models.Contact;
+import com.bomroboto.smartcalendar.models.Customer;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ContactsFragment extends Fragment
 {
@@ -32,6 +35,8 @@ public class ContactsFragment extends Fragment
     RecyclerView rvContacts;
     TextView tvNoContacts;
 
+    List<Business> businesses;
+    ArrayList<Customer> customers;
     ArrayList<Contact> contacts;
     private ContactsAdapter adapter;
 
@@ -79,6 +84,12 @@ public class ContactsFragment extends Fragment
                 t.printStackTrace();
             }
         });*/
+
+        businesses = SQLite.select().from(Business.class).queryList();
+
+        customers.addAll(businesses.get(0).getCustomers());
+
+
 
         contacts = new ArrayList<>();
 

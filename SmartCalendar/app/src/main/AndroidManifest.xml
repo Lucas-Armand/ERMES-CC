@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.CalendarActivity"
+            android:name=".views.activities.HomeActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -22,8 +22,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.ContactInfoActivity" />
-        <activity android:name=".activities.ContactEditorActivity" />
+        <activity android:name=".views.activities.ContactInfoActivity" />
+        <activity android:name=".views.activities.ContactEditorActivity" />
+        <activity android:name=".views.activities.AppointmentInfoActivity" />
+        <activity android:name=".views.BaseActivity"></activity>
     </application>
 
 </manifest>

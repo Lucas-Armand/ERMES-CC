@@ -2,8 +2,8 @@
     <string name="app_name">SmartCalendar</string>
 
     <string name="action_today">Ir para hoje</string>
-    <string name="action_account_plus">Adicionar contato</string>
-    <string name="action_account_edit">Editar contato</string>
+    <string name="action_account_plus">Adicionar cliente</string>
+    <string name="action_account_edit">Editar cliente</string>
     <string name="action_done">Salvar</string>
     <string name="action_refresh">Atualizar</string>
     <string name="action_settings">Configurações</string>

@@ -4,17 +4,15 @@
     android:animateLayoutChanges="true">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvContacts"
+        android:id="@+id/rvCustomers"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:layout_marginTop="8dp" />
 
     <TextView
-        android:id="@+id/tvNoContacts"
-        style="@style/Base.TextAppearance.AppCompat.Small"
+        android:id="@+id/tvNoCustomers"
+        style="@style/Base.TextAppearance.AppCompat.Large"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"

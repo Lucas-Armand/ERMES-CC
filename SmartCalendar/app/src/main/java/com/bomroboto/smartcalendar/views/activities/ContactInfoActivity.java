@@ -1,20 +1,16 @@
-package com.bomroboto.smartcalendar.activities;
+package com.bomroboto.smartcalendar.views.activities;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bomroboto.smartcalendar.R;
 import com.bomroboto.smartcalendar.models.Contact;
-import com.raizlabs.android.dbflow.sql.language.SQLite;
-import com.raizlabs.android.dbflow.structure.listener.LoadFromCursorListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 

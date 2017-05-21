@@ -1,4 +1,4 @@
-package com.bomroboto.smartcalendar.fragments;
+package com.bomroboto.smartcalendar.views.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

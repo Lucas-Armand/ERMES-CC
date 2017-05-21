@@ -1,12 +1,13 @@
-package com.bomroboto.smartcalendar.adapters;
+package com.bomroboto.smartcalendar.views.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.bomroboto.smartcalendar.fragments.CalendarFragment;
-import com.bomroboto.smartcalendar.fragments.ContactsFragment;
-import com.bomroboto.smartcalendar.fragments.EventsFragment;
+import com.bomroboto.smartcalendar.views.fragments.CalendarFragment;
+import com.bomroboto.smartcalendar.views.fragments.ContactsFragment;
+import com.bomroboto.smartcalendar.views.fragments.CustomersFragment;
+import com.bomroboto.smartcalendar.views.fragments.EventsFragment;
 
 public class PagerAdapter extends FragmentPagerAdapter
 {
@@ -14,7 +15,7 @@ public class PagerAdapter extends FragmentPagerAdapter
             {
                     CalendarFragment.newInstance(),
                     EventsFragment.newInstance(),
-                    ContactsFragment.newInstance()
+                    CustomersFragment.newInstance()
             };
 
     public PagerAdapter(FragmentManager fm)
@@ -44,7 +45,7 @@ public class PagerAdapter extends FragmentPagerAdapter
             case 1:
                 return EventsFragment.TITLE;
             case 2:
-                return ContactsFragment.TITLE;
+                return CustomersFragment.TITLE;
         }
 
         return null;
