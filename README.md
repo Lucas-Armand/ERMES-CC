@@ -1,7 +1,7 @@
 # ERMES
 
 #O Projeto
-Fazer um aplicativo que permita pequenas empresas terem acesso a soluções de chatbots para atendimento de maneira simples e automática. A construção do MVP (Minimum Viable Product) deve ser até o final de Fevereiro. Nossa missão é oferecer um serviço de agendamento e pedidos por Bots completo, simples, personalizável e multiplataforma. 
+Fazer um aplicativo que permita pequenas empresas terem acesso a soluções de chatbots para atendimento de maneira simples e automática. A construção do MVP (Minimum Viable Product. Nossa missão é oferecer um serviço de agendamento e pedidos por Bots completo, simples, personalizável e multiplataforma. 
 
 #Informações Básicas
 
