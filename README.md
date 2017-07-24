@@ -1,9 +1,9 @@
 # ERMES
 
-#O Projeto
+# O Projeto
 Fazer um aplicativo que permita pequenas empresas terem acesso a soluções de chatbots para atendimento de maneira simples e automática. A construção do MVP (Minimum Viable Product. Nossa missão é oferecer um serviço de agendamento e pedidos por Bots completo, simples, personalizável e multiplataforma. 
 
-#Informações Básicas
+# Informações Básicas
 
 
 Estamos usando python 3.5 para programar o bot, segue algumas referências:
@@ -12,8 +12,14 @@ Estamos usando python 3.5 para programar o bot, segue algumas referências:
  - https://core.telegram.org/bots/samples
  - https://apps.worldwritable.com/tutorials/chatbot/ 
  - https://blog.hartleybrody.com/fb-messenger-bot/
+ 
+# Como funciona 
 
-#Organização
+Abaixo um infografico mostrando os elementos do nosso sistema:
+
+![Information Flow](https://github.com/Lucas-Armand/ERMES-CC/blob/master/como%20funciona.png)
+
+# Organização
 
 1) Reuniões semanais a onde é analisado o avanço do projeto e definido os objeetivos para proxima semana.
 
