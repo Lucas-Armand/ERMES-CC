@@ -1,38 +1,10 @@
-# Aceleradoras:
-
-Oxigênio Aceleradora (Porto Seguro) [SP] = As inscrições vão até 07/05 - http://bit.ly/OxigenioInsc4thBatch
-
-ACE (antiga aceleratech) [RJ/SP] = inscrições sempre abertas - http://info.goace.vc/inscricoes
-
-Wayra Brasil (Telefonica) [SP] = ultimas inscriçes foram até 13/11 - http://bit.ly/wayra_ideia (pré inscrição)
-
-Startup Farm [SP] = ahead2 foi até 19/01 e o ahead3 foi até 23/03 
-
-
-# BOMROBOTO
+# ERMES
 
 #O Projeto
 Fazer um aplicativo que permita pequenas empresas terem acesso a soluções de chatbots para atendimento de maneira simples e automática. A construção do MVP (Minimum Viable Product) deve ser até o final de Fevereiro. Nossa missão é oferecer um serviço de agendamento e pedidos por Bots completo, simples, personalizável e multiplataforma. 
 
 #Informações Básicas
 
-Nossos Bots de Teste:
-
-- Telegran = https://telegram.me/BOMRO_bot  // Token:"292444370:AAGiqsll_zwYbIRMQ9Hg_8pfihj8y1Ig8Ac" 
-- Mensager : 
-INFORMAÇÕES NOVAS:
-
-ID : 132804990557844           #id do aplicativo no facebook, quem quiser ter acesso é só pedir ao Lucas  
-URL de retorno : https://bcd920bf.ngrok.io/    # feita usando o ngrok e rodando na nossa maquina virtual!
-Tokens :
-
-   Fundamentos da Matemática :
-EAAB4yRJJXpQBAPZC57WEk31t8Ot3dOq40gEZAcXBlN5JPDnJXIu56szS3adjKtXNBTOOyU1CKy5NTwU0hKamFwlLioXEY24hVPZBZCnsdqBFNu0YXPA4twge1XZCtPNvldc6JwzAFZA2DifRoSABSZCPg4nSkltU0iJeZB2AAsxYvgZDZD
-
-Curso de Fisica Básico :
-EAAB4yRJJXpQBAIoktLxF50nSeDO3Rt8MGZChufZAWyx4cGNH2Ejwo0NF8wdGsoRS5oZBTxSyz2dK0riA9fjHniys0Wih7ZCoSNf2JPSEGgdX16YuaVbLiQsA3Mr6un94jYPQv53uqtT4W4E70oGk8BRGKQ6wdANAWFzkxmU3ogZDZD
-
-- Google Plus = ?
 
 Estamos usando python 3.5 para programar o bot, segue algumas referências:
 
@@ -66,8 +38,7 @@ Para entrar você tem que abrir o seu terminal e digitar:
 
 $ ssh ermes.brazilsouth.cloudapp.azure.com -l ermes
 
-$ password: Ermesbomrobot0
-
+$ password: ********
 Uma vez que vocẽ entrou você verá um novo usuário e maquina
 no terminal:
 
@@ -269,47 +240,7 @@ O grupo ou empresa está vinculado a alguma instituição de apoio (Universidade
 
 ```
    Atualmente não temos nenhuma ligaçõa direta com instituições de apoio (mais gostariamos!)
-```
 
-Integrante 1 - Contato Principal *
-
-```
-Lucas Armand Souza Assis de Oliveira
-```
-
-E-mail do Integrante 1 *
-
-```
-oliveira.armand@poli.ufrj.br
-```
-
-Telefone do Integrante 1 *
-
-```
-21 97927-4976
-```
-
-LinkedIn do Integrante 1
-
-```
-https://www.linkedin.com/in/lucas-armand-246583b1/
-```
-
-Integrante 2 *
-
-E-mail do Integrante 2 *
-
-Telefone do Integrante 2 *
-
-LinkedIn do Integrante 2
-
-Integrante 3
-
-E-mail do Integrante 3
-
-Telefone do Integrante 3
-
-LinkedIn do Integrante 3
 
 # BIBLIOGRAFIA
 
