@@ -14,6 +14,7 @@ Estamos usando python 3.5 para programar o bot, segue algumas referências:
  - https://blog.hartleybrody.com/fb-messenger-bot/
  
 # Como funciona 
+[![video 2](https://img.youtube.com/vi/N1m0-StJcnQ/0.jpg)](https://www.youtube.com/watch?v=N1m0-StJcnQ)
 
 Abaixo um infografico mostrando os elementos do nosso sistema:
 
@@ -201,6 +202,9 @@ sudo dpkg-reconfigure locales
 ```
 
 # INSCRIÇÃO LEAN STARTUP
+
+[![video 1](https://img.youtube.com/vi/ZzdGzzv5BhI/0.jpg)](https://www.youtube.com/watch?v=ZzdGzzv5BhI)
+
 
 Nome do grupo ou empresa *
 
